@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Registration Form</title>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #fdf8f1;
+      background-image: linear-gradient(to right, #fdf8f1, #fffaf0);
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      width: 400px;
+      background: #fff;
+      margin: 80px auto;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      padding: 30px;
+      border-top: 8px solid #a8b400; /* mehndi color */
+    }
+
+    h2 {
+      text-align: center;
+      color: #6b7a00;
+      margin-bottom: 25px;
+    }
+
+    label {
+      display: block;
+      color: #4b4b4b;
+      font-weight: 500;
+      margin-bottom: 5px;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #dcdcdc;
+      border-radius: 6px;
+      font-size: 14px;
+      transition: 0.3s;
+    }
+
+    input:focus, select:focus {
+      border-color: #a8b400;
+      box-shadow: 0 0 5px #cddc39;
+      outline: none;
+    }
+
+    .btn {
+      width: 100%;
+      background-color: #a8b400;
+      color: white;
+      font-size: 16px;
+      padding: 10px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .btn:hover {
+      background-color: #8f9a00;
+    }
+
+    p.note {
+      text-align: center;
+      color: #777;
+      margin-top: 10px;
+      font-size: 13px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Shree Code Mantra Registration</h2>
+    <form action="/register" method="post">
+      <label for="fullname">Full Name</label>
+      <input type="text" id="fullname" name="fullname" placeholder="Enter your full name" required>
+
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" placeholder="Enter your email" required>
+
+      <label for="password">Password</label>
+      <input type="password" id="password" name="password" placeholder="Create a password" required>
+
+      <label for="confirm">Confirm Password</label>
+      <input type="password" id="confirm" name="confirm" placeholder="Confirm your password" required>
+
+      <label for="phone">Phone Number</label>
+      <input type="tel" id="phone" name="phone" placeholder="Enter your phone number">
+
+      <label for="gender">Gender</label>
+      <select id="gender" name="gender">
+        <option value="">--Select Gender--</option>
+        <option value="male">Male</option>
+        <option value="female">Female</option>
+        <option value="other">Other</option>
+      </select>
+
+      <button type="submit" class="btn">Register</button>
+    </form>
+    <p class="note">Already have an account? <a href="#" style="color:#8f9a00; text-decoration:none;">Login</a></p>
+  </div>
+</body>
+</html>
