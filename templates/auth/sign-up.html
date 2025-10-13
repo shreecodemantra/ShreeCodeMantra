@@ -1,0 +1,251 @@
+{% extends 'auth/header.html'%}
+{% block content %}
+
+<!-- Page Content -->
+<div class="page-heading header-text">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <h1>Sign Up</h1>
+        <span>feel free to send us a message now!</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="callback-form contact-us">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="contact-form">
+          <form id="signupForm" method="post">
+            <div class="row">
+
+              <!-- Full Name -->
+              <div class="col-lg-6 col-md-12 col-sm-12 mb-3">
+                <fieldset>
+                  <input name="name" type="text" class="form-control" id="fullname" placeholder="Full Name">
+                  <small id="nameError" class="error-label"></small>
+                </fieldset>
+              </div>
+
+              <!-- Email -->
+              <div class="col-lg-6 col-md-12 col-sm-12 mb-3">
+                <fieldset>
+                  <input name="email" type="text" class="form-control" id="emailadd" placeholder="E-Mail Address">
+                  <small id="emailError" class="error-label"></small>
+                </fieldset>
+              </div>
+
+              <!-- Password -->
+              <div class="col-lg-6 col-md-12 col-sm-12 mb-3">
+                <fieldset>
+                  <input name="password" type="password" class="form-control" id="password" placeholder="Password">
+                  <small id="passwordError" class="error-label"></small>
+                </fieldset>
+              </div>
+
+              <!-- Confirm Password -->
+              <div class="col-lg-6 col-md-12 col-sm-12 mb-3">
+                <fieldset>
+                  <input name="cpassword" type="password" class="form-control" id="cpassword"
+                    placeholder="Confirm Password">
+                  <small id="cpasswordError" class="error-label"></small>
+                </fieldset>
+              </div>
+
+              <!-- Submit -->
+              <div class="col-lg-12 text-center mt-3">
+                <fieldset>
+                  <button type="submit" id="submit" class="filled-button">Sign Up</button>
+                </fieldset>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .error-label {
+    color: red;
+    font-size: 11px;
+    display: block;
+    text-align: left;
+  }
+
+  .form-control.is-invalid {
+    border-color: #dc3545;
+  }
+
+  .form-control.is-valid {
+    border-color: #198754;
+  }
+</style>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const form = document.getElementById("signupForm");
+
+    const fields = {
+      name: document.getElementById("fullname"),
+      email: document.getElementById("emailadd"),
+      password: document.getElementById("password"),
+      cpassword: document.getElementById("cpassword")
+    };
+
+    const errors = {
+      name: document.getElementById("nameError"),
+      email: document.getElementById("emailError"),
+      password: document.getElementById("passwordError"),
+      cpassword: document.getElementById("cpasswordError")
+    };
+
+    // Mark field valid/invalid
+    function markInvalid(field) {
+      field.classList.add("is-invalid");
+      field.classList.remove("is-valid");
+    }
+    function markValid(field) {
+      field.classList.remove("is-invalid");
+      field.classList.add("is-valid");
+    }
+
+    // Validate functions
+    function validateName() {
+      const value = fields.name.value.trim();
+      if (value === "") {
+        errors.name.textContent = " * Name is required.";
+        markInvalid(fields.name);
+        return false;
+      } else if (value.split(" ").length < 2) {
+        errors.name.textContent = " * Enter both first and last name.";
+        markInvalid(fields.name);
+        return false;
+      } else if (!/^[A-Za-z\s]+$/.test(value)) {
+        errors.name.textContent = " * Name can only contain letters.";
+        markInvalid(fields.name);
+        return false;
+      }
+      errors.name.textContent = "";
+      markValid(fields.name);
+      return true;
+    }
+
+    function validateEmail() {
+      const value = fields.email.value.trim();
+      const pattern = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
+      if (value === "") {
+        errors.email.textContent = " * Email is required.";
+        markInvalid(fields.email);
+        return false;
+      } else if (!pattern.test(value)) {
+        errors.email.textContent = " * Please enter a valid email address.";
+        markInvalid(fields.email);
+        return false;
+      }
+      errors.email.textContent = "";
+      markValid(fields.email);
+      return true;
+    }
+
+    function validatePassword() {
+      const value = fields.password.value.trim();
+      if (value === "") {
+        errors.password.textContent = " * Password is required.";
+        markInvalid(fields.password);
+        return false;
+      } else if (value.length < 8) {
+        errors.password.textContent = " * Password must be at least 8 characters.";
+        markInvalid(fields.password);
+        return false;
+      } else if (!/[A-Z]/.test(value)) {
+        errors.password.textContent = " * Include at least one uppercase letter.";
+        markInvalid(fields.password);
+        return false;
+      } else if (!/[0-9]/.test(value)) {
+        errors.password.textContent = " * Include at least one number.";
+        markInvalid(fields.password);
+        return false;
+      } else if (!/[!@#$%^&*]/.test(value)) {
+        errors.password.textContent = " * Include at least one special character (!@#$%^&*).";
+        markInvalid(fields.password);
+        return false;
+      }
+      errors.password.textContent = "";
+      markValid(fields.password);
+      return true;
+    }
+
+    function validateCPassword() {
+      const value = fields.cpassword.value.trim();
+      if (value === "") {
+        errors.cpassword.textContent = " * Confirm your password.";
+        markInvalid(fields.cpassword);
+        return false;
+      } else if (value !== fields.password.value.trim()) {
+        errors.cpassword.textContent = " * Passwords do not match.";
+        markInvalid(fields.cpassword);
+        return false;
+      }
+      errors.cpassword.textContent = "";
+      markValid(fields.cpassword);
+      return true;
+    }
+
+    // 🟢 Real-time validation (hides errors while typing)
+    fields.name.addEventListener("input", validateName);
+    fields.email.addEventListener("input", validateEmail);
+    fields.password.addEventListener("input", validatePassword);
+    fields.cpassword.addEventListener("input", validateCPassword);
+
+    // On blur validation (backup check)
+    fields.name.addEventListener("blur", validateName);
+    fields.email.addEventListener("blur", validateEmail);
+    fields.password.addEventListener("blur", validatePassword);
+    fields.cpassword.addEventListener("blur", validateCPassword);
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      // Run all validations separately
+      const isNameValid = validateName();
+      const isEmailValid = validateEmail();
+      const isPasswordValid = validatePassword();
+      const isCPasswordValid = validateCPassword();
+
+      // Check all together
+      const valid = isNameValid && isEmailValid && isPasswordValid && isCPasswordValid;
+
+      if (valid) {
+        $.ajax({
+          type: "POST",
+          url: "/auth/sign-up",
+          data: $("#signupForm").serialize(),
+          success: function (response) {
+            if (response.status == "success") {
+              alert(response.message)
+              window.location.replace("/auth/sign-in");
+            }
+            else {
+              alert(response.error)
+              var inputs = document.querySelectorAll('input');
+              inputs.forEach(function (input) {
+                input.value = '';
+              });
+            }
+          },
+          error: function (e) {
+            console.log("ERROR : ", e);
+            $("#submit").prop("disabled", false);
+          }
+        });
+      }
+    });
+
+  });
+</script>
+
+{% endblock %}

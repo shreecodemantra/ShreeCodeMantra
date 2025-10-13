@@ -1,0 +1,183 @@
+{% extends 'auth/header.html'%}
+{% block content %}
+
+<!-- Page Content -->
+<div class="page-heading header-text">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <h1>Sign In</h1>
+        <span>feel free to send us a message now!</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="callback-form contact-us">
+  <div class="container">
+    <div class="row">
+      <!-- <div class="col-md-12">
+        <div class="section-heading">
+          <h2><em>Sign In</em></h2>
+          <span>Suspendisse a ante in neque iaculis lacinia</span>
+        </div>
+      </div> -->
+      <div class="col-md-12">
+        <div class="contact-form">
+          <form id="signinForm" action="" method="get">
+            <div class="row">
+
+              <!-- Email -->
+              <div class="col-lg-12 col-md-12 col-sm-12 mb-3">
+                <fieldset>
+                  <input name="email" type="text" class="form-control" id="emailadd" placeholder="E-Mail Address">
+                  <small id="emailError" class="error-label"></small>
+                </fieldset>
+              </div>
+
+              <!-- Password -->
+              <div class="col-lg-12 col-md-12 col-sm-12 mb-3">
+                <fieldset>
+                  <input name="password" type="password" class="form-control" id="password" placeholder="Password">
+                  <small id="passwordError" class="error-label"></small>
+                </fieldset>
+              </div>
+
+              <div class="col-lg-12">
+                <fieldset>
+                  <button type="submit" id="submit" class="filled-button">Sign In</button>
+                </fieldset>
+              </div>
+
+              <div class="col-lg-12 text-center mt-3">
+                <p style="margin-top:10px;">
+                  Don’t have an account?
+                  <a href="{{ url_for('auth.sign_up') }}" style="color:#007bff; text-decoration:none;">Sign Up</a>
+                </p>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .error-label {
+    color: red;
+    font-size: 11px;
+    display: block;
+    text-align: left;
+  }
+
+  .form-control.is-invalid {
+    border-color: #dc3545;
+  }
+
+  .form-control.is-valid {
+    border-color: #198754;
+  }
+</style>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const form = document.getElementById("signinForm");
+
+    const fields = {
+      email: document.getElementById("emailadd"),
+      password: document.getElementById("password")
+    };
+
+    const errors = {
+      email: document.getElementById("emailError"),
+      password: document.getElementById("passwordError")
+    };
+
+    // Mark field valid/invalid
+    function markInvalid(field) {
+      field.classList.add("is-invalid");
+      field.classList.remove("is-valid");
+    }
+    function markValid(field) {
+      field.classList.remove("is-invalid");
+      field.classList.add("is-valid");
+    }
+
+    function validateEmail() {
+      const value = fields.email.value.trim();
+      const pattern = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
+      if (value === "") {
+        errors.email.textContent = " * Email is required.";
+        markInvalid(fields.email);
+        return false;
+      } else if (!pattern.test(value)) {
+        errors.email.textContent = " * Please enter a valid email address.";
+        markInvalid(fields.email);
+        return false;
+      }
+      errors.email.textContent = "";
+      markValid(fields.email);
+      return true;
+    }
+
+    function validatePassword() {
+      const value = fields.password.value.trim();
+      if (value === "") {
+        errors.password.textContent = " * Password is required.";
+        markInvalid(fields.password);
+        return false;
+      }
+      errors.password.textContent = "";
+      markValid(fields.password);
+      return true;
+    }
+
+    // 🟢 Real-time validation (hides errors while typing)
+    fields.email.addEventListener("input", validateEmail);
+    fields.password.addEventListener("input", validatePassword);
+
+    // On blur validation (backup check)
+    fields.email.addEventListener("blur", validateEmail);
+    fields.password.addEventListener("blur", validatePassword);
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      // Run all validations separately
+      const isEmailValid = validateEmail();
+      const isPasswordValid = validatePassword();
+
+      // Check all together
+      const valid = isEmailValid && isPasswordValid;
+
+      if (valid) {
+        $.ajax({
+          type: "POST",
+          url: "/auth/sign-in",
+          data: $("#signinForm").serialize(),
+          success: function (response) {
+            // console.log(response);
+            if (response.status == "success") {
+              window.location.replace("/auth/sign-in");
+            }
+            else {
+              alert(response.error)
+              var inputs = document.querySelectorAll('input');
+              inputs.forEach(function (input) {
+                input.value = '';
+              });
+            }
+          },
+          error: function (e) {
+            console.log("ERROR : ", e);
+            $("#submit").prop("disabled", false);
+          }
+        });
+      }
+    });
+
+  });
+</script>
+
+{% endblock %}
