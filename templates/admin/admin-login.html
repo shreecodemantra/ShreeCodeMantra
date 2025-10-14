@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login - MYCITYPEDIA</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        .error-label {
+            color: #dc2626;
+            font-size: 0.75rem;
+            display: block;
+            text-align: left;
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen flex items-center justify-center p-4">
+    <div class="w-full max-w-md">
+        <!-- Login Card -->
+        <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+            <!-- Header Section -->
+            <div class="gradient-bg text-white p-6 text-center">
+                <h1 class="text-2xl font-bold mb-2">Admin Login</h1>
+                <p class="text-blue-100">Access your admin dashboard securely</p>
+            </div>
+            
+            <!-- Login Form -->
+            <div class="p-6">
+                <form id="adminLoginForm" action="" method="get">
+                    <!-- Email Field -->
+                    <div class="mb-4">
+                        <label for="adminEmail" class="block text-sm font-medium text-gray-700 mb-1">
+                            Email Address
+                        </label>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <i class="fas fa-envelope text-gray-400"></i>
+                            </div>
+                            <input 
+                                name="email" 
+                                type="text" 
+                                class="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition" 
+                                id="adminEmail" 
+                                placeholder="admin@example.com"
+                            >
+                        </div>
+                        <small id="adminEmailError" class="error-label mt-1"></small>
+                    </div>
+
+                    <!-- Password Field -->
+                    <div class="mb-6">
+                        <label for="adminPassword" class="block text-sm font-medium text-gray-700 mb-1">
+                            Password
+                        </label>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <i class="fas fa-lock text-gray-400"></i>
+                            </div>
+                            <input 
+                                name="password" 
+                                type="password" 
+                                class="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition" 
+                                id="adminPassword" 
+                                placeholder="Enter your password"
+                            >
+                        </div>
+                        <small id="adminPasswordError" class="error-label mt-1"></small>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <div class="mb-4">
+                        <button 
+                            type="submit" 
+                            id="adminSubmit" 
+                            class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                        >
+                            <i class="fas fa-sign-in-alt mr-2"></i>
+                            Login
+                        </button>
+                    </div>
+
+                    <!-- Alternative Link -->
+                    <div class="text-center">
+                        <p class="text-sm text-gray-600">
+                            Not an admin? 
+                            <a 
+                                href="{{ url_for('auth.sign_in') }}" 
+                                class="text-blue-600 hover:text-blue-800 font-medium transition duration-200"
+                            >
+                                Go to User Login
+                            </a>
+                        </p>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Additional Info (Optional) -->
+        <div class="mt-6 text-center text-sm text-gray-500">
+            <p>© 2023 MYCITYPEDIA. Secure Admin Access</p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const form = document.getElementById("adminLoginForm");
+
+            const fields = {
+                email: document.getElementById("adminEmail"),
+                password: document.getElementById("adminPassword")
+            };
+
+            const errors = {
+                email: document.getElementById("adminEmailError"),
+                password: document.getElementById("adminPasswordError")
+            };
+
+            // Validation helpers
+            function markInvalid(field) {
+                field.classList.add("border-red-500");
+                field.classList.remove("border-green-500");
+            }
+            
+            function markValid(field) {
+                field.classList.remove("border-red-500");
+                field.classList.add("border-green-500");
+            }
+            
+            function resetField(field) {
+                field.classList.remove("border-red-500", "border-green-500");
+            }
+
+            function validateEmail() {
+                const value = fields.email.value.trim();
+                const pattern = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
+                
+                if (value === "") {
+                    errors.email.textContent = " * Email is required.";
+                    markInvalid(fields.email);
+                    return false;
+                } else if (!pattern.test(value)) {
+                    errors.email.textContent = " * Please enter a valid email address.";
+                    markInvalid(fields.email);
+                    return false;
+                }
+                
+                errors.email.textContent = "";
+                markValid(fields.email);
+                return true;
+            }
+
+            function validatePassword() {
+                const value = fields.password.value.trim();
+                
+                if (value === "") {
+                    errors.password.textContent = " * Password is required.";
+                    markInvalid(fields.password);
+                    return false;
+                }
+                
+                errors.password.textContent = "";
+                markValid(fields.password);
+                return true;
+            }
+
+            // Real-time validation
+            fields.email.addEventListener("input", function() {
+                if (fields.email.value.trim() === "") {
+                    resetField(fields.email);
+                    errors.email.textContent = "";
+                } else {
+                    validateEmail();
+                }
+            });
+            
+            fields.password.addEventListener("input", function() {
+                if (fields.password.value.trim() === "") {
+                    resetField(fields.password);
+                    errors.password.textContent = "";
+                } else {
+                    validatePassword();
+                }
+            });
+
+            // Submit handler
+            form.addEventListener("submit", function (e) {
+                e.preventDefault();
+
+                const isEmailValid = validateEmail();
+                const isPasswordValid = validatePassword();
+
+                if (isEmailValid && isPasswordValid) {
+                    // Disable submit button and show loading state
+                    const submitBtn = document.getElementById("adminSubmit");
+                    submitBtn.disabled = true;
+                    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Logging in...';
+                    
+                    $.ajax({
+                        type: "POST",
+                        url: "/admin/login",
+                        data: $("#adminLoginForm").serialize(),
+                        success: function (response) {
+                            if (response.status === "success") {
+                                // Show success message before redirect
+                                submitBtn.innerHTML = '<i class="fas fa-check mr-2"></i> Login Successful!';
+                                submitBtn.classList.remove("bg-blue-600", "hover:bg-blue-700");
+                                submitBtn.classList.add("bg-green-600");
+                                
+                                // Redirect to admin dashboard after a brief delay
+                                setTimeout(function() {
+                                    window.location.replace("/admin/dashboard");
+                                }, 1000);
+                            } else {
+                                // Reset button state
+                                submitBtn.disabled = false;
+                                submitBtn.innerHTML = '<i class="fas fa-sign-in-alt mr-2"></i> Login';
+                                
+                                // Show error message
+                                alert(response.error || "Login failed. Please try again.");
+                                
+                                // Reset form validation states
+                                Object.values(fields).forEach(field => resetField(field));
+                            }
+                        },
+                        error: function (xhr, status, error) {
+                            console.error("Login error:", error);
+                            
+                            // Reset button state
+                            submitBtn.disabled = false;
+                            submitBtn.innerHTML = '<i class="fas fa-sign-in-alt mr-2"></i> Login';
+                            
+                            // Show error message
+                            alert("An error occurred during login. Please try again.");
+                        }
+                    });
+                }
+            });
+            
+            // Add focus effects
+            Object.values(fields).forEach(field => {
+                field.addEventListener('focus', function() {
+                    this.parentElement.classList.add('ring-2', 'ring-blue-200');
+                });
+                
+                field.addEventListener('blur', function() {
+                    this.parentElement.classList.remove('ring-2', 'ring-blue-200');
+                });
+            });
+        });
+    </script>
+</body>
+</html>
