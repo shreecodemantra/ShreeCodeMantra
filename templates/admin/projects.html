@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projects - Shree Code Mantra</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+        .sidebar-scrollbar::-webkit-scrollbar {
+            width: 5px;
+        }
+        .sidebar-scrollbar::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        .sidebar-scrollbar::-webkit-scrollbar-thumb {
+            background: #c1c1c1;
+            border-radius: 5px;
+        }
+        .sidebar-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #a8a8a8;
+        }
+        .project-card {
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        }
+        .project-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <div class="flex h-screen">
+        <!-- Sidebar Menu -->
+        <aside class="hidden lg:flex lg:flex-col lg:w-64 bg-white shadow-md">
+            <div class="flex items-center justify-center h-16 bg-blue-600">
+                <a href="{{ url_for('admin.dashboard') }}" class="text-white text-xl font-bold">Shree Code Mantra</a>
+            </div>
+            <div class="flex flex-col flex-1 overflow-y-auto sidebar-scrollbar">
+                <div class="flex items-center justify-center flex-shrink-0 px-4 py-8">
+                    <img class="w-16 h-16 rounded-full object-cover" src="{{ url_for('static', filename='admin/images/reviewer-4.png') }}" alt="Admin">
+                </div>
+                <div class="text-center mb-6">
+                    <h4 class="text-lg font-semibold text-gray-700">ADMIN</h4>
+                </div>
+                <nav class="flex-1 px-4 py-4 bg-white">
+                    <ul class="space-y-2">
+                        <li>
+                            <a href="{{ url_for('admin.dashboard') }}" class="flex items-center px-4 py-2 text-gray-700 rounded-lg hover:bg-blue-100">
+                                <i class="fas fa-tachometer-alt mr-3"></i>
+                                Dashboard
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ url_for('admin.add_projects') }}" class="flex items-center px-4 py-2 text-gray-700 rounded-lg hover:bg-blue-100">
+                                <i class="fas fa-plus-circle mr-3"></i>
+                                Add Projects
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ url_for('admin.view_projects') }}" class="flex items-center px-4 py-2 text-white bg-blue-600 rounded-lg">
+                                <i class="fas fa-list mr-3"></i>
+                                View Projects
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ url_for('admin.view_categories') }}" class="flex items-center px-4 py-2 text-gray-700 rounded-lg hover:bg-blue-100">
+                                <i class="fas fa-tags mr-3"></i>
+                                View Categories
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" id="logoutBtn" class="flex items-center px-4 py-2 text-gray-700 rounded-lg hover:bg-blue-100">
+                                <i class="fas fa-sign-out-alt mr-3"></i>
+                                Logout
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <div class="flex flex-col flex-1 overflow-hidden">
+            <!-- Top Header -->
+            <header class="flex items-center justify-between px-6 py-4 bg-white shadow">
+                <div class="flex items-center">
+                    <button class="lg:hidden text-gray-500 focus:outline-none mr-4" id="mobile-menu-button">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                    <div class="relative">
+                        <input type="text" class="pl-10 pr-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Search projects...">
+                        <div class="absolute left-3 top-2.5 text-gray-400">
+                            <i class="fas fa-search"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex items-center">
+                    <div class="relative mr-4">
+                        <button class="flex items-center text-gray-500 focus:outline-none">
+                            <i class="fas fa-bell text-xl"></i>
+                            <span class="absolute top-0 right-0 block h-2 w-2 rounded-full bg-red-500"></span>
+                        </button>
+                    </div>
+                    <div class="flex items-center">
+                        <img class="w-10 h-10 rounded-full object-cover" src="{{ url_for('static', filename='admin/images/reviewer-4.png') }}" alt="Admin">
+                        <span class="ml-2 text-gray-700 font-medium">Admin</span>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Main Content Area -->
+            <main class="flex-1 overflow-y-auto p-4 md:p-6">
+                <!-- Breadcrumb -->
+                <div class="mb-6">
+                    <nav class="flex" aria-label="Breadcrumb">
+                        <ol class="inline-flex items-center space-x-1 md:space-x-3">
+                            <li class="inline-flex items-center">
+                                <a href="{{ url_for('admin.dashboard') }}" class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-blue-600">
+                                    <i class="fas fa-home mr-2"></i>
+                                    Dashboard
+                                </a>
+                            </li>
+                            <li aria-current="page">
+                                <div class="flex items-center">
+                                    <i class="fas fa-chevron-right text-gray-400 mx-1"></i>
+                                    <span class="ml-1 text-sm font-medium text-gray-500 md:ml-2">Projects</span>
+                                </div>
+                            </li>
+                        </ol>
+                    </nav>
+                </div>
+
+                <!-- Page Header -->
+                <div class="mb-6">
+                    <div class="flex flex-col md:flex-row md:items-center md:justify-between">
+                        <div>
+                            <h1 class="text-2xl font-bold text-gray-800">Projects</h1>
+                            <p class="text-gray-600 mt-1">Manage all your projects in one place</p>
+                        </div>
+                        <div class="mt-4 md:mt-0">
+                            <a href="{{ url_for('admin.add_projects') }}" class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                <i class="fas fa-plus mr-2"></i>
+                                Add New Project
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Projects Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {% for project in projects %}
+                    <div class="project-card bg-white rounded-lg shadow-md overflow-hidden">
+                        <!-- Project Image -->
+                        <div class="h-48 bg-gray-200 relative">
+                            {% if project.files and project.files.main_image %}
+                           <img src="{{ url_for('static', filename=project.files.main_image.replace('uploads/', '').replace('\\', '/')) }}"
+     alt="{{ project.title }}"
+     class="w-full h-full object-cover">
+
+
+                            {% else %}
+                            <div class="w-full h-full flex items-center justify-center bg-gray-100">
+                                <i class="fas fa-image text-gray-400 text-4xl"></i>
+                            </div>
+                            {% endif %}
+                            <div class="absolute top-3 right-3">
+                                <span class="px-2 py-1 bg-blue-600 text-white text-xs rounded-full">
+                                    {{ project.category }}
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- Project Details -->
+                        <div class="p-4">
+                            <h3 class="text-lg font-semibold text-gray-800 mb-2">{{ project.title }}</h3>
+                            <p class="text-gray-600 text-sm mb-3 line-clamp-2">{{ project.description[:100] }}{% if project.description|length > 100 %}...{% endif %}</p>
+                            
+                            <!-- Tech Stack -->
+                            <div class="mb-3">
+                                <div class="flex flex-wrap gap-1">
+                                    {% for tech in project.tech_stack[:3] %}
+                                    <span class="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded">{{ tech }}</span>
+                                    {% endfor %}
+                                    {% if project.tech_stack|length > 3 %}
+                                    <span class="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded">+{{ project.tech_stack|length - 3 }} more</span>
+                                    {% endif %}
+                                </div>
+                            </div>
+
+                            <!-- Project Meta -->
+                            <div class="flex items-center justify-between text-sm text-gray-500 mb-4">
+                                <div class="flex items-center">
+                                    <i class="fas fa-calendar-alt mr-1"></i>
+                                    <span>{{ project.upload_date }}</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <i class="fas fa-dollar-sign mr-1"></i>
+                                    <span>{{ project.price }}</span>
+                                </div>
+                            </div>
+
+                            <!-- Action Buttons -->
+                            <div class="flex space-x-2">
+                                <button onclick="viewProject('{{ project._id }}')" 
+                                        class="flex-1 bg-blue-600 text-white py-2 px-3 rounded text-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                    <i class="fas fa-eye mr-1"></i> View
+                                </button>
+                                <button onclick="editProject('{{ project._id }}')" 
+                                        class="flex-1 bg-green-600 text-white py-2 px-3 rounded text-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500">
+                                    <i class="fas fa-edit mr-1"></i> Edit
+                                </button>
+                                <button onclick="deleteProject('{{ project._id }}')" 
+                                        class="flex-1 bg-red-600 text-white py-2 px-3 rounded text-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500">
+                                    <i class="fas fa-trash mr-1"></i> Delete
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    {% else %}
+                    <div class="col-span-full text-center py-12">
+                        <i class="fas fa-folder-open text-gray-400 text-6xl mb-4"></i>
+                        <h3 class="text-xl font-semibold text-gray-600 mb-2">No Projects Found</h3>
+                        <p class="text-gray-500 mb-4">Get started by creating your first project</p>
+                        <a href="{{ url_for('admin.add_projects') }}" class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                            <i class="fas fa-plus mr-2"></i>
+                            Add New Project
+                        </a>
+                    </div>
+                    {% endfor %}
+                </div>
+
+                <!-- Pagination (if needed) -->
+                {% if projects %}
+                <div class="mt-8 flex justify-center">
+                    <nav class="flex items-center space-x-2">
+                        <button class="px-3 py-1 rounded border border-gray-300 text-gray-500 hover:bg-gray-50">
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        <button class="px-3 py-1 rounded bg-blue-600 text-white">1</button>
+                        <button class="px-3 py-1 rounded border border-gray-300 text-gray-700 hover:bg-gray-50">2</button>
+                        <button class="px-3 py-1 rounded border border-gray-300 text-gray-700 hover:bg-gray-50">3</button>
+                        <button class="px-3 py-1 rounded border border-gray-300 text-gray-500 hover:bg-gray-50">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </nav>
+                </div>
+                {% endif %}
+            </main>
+
+            <!-- Footer -->
+            <footer class="bg-white py-4 px-6 border-t border-gray-200">
+                <div class="text-center text-gray-600 text-sm">
+                    <p>© 2025 Shree Code Mantra. All rights reserved.</p>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <script>
+        // Search functionality
+        document.querySelector('input[type="text"]').addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            const projectCards = document.querySelectorAll('.project-card');
+            
+            projectCards.forEach(card => {
+                const title = card.querySelector('h3').textContent.toLowerCase();
+                const description = card.querySelector('p').textContent.toLowerCase();
+                
+                if (title.includes(searchTerm) || description.includes(searchTerm)) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+
+        // Project actions
+        function viewProject(projectId) {
+            Swal.fire({
+                title: 'Project Details',
+                text: 'View functionality will be implemented soon!',
+                icon: 'info',
+                confirmButtonColor: '#3b82f6'
+            });
+        }
+
+        function editProject(projectId) {
+            Swal.fire({
+                title: 'Edit Project',
+                text: 'Edit functionality will be implemented soon!',
+                icon: 'info',
+                confirmButtonColor: '#3b82f6'
+            });
+        }
+
+        function deleteProject(projectId) {
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#ef4444',
+                cancelButtonColor: '#6b7280',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Here you would make an API call to delete the project
+                    Swal.fire({
+                        title: 'Deleted!',
+                        text: 'Project has been deleted.',
+                        icon: 'success',
+                        confirmButtonColor: '#3b82f6'
+                    });
+                }
+            });
+        }
+
+        // Logout functionality
+        document.getElementById('logoutBtn').addEventListener('click', function(e) {
+            e.preventDefault();
+            fetch("{{ url_for('admin.logout') }}", {
+                method: 'POST'
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    window.location.href = "{{ url_for('admin.admin_login') }}";
+                }
+            });
+        });
+    </script>
+</body>
+</html>

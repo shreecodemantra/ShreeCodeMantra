@@ -8,20 +8,12 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Chart.js for statistics -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <!-- SweetAlert2 -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <style>
-        .img-preview-thumb {
-            background: #fff;
-            border: 1px solid #777;
-            border-radius: 0.25rem;
-            box-shadow: 0.125rem 0.125rem 0.0625rem rgba(0, 0, 0, 0.12);
-            margin-right: 1rem;
-            max-width: 140px;
-            padding: 0.25rem;
-        }
-        
         /* Custom scrollbar for sidebar */
         .sidebar-scrollbar::-webkit-scrollbar {
             width: 5px;
@@ -39,6 +31,23 @@
         .sidebar-scrollbar::-webkit-scrollbar-thumb:hover {
             background: #a8a8a8;
         }
+        
+        .stat-card {
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        
+        .project-item {
+            transition: background-color 0.2s ease-in-out;
+        }
+        
+        .project-item:hover {
+            background-color: #f9fafb;
+        }
     </style>
 </head>
 <body class="bg-gray-100">
@@ -46,7 +55,7 @@
         <!-- Sidebar Menu (Hidden on mobile) -->
         <aside class="hidden lg:flex lg:flex-col lg:w-64 bg-white shadow-md">
             <div class="flex items-center justify-center h-16 bg-blue-600">
-                <a href="/alladdlist" class="text-white text-xl font-bold">Shree Code Mantra</a>
+                <a href="/admin/dashboard" class="text-white text-xl font-bold">Shree Code Mantra</a>
             </div>
             <div class="flex flex-col flex-1 overflow-y-auto sidebar-scrollbar">
                 <div class="flex items-center justify-center flex-shrink-0 px-4 py-8">
@@ -58,19 +67,31 @@
                 <nav class="flex-1 px-4 py-4 bg-white">
                     <ul class="space-y-2">
                         <li>
-                            <a href="/alladdlist" class="flex items-center px-4 py-2 text-gray-700 rounded-lg hover:bg-blue-100">
+                            <a href="/admin/dashboard" class="flex items-center px-4 py-2 text-white bg-blue-600 rounded-lg">
                                 <i class="fas fa-tachometer-alt mr-3"></i>
                                 Dashboard
                             </a>
                         </li>
                         <li>
-                            <a href="/adminhome" class="flex items-center px-4 py-2 text-white bg-blue-600 rounded-lg">
+                            <a href="/admin/add_projects" class="flex items-center px-4 py-2 text-gray-700 rounded-lg hover:bg-blue-100">
                                 <i class="fas fa-plus-circle mr-3"></i>
-                                Add Listings
+                                Add Projects
                             </a>
                         </li>
                         <li>
-                            <a href="#"  id="logoutBtn" class="flex items-center px-4 py-2 text-gray-700 rounded-lg hover:bg-blue-100">
+                            <a href="/admin/projects" class="flex items-center px-4 py-2 text-gray-700 rounded-lg hover:bg-blue-100">
+                                <i class="fas fa-list mr-3"></i>
+                                View Projects
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/admin/categories" class="flex items-center px-4 py-2 text-gray-700 rounded-lg hover:bg-blue-100">
+                                <i class="fas fa-tags mr-3"></i>
+                                Categories
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" id="logoutBtn" class="flex items-center px-4 py-2 text-gray-700 rounded-lg hover:bg-blue-100">
                                 <i class="fas fa-sign-out-alt mr-3"></i>
                                 Logout
                             </a>
@@ -119,7 +140,7 @@
                         </button>
                     </div>
                     <div class="flex items-center justify-center h-16 bg-blue-600">
-                        <a href="/alladdlist" class="text-white text-xl font-bold">Shree Code Mantra</a>
+                        <a href="/admin/dashboard" class="text-white text-xl font-bold">Shree Code Mantra</a>
                     </div>
                     <div class="flex flex-col flex-1 overflow-y-auto sidebar-scrollbar">
                         <div class="flex items-center justify-center flex-shrink-0 px-4 py-8">
@@ -131,19 +152,31 @@
                         <nav class="flex-1 px-4 py-4 bg-white">
                             <ul class="space-y-2">
                                 <li>
-                                    <a href="/alladdlist" class="flex items-center px-4 py-2 text-gray-700 rounded-lg hover:bg-blue-100">
+                                    <a href="/admin/dashboard" class="flex items-center px-4 py-2 text-white bg-blue-600 rounded-lg">
                                         <i class="fas fa-tachometer-alt mr-3"></i>
                                         Dashboard
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="/adminhome" class="flex items-center px-4 py-2 text-white bg-blue-600 rounded-lg">
+                                    <a href="/admin/add_projects" class="flex items-center px-4 py-2 text-gray-700 rounded-lg hover:bg-blue-100">
                                         <i class="fas fa-plus-circle mr-3"></i>
-                                        Add Listings
+                                        Add Projects
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="#" id="logoutBtn" class="flex items-center px-4 py-2 text-gray-700 rounded-lg hover:bg-blue-100">
+                                    <a href="/admin/projects" class="flex items-center px-4 py-2 text-gray-700 rounded-lg hover:bg-blue-100">
+                                        <i class="fas fa-list mr-3"></i>
+                                        View Projects
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/admin/categories" class="flex items-center px-4 py-2 text-gray-700 rounded-lg hover:bg-blue-100">
+                                        <i class="fas fa-tags mr-3"></i>
+                                        Categories
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" id="logoutBtnMobile" class="flex items-center px-4 py-2 text-gray-700 rounded-lg hover:bg-blue-100">
                                         <i class="fas fa-sign-out-alt mr-3"></i>
                                         Logout
                                     </a>
@@ -161,7 +194,7 @@
                     <nav class="flex" aria-label="Breadcrumb">
                         <ol class="inline-flex items-center space-x-1 md:space-x-3">
                             <li class="inline-flex items-center">
-                                <a href="/alladdlist" class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-blue-600">
+                                <a href="/admin/dashboard" class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-blue-600">
                                     <i class="fas fa-home mr-2"></i>
                                     Dashboard
                                 </a>
@@ -169,182 +202,233 @@
                             <li aria-current="page">
                                 <div class="flex items-center">
                                     <i class="fas fa-chevron-right text-gray-400 mx-1"></i>
-                                    <span class="ml-1 text-sm font-medium text-gray-500 md:ml-2">Add Listing</span>
+                                    <span class="ml-1 text-sm font-medium text-gray-500 md:ml-2">Overview</span>
                                 </div>
                             </li>
                         </ol>
                     </nav>
                 </div>
 
-                <!-- Form Container -->
-                <div class="bg-white rounded-lg shadow-md overflow-hidden">
-                    <form id="signUpForm" enctype="multipart/form-data">
-                        <!-- General Information Section -->
-                        <div class="p-6 border-b border-gray-200">
-                            <div class="flex items-center mb-4">
-                                <i class="fas fa-info-circle text-blue-600 mr-2"></i>
-                                <h2 class="text-lg font-semibold text-gray-800">General Information</h2>
+                <!-- Welcome Section -->
+                <div class="mb-8">
+                    <h1 class="text-2xl md:text-3xl font-bold text-gray-800">Welcome back, Admin!</h1>
+                    <p class="text-gray-600 mt-2">Here's what's happening with your projects today.</p>
+                </div>
+
+                <!-- Stats Cards -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                    <!-- Total Projects Card -->
+                    <div class="stat-card bg-white rounded-lg shadow-md p-6">
+                        <div class="flex items-center">
+                            <div class="p-3 rounded-full bg-blue-100 text-blue-600 mr-4">
+                                <i class="fas fa-project-diagram text-xl"></i>
                             </div>
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-1">Business Name</label>
-                                    <input type="text" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" placeholder="Business Title" name="Title" required>
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-1">Category</label>
-                                    <select class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" name="categorySelect" required>
-                                        <option value="Hotels">Hotels</option>
-                                        <option value="Restaurants">Restaurants</option>
-                                        <option value="Shopping">Shopping</option>
-                                        <option value="Beauty">Beauty & spa</option>
-                                        <option value="Hospitals">Hospitals</option>
-                                        <option value="Education">Education</option>
-                                        <option value="Event">Event Organizers</option>
-                                        <option value="Dentists">Dentists</option>
-                                        <option value="Estate_Agent">Estate Agent</option>
-                                        <option value="GYM">GYM</option>
-                                        <option value="Courier_Services">Courier Services</option>
-                                        <option value="Motor_Training_Schools">Motor Training Schools</option>
-                                    </select>
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-1">Contact</label>
-                                    <input type="tel" pattern="[0-9]{10}" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" placeholder="Enter your contact No" name="Contact" required>
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
-                                    <input type="email" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" placeholder="Email Address" name="Email" required>
-                                </div>
-                                <div class="md:col-span-2">
-                                    <label class="block text-sm font-medium text-gray-700 mb-1">Description</label>
-                                    <textarea class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" rows="4" placeholder="Enter your text here" name="Description" required></textarea>
-                                </div>
+                            <div>
+                                <p class="text-sm font-medium text-gray-600">Total Projects</p>
+                                <p class="text-2xl font-bold text-gray-800">{{ total_projects }}</p>
                             </div>
                         </div>
-
-                        <!-- Gallery Section -->
-                        <div class="p-6 border-b border-gray-200">
-                            <div class="flex items-center mb-4">
-                                <i class="fas fa-images text-blue-600 mr-2"></i>
-                                <h2 class="text-lg font-semibold text-gray-800">Gallery</h2>
-                            </div>
-                            <div class="mb-4">
-                                <label for="upload_imgs" class="block text-sm font-medium text-gray-700 mb-2">Select Your Images</label>
-                                <div class="flex items-center justify-center w-full">
-                                    <label class="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100">
-                                        <div class="flex flex-col items-center justify-center pt-5 pb-6">
-                                            <i class="fas fa-cloud-upload-alt text-gray-400 text-3xl mb-2"></i>
-                                            <p class="mb-2 text-sm text-gray-500"><span class="font-semibold">Click to upload</span> or drag and drop</p>
-                                            <p class="text-xs text-gray-500">PNG, JPG, GIF (MAX. 5MB each)</p>
-                                        </div>
-                                        <input id="upload_imgs" type="file" class="hidden" name="upload_imgs[]" multiple />
-                                    </label>
-                                </div>
-                            </div>
-                            <div id="img_preview" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 mt-4 hidden"></div>
+                        <div class="mt-4">
+                            <span class="text-sm text-green-600 font-medium">
+                                <i class="fas fa-arrow-up mr-1"></i> 12%
+                            </span>
+                            <span class="text-xs text-gray-500 ml-2">From last month</span>
                         </div>
+                    </div>
 
-                        <!-- Location/Contacts Section -->
-                        <div class="p-6 border-b border-gray-200">
-                            <div class="flex items-center mb-4">
-                                <i class="fas fa-map-marker-alt text-blue-600 mr-2"></i>
-                                <h2 class="text-lg font-semibold text-gray-800">Location/Contacts</h2>
+                    <!-- Categories Card -->
+                    <div class="stat-card bg-white rounded-lg shadow-md p-6">
+                        <div class="flex items-center">
+                            <div class="p-3 rounded-full bg-green-100 text-green-600 mr-4">
+                                <i class="fas fa-tags text-xl"></i>
                             </div>
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-1">Select Area</label>
-                                    <select class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" name="City" required>
-                                        <option value="panvel">Panvel</option>
-                                        <option value="vashi">Vashi</option>
-                                        <option value="Aroli">Aroli</option>
-                                        <option value="Thane">Thane</option>
-                                    </select>
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-1">Current Address</label>
-                                    <input type="text" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" name="Current_Address" placeholder="ex. 250, Fifth Avenue..." required>
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-1">Contact Person Name</label>
-                                    <input type="text" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" name="State" placeholder="ex. abc" required>
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-1">Zip Code</label>
-                                    <input type="text" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" name="Zip" placeholder="ex. 5858" required>
-                                </div>
+                            <div>
+                                <p class="text-sm font-medium text-gray-600">Categories</p>
+                                <p class="text-2xl font-bold text-gray-800">{{ total_categories }}</p>
                             </div>
                         </div>
+                        <div class="mt-4">
+                            <span class="text-sm text-green-600 font-medium">
+                                <i class="fas fa-arrow-up mr-1"></i> 5%
+                            </span>
+                            <span class="text-xs text-gray-500 ml-2">From last month</span>
+                        </div>
+                    </div>
 
-                        <!-- Business Hours Section -->
-                        <div class="p-6 border-b border-gray-200">
-                            <div class="flex items-center mb-4">
-                                <i class="fas fa-clock text-blue-600 mr-2"></i>
-                                <h2 class="text-lg font-semibold text-gray-800">Opening/Business Hours</h2>
+                    <!-- Active Projects Card -->
+                    <div class="stat-card bg-white rounded-lg shadow-md p-6">
+                        <div class="flex items-center">
+                            <div class="p-3 rounded-full bg-purple-100 text-purple-600 mr-4">
+                                <i class="fas fa-play-circle text-xl"></i>
                             </div>
-                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                                <div class="md:col-span-1">
-                                    <label class="block text-sm font-medium text-gray-700 mb-1">Week Routing</label>
-                                    <div class="mt-2 text-sm text-gray-500">Monday - Friday</div>
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-1">Opening Time</label>
-                                    <select class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" name="openingTimeSelect" required>
-                                        <option value="6.00 am">6.00 am</option>
-                                        <option value="7.00 am">7.00 am</option>
-                                        <option value="8.00 am">8.00 am</option>
-                                        <option value="9.00 am">9.00 am</option>
-                                        <option value="10.00 am">10.00 am</option>
-                                    </select>
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-1">Closing Time</label>
-                                    <select class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" name="closing" required>
-                                        <option value="5.00 pm">5.00 pm</option>
-                                        <option value="6.00 pm">6.00 pm</option>
-                                        <option value="7.00 pm">7.00 pm</option>
-                                        <option value="8.00 pm">8.00 pm</option>
-                                        <option value="9.00 pm">9.00 pm</option>
-                                        <option value="10.00 pm">10.00 pm</option>
-                                    </select>
-                                </div>
+                            <div>
+                                <p class="text-sm font-medium text-gray-600">Active Projects</p>
+                                <p class="text-2xl font-bold text-gray-800">18</p>
                             </div>
                         </div>
+                        <div class="mt-4">
+                            <span class="text-sm text-green-600 font-medium">
+                                <i class="fas fa-arrow-up mr-1"></i> 8%
+                            </span>
+                            <span class="text-xs text-gray-500 ml-2">From last month</span>
+                        </div>
+                    </div>
 
-                        <!-- Social Networks Section -->
-                        <div class="p-6">
-                            <div class="flex items-center mb-4">
-                                <i class="fas fa-share-alt text-blue-600 mr-2"></i>
-                                <h2 class="text-lg font-semibold text-gray-800">Social Networks</h2>
+                    <!-- Revenue Card -->
+                    <div class="stat-card bg-white rounded-lg shadow-md p-6">
+                        <div class="flex items-center">
+                            <div class="p-3 rounded-full bg-yellow-100 text-yellow-600 mr-4">
+                                <i class="fas fa-dollar-sign text-xl"></i>
                             </div>
-                            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-1">Facebook link (Optional)</label>
-                                    <input type="url" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" placeholder="Facebook url" name="Facebook">
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-1">Pinterest (Optional)</label>
-                                    <input type="url" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" placeholder="Pinterest url" name="Pinterest">
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-1">Twitter link (Optional)</label>
-                                    <input type="url" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" placeholder="Twitter url" name="Twitter">
-                                </div>
+                            <div>
+                                <p class="text-sm font-medium text-gray-600">Total Revenue</p>
+                                <p class="text-2xl font-bold text-gray-800">$12,450</p>
                             </div>
-                            <div class="flex flex-col md:flex-row justify-between items-start md:items-center">
-                                <div class="mb-4 md:mb-0">
-                                    <div class="flex items-center">
-                                        <input type="checkbox" class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded" name="remember" id="remember" required>
-                                        <label for="remember" class="ml-2 block text-sm text-gray-700">
-                                            I've read and accept <a href="#" class="text-blue-600 hover:text-blue-500">terms &amp; conditions</a>
-                                        </label>
+                        </div>
+                        <div class="mt-4">
+                            <span class="text-sm text-green-600 font-medium">
+                                <i class="fas fa-arrow-up mr-1"></i> 15%
+                            </span>
+                            <span class="text-xs text-gray-500 ml-2">From last month</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Charts and Recent Projects Section -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+                    <!-- Projects Chart -->
+                    <div class="bg-white rounded-lg shadow-md p-6">
+                        <div class="flex items-center justify-between mb-6">
+                            <h2 class="text-lg font-semibold text-gray-800">Projects Overview</h2>
+                            <div class="flex space-x-2">
+                                <button class="text-xs px-3 py-1 bg-blue-100 text-blue-600 rounded-full">Monthly</button>
+                                <button class="text-xs px-3 py-1 bg-gray-100 text-gray-600 rounded-full">Yearly</button>
+                            </div>
+                        </div>
+                        <div class="h-64">
+                            <canvas id="projectsChart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Category Distribution -->
+                    <div class="bg-white rounded-lg shadow-md p-6">
+                        <h2 class="text-lg font-semibold text-gray-800 mb-6">Category Distribution</h2>
+                        <div class="h-64">
+                            <canvas id="categoryChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Projects and Quick Actions -->
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <!-- Recent Projects -->
+                    <div class="lg:col-span-2 bg-white rounded-lg shadow-md p-6">
+                        <div class="flex items-center justify-between mb-6">
+                            <h2 class="text-lg font-semibold text-gray-800">Recent Projects</h2>
+                            <a href="/admin/projects" class="text-sm text-blue-600 hover:text-blue-800 font-medium">View All</a>
+                        </div>
+                        <div class="space-y-4">
+                            {% if recent_projects %}
+                                {% for project in recent_projects %}
+                                <div class="project-item flex items-center p-4 border border-gray-200 rounded-lg">
+                                    <div class="flex-shrink-0 w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mr-4">
+                                        <i class="fas fa-project-diagram text-blue-600"></i>
+                                    </div>
+                                    <div class="flex-1 min-w-0">
+                                        <h3 class="text-sm font-medium text-gray-800 truncate">{{ project.title }}</h3>
+                                        <p class="text-xs text-gray-500 mt-1">{{ project.category }} • {{ project.upload_date }}</p>
+                                    </div>
+                                    <div class="flex items-center space-x-2">
+                                        <span class="px-2 py-1 bg-green-100 text-green-800 text-xs rounded-full">Active</span>
+                                        <button class="text-gray-400 hover:text-gray-600">
+                                            <i class="fas fa-ellipsis-v"></i>
+                                        </button>
                                     </div>
                                 </div>
-                                <button type="submit" class="px-6 py-2 bg-blue-600 text-white font-medium rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
-                                    Submit Listing
-                                </button>
+                                {% endfor %}
+                            {% else %}
+                                <div class="text-center py-8">
+                                    <i class="fas fa-folder-open text-gray-400 text-4xl mb-3"></i>
+                                    <p class="text-gray-500">No projects yet</p>
+                                    <a href="/admin/add_projects" class="inline-block mt-2 text-blue-600 hover:text-blue-800 font-medium">Create your first project</a>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <!-- Quick Actions -->
+                    <div class="bg-white rounded-lg shadow-md p-6">
+                        <h2 class="text-lg font-semibold text-gray-800 mb-6">Quick Actions</h2>
+                        <div class="space-y-4">
+                            <a href="/admin/add_projects" class="flex items-center p-4 bg-blue-50 rounded-lg hover:bg-blue-100 transition-colors">
+                                <div class="flex-shrink-0 w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center mr-4">
+                                    <i class="fas fa-plus text-white"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-medium text-gray-800">Add New Project</h3>
+                                    <p class="text-sm text-gray-600">Create a new project</p>
+                                </div>
+                            </a>
+                            
+                            <a href="/admin/categories" class="flex items-center p-4 bg-green-50 rounded-lg hover:bg-green-100 transition-colors">
+                                <div class="flex-shrink-0 w-10 h-10 bg-green-600 rounded-lg flex items-center justify-center mr-4">
+                                    <i class="fas fa-tags text-white"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-medium text-gray-800">Manage Categories</h3>
+                                    <p class="text-sm text-gray-600">Add or edit categories</p>
+                                </div>
+                            </a>
+                            
+                            <a href="/admin/projects" class="flex items-center p-4 bg-purple-50 rounded-lg hover:bg-purple-100 transition-colors">
+                                <div class="flex-shrink-0 w-10 h-10 bg-purple-600 rounded-lg flex items-center justify-center mr-4">
+                                    <i class="fas fa-list text-white"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-medium text-gray-800">View All Projects</h3>
+                                    <p class="text-sm text-gray-600">Browse all projects</p>
+                                </div>
+                            </a>
+                            
+                            <div class="flex items-center p-4 bg-yellow-50 rounded-lg">
+                                <div class="flex-shrink-0 w-10 h-10 bg-yellow-600 rounded-lg flex items-center justify-center mr-4">
+                                    <i class="fas fa-chart-line text-white"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-medium text-gray-800">View Analytics</h3>
+                                    <p class="text-sm text-gray-600">Detailed project analytics</p>
+                                </div>
                             </div>
                         </div>
-                    </form>
+                    </div>
+                </div>
+
+                <!-- System Status -->
+                <div class="mt-8 bg-white rounded-lg shadow-md p-6">
+                    <h2 class="text-lg font-semibold text-gray-800 mb-6">System Status</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div class="flex items-center">
+                            <div class="flex-shrink-0 w-3 h-3 bg-green-500 rounded-full mr-3"></div>
+                            <div>
+                                <p class="text-sm font-medium text-gray-800">Database</p>
+                                <p class="text-xs text-gray-500">All systems operational</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="flex-shrink-0 w-3 h-3 bg-green-500 rounded-full mr-3"></div>
+                            <div>
+                                <p class="text-sm font-medium text-gray-800">File Storage</p>
+                                <p class="text-xs text-gray-500">65% of 50GB used</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="flex-shrink-0 w-3 h-3 bg-green-500 rounded-full mr-3"></div>
+                            <div>
+                                <p class="text-sm font-medium text-gray-800">API</p>
+                                <p class="text-xs text-gray-500">Response time: 120ms</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </main>
 
@@ -367,85 +451,105 @@
             document.getElementById('mobile-sidebar').classList.add('hidden');
         });
 
-        // Image preview functionality
-        document.getElementById('upload_imgs').addEventListener('change', function(event) {
-            const previewContainer = document.getElementById('img_preview');
-            previewContainer.innerHTML = '';
-            previewContainer.classList.remove('hidden');
-            
-            const totalFiles = event.target.files.length;
-            
-            if (totalFiles > 0) {
-                const previewTitle = document.createElement('p');
-                previewTitle.className = 'text-sm font-medium text-gray-700 mb-2 col-span-full';
-                previewTitle.textContent = totalFiles + ' Total Images Selected';
-                previewContainer.appendChild(previewTitle);
-                
-                for (let i = 0; i < totalFiles; i++) {
-                    const img = document.createElement('img');
-                    img.src = URL.createObjectURL(event.target.files[i]);
-                    img.className = 'img-preview-thumb w-full h-32 object-cover rounded-md';
-                    previewContainer.appendChild(img);
-                }
-            }
-        });
-
-        // Form submission
-        $(document).ready(function () {
-            $("#signUpForm").submit(function (event) {
-                event.preventDefault();
-                var form = $('#signUpForm')[0];
-                var data = new FormData(form);
-                console.log(data)
-
-                $.ajax({
-                    type: 'POST',
-                    enctype: 'multipart/form-data',
-                    url: "addlistingdata",
-                    data: data,
-                    processData: false,
-                    contentType: false,
-                    cache: false,
-                    timeout: 600000,
-                    success: function (response) {
-                        Swal.fire({
-                            title: 'Your Listing has been saved!',
-                            text: response.message,
-                            icon: 'success',
-                            confirmButtonText: 'Okay'
-                        }).then((result) => {
-                            if (result.isConfirmed) {
-                                window.location.href = '/adminhome';
-                            }
-                        });
+        // Initialize Charts
+        document.addEventListener('DOMContentLoaded', function() {
+            // Projects Chart
+            const projectsCtx = document.getElementById('projectsChart').getContext('2d');
+            const projectsChart = new Chart(projectsCtx, {
+                type: 'line',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                    datasets: [{
+                        label: 'Projects Created',
+                        data: [12, 19, 15, 25, 22, 30],
+                        borderColor: '#3b82f6',
+                        backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                        borderWidth: 2,
+                        fill: true,
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
                     },
-                    error: function (e) {
-                        console.log("ERROR : ", e);
-                        Swal.fire({
-                            title: 'Error!',
-                            text: 'There was an error submitting your listing. Please try again.',
-                            icon: 'error',
-                            confirmButtonText: 'Okay'
-                        });
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: {
+                                drawBorder: false
+                            }
+                        },
+                        x: {
+                            grid: {
+                                display: false
+                            }
+                        }
                     }
-                });
-                return false;
+                }
+            });
+
+            // Category Chart
+            const categoryCtx = document.getElementById('categoryChart').getContext('2d');
+            const categoryChart = new Chart(categoryCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Web Development', 'AI/ML', 'Mobile Apps', 'Data Science', 'Others'],
+                    datasets: [{
+                        data: [35, 25, 20, 15, 5],
+                        backgroundColor: [
+                            '#3b82f6',
+                            '#10b981',
+                            '#8b5cf6',
+                            '#f59e0b',
+                            '#6b7280'
+                        ],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                boxWidth: 12,
+                                padding: 15
+                            }
+                        }
+                    },
+                    cutout: '70%'
+                }
             });
         });
 
-
+        // Logout functionality
         document.querySelector("#logoutBtn").addEventListener("click", function (e) {
             e.preventDefault();
+            logout();
+        });
+
+        document.querySelector("#logoutBtnMobile").addEventListener("click", function (e) {
+            e.preventDefault();
+            logout();
+        });
+
+        function logout() {
             $.ajax({
-                type: "GET",
+                type: "POST",
                 url: "/admin/logout",
                 success: function (response) {
-                if (response.status === "success") {
-                    window.location.href = "/admin/login";
-                }
+                    if (response.status === "success") {
+                        window.location.href = "/admin/login";
+                    }
                 }
             });
-            });
+        }
     </script>
 </body>
 </html>
