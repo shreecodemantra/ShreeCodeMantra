@@ -63,43 +63,53 @@ https://templatemo.com/tm-545-finance-business
     </div>
   </div>
 
-  <header class="">
+  <header>
     <nav class="navbar navbar-expand-lg">
       <div class="container">
-        <a class="navbar-brand" href="index.html">
+        <a class="navbar-brand" href="/">
           <h2>Shree Code Mantra</h2>
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
           aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
+
         <div class="collapse navbar-collapse" id="navbarResponsive">
           <ul class="navbar-nav ml-auto">
-            <li class="nav-item">
-              <a class="nav-link" href="/">Home
-                <span class="sr-only">(current)</span>
+            <li class="nav-item {% if request.path == '/' %}active{% endif %}">
+              <a class="nav-link" href="/">Home</a>
+            </li>
+            <li class="nav-item {% if request.path.startswith('/users/services') %}active{% endif %}">
+              <a class="nav-link" href="/users/services">Our Services</a>
+            </li>
+            <li class="nav-item {% if request.path.startswith('/users/aboutus') %}active{% endif %}">
+              <a class="nav-link" href="/users/aboutus">About Us</a>
+            </li>
+            <li class="nav-item {% if request.path.startswith('/users/contact') %}active{% endif %}">
+              <a class="nav-link" href="/users/contact">Contact Us</a>
+            </li>
+
+            {% if g.user %}
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
+                {{ g.user.name }}
               </a>
+              <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
+                <a class="dropdown-item" href="/auth/logout">Logout</a>
+              </div>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/about">About Us</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/services">Our Services</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/contact">Contact Us</a>
-            </li>
-            <!-- <li class="nav-item">
-                <a class="nav-link" href="/onepage">One Page</a>
-              </li> -->
-            <li class="nav-item active">
+            {% else %}
+            <li class="nav-item {% if request.path.startswith('/auth') %}active{% endif %}">
               <a class="nav-link" href="/auth/sign-in">Sign In</a>
             </li>
+            {% endif %}
           </ul>
         </div>
       </div>
     </nav>
   </header>
+
 
   {% block content %}
 

@@ -270,7 +270,7 @@ def admin_login():
         password = request.form['password']
 
         # Only find user with role = admin
-        admin_user = mongo.db.users.find_one({'email': email, 'role': 'admin'})
+        admin_user = mongo.db.admin.find_one({'email': email, 'role': 'admin'})
 
         if admin_user and check_password_hash(admin_user['password'], password):
             token = create_jwt_token(str(admin_user['_id']), email)

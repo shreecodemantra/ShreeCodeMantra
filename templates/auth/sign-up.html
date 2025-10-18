@@ -60,6 +60,21 @@
                   <button type="submit" id="submit" class="filled-button">Sign Up</button>
                 </fieldset>
               </div>
+
+              <!-- OTP Field (hidden by default) -->
+              <div class="col-lg-12 col-md-12 col-sm-12 mt-3" id="otpSection" style="display: none;">
+                <fieldset>
+                  <input name="otpInput" type="number" class="form-control" id="otpInput" placeholder="Enter OTP">
+                  <small id="otpError" class="error-label"></small>
+                </fieldset>
+              </div>
+
+              <!-- Buttons -->
+              <div class="col-lg-12 text-center mt-3" id="OtpBtnSection" style="display: none;">
+                <fieldset>
+                  <button id="verifyOtpBtn" class="filled-button">Validate OTP</button>
+                </fieldset>
+              </div>
             </div>
           </form>
         </div>
@@ -88,19 +103,25 @@
 <script>
   document.addEventListener("DOMContentLoaded", function () {
     const form = document.getElementById("signupForm");
+    const verifyOtpBtn = document.getElementById("verifyOtpBtn");
+    const otpSection = document.getElementById("otpSection");
+    const OtpBtnSection = document.getElementById("OtpBtnSection");
+    const submit = document.getElementById("submit");
 
     const fields = {
       name: document.getElementById("fullname"),
       email: document.getElementById("emailadd"),
       password: document.getElementById("password"),
-      cpassword: document.getElementById("cpassword")
+      cpassword: document.getElementById("cpassword"),
+      otpInput: document.getElementById("otpInput")
     };
 
     const errors = {
       name: document.getElementById("nameError"),
       email: document.getElementById("emailError"),
       password: document.getElementById("passwordError"),
-      cpassword: document.getElementById("cpasswordError")
+      cpassword: document.getElementById("cpasswordError"),
+      otpInput: document.getElementById("otpError")
     };
 
     // Mark field valid/invalid
@@ -210,36 +231,72 @@
     form.addEventListener("submit", function (e) {
       e.preventDefault();
 
-      // Run all validations separately
       const isNameValid = validateName();
       const isEmailValid = validateEmail();
       const isPasswordValid = validatePassword();
       const isCPasswordValid = validateCPassword();
-
-      // Check all together
       const valid = isNameValid && isEmailValid && isPasswordValid && isCPasswordValid;
 
-      if (valid) {
+      if (!valid) return;
+
+      // disable sign-up button to prevent multiple clicks
+      submit.disabled = true;
+
+      // Step 1: send sign-up + OTP request
+      $.ajax({
+        type: "POST",
+        url: "/auth/sign-up",
+        data: $("#signupForm").serialize(),
+        success: function (response) {
+          if (response.status === "otp_sent") {
+            alert(response.message);
+            otpSection.style.display = "block";
+            OtpBtnSection.style.display = "block";
+            verifyOtpBtn.style.display = "inline-block";
+
+            // disable other fields (user can’t change them)
+            $("#signupForm input").not("#otpInput").prop("disabled", true);
+          } else if (response.status === "fail") {
+            alert(response.error);
+            submit.disabled = false;
+          }
+        },
+        error: function (e) {
+          console.error("ERROR:", e);
+          submit.disabled = false;
+        }
+      });
+    });
+
+    // Step 2: Verify OTP
+    verifyOtpBtn.addEventListener("click", function (e) {
+      e.preventDefault();
+      const otpVal = fields.otpInput.value.trim();
+      console.log(otpVal);
+      if (!otpVal) {
+        document.getElementById("otpError").textContent = " * OTP is required.";
+        return;
+      }
+      else {
+        var formData = $("#signupForm")
+          .find("input, select, textarea") // include all input types
+          .map(function () {
+            return { name: this.name, value: $(this).val() };
+          }).get();
         $.ajax({
           type: "POST",
-          url: "/auth/sign-up",
-          data: $("#signupForm").serialize(),
+          url: "/auth/otpvalidate",
+          data: formData,
           success: function (response) {
-            if (response.status == "success") {
-              alert(response.message)
+            if (response.status === "success") {
+              alert(response.message);
               window.location.replace("/auth/sign-in");
-            }
-            else {
-              alert(response.error)
-              var inputs = document.querySelectorAll('input');
-              inputs.forEach(function (input) {
-                input.value = '';
-              });
+            } else {
+              alert(response.error);
             }
           },
           error: function (e) {
-            console.log("ERROR : ", e);
-            $("#submit").prop("disabled", false);
+            console.error("ERROR:", e);
           }
         });
       }

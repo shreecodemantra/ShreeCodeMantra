@@ -6,10 +6,10 @@ client = MongoClient("mongodb://localhost:27017/")
 db = client["shreecodemanta"]
 
 # Insert admin user
-db.users.insert_one({
-    "name": "Admin User",
-    "email": "admin@example.com",
-    "password": generate_password_hash("admin123"),
+db.admin.insert_one({
+    "name": "Yash Salvi",
+    "email": "yash.salvi1209@gmail.com",
+    "password": generate_password_hash("Yash@1234"),
     "role": "admin"
 })
 
