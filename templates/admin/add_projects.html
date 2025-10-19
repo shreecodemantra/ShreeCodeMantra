@@ -72,7 +72,8 @@
             </div>
             <div class="flex flex-col flex-1 overflow-y-auto sidebar-scrollbar">
                 <div class="flex items-center justify-center flex-shrink-0 px-4 py-8">
-                    <img class="w-16 h-16 rounded-full object-cover" src="{{ url_for('static', filename='admin/images/reviewer-4.png') }}" alt="Admin">
+                    <img class="w-16 h-16 rounded-full object-cover"
+                        src="{{ url_for('static', filename='admin/images/reviewer-4.png') }}" alt="Admin">
                 </div>
                 <div class="text-center mb-6">
                     <h4 class="text-lg font-semibold text-gray-700">ADMIN</h4>
@@ -80,31 +81,43 @@
                 <nav class="flex-1 px-4 py-4 bg-white">
                     <ul class="space-y-2">
                         <li>
-                            <a href="/admin/dashboard" class="flex items-center px-4 py-2 text-gray-700 rounded-lg hover:bg-blue-100">
+                            <a href="/admin/dashboard"
+                                class="flex items-center px-4 py-2 text-gray-700 rounded-lg hover:bg-blue-100">
                                 <i class="fas fa-tachometer-alt mr-3"></i>
                                 Dashboard
                             </a>
                         </li>
                         <li>
-                            <a href="/admin/add_projects" class="flex items-center px-4 py-2 text-white bg-blue-600 rounded-lg">
+                            <a href="/admin/add_projects"
+                                class="flex items-center px-4 py-2 text-white bg-blue-600 rounded-lg">
                                 <i class="fas fa-plus-circle mr-3"></i>
                                 Add Projects
                             </a>
                         </li>
                         <li>
-                            <a href="/admin/projects" class="flex items-center px-4 py-2 text-gray-700 rounded-lg hover:bg-blue-100">
+                            <a href="/admin/projects"
+                                class="flex items-center px-4 py-2 text-gray-700 rounded-lg hover:bg-blue-100">
                                 <i class="fas fa-list mr-3"></i>
                                 View Projects
                             </a>
                         </li>
                         <li>
-                            <a href="/admin/categories" class="flex items-center px-4 py-2 text-gray-700 rounded-lg hover:bg-blue-100">
+                            <a href="/admin/categories"
+                                class="flex items-center px-4 py-2 text-gray-700 rounded-lg hover:bg-blue-100">
                                 <i class="fas fa-tags mr-3"></i>
                                 View Categories
                             </a>
                         </li>
                         <li>
-                            <a href="#" id="logoutBtn" class="flex items-center px-4 py-2 text-gray-700 rounded-lg hover:bg-blue-100">
+                            <a href="/admin/topics"
+                                class="flex items-center px-4 py-2 text-gray-700 rounded-lg hover:bg-blue-100">
+                                <i class="fas fa-folder mr-3"></i>
+                                Manage Topics
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" id="logoutBtn"
+                                class="flex items-center px-4 py-2 text-gray-700 rounded-lg hover:bg-blue-100">
                                 <i class="fas fa-sign-out-alt mr-3"></i>
                                 Logout
                             </a>
@@ -123,7 +136,9 @@
                         <i class="fas fa-bars text-xl"></i>
                     </button>
                     <div class="relative">
-                        <input type="text" class="pl-10 pr-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Search...">
+                        <input type="text"
+                            class="pl-10 pr-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                            placeholder="Search...">
                         <div class="absolute left-3 top-2.5 text-gray-400">
                             <i class="fas fa-search"></i>
                         </div>
@@ -137,7 +152,8 @@
                         </button>
                     </div>
                     <div class="flex items-center">
-                        <img class="w-10 h-10 rounded-full object-cover" src="{{ url_for('static', filename='admin/images/reviewer-4.png') }}" alt="Admin">
+                        <img class="w-10 h-10 rounded-full object-cover"
+                            src="{{ url_for('static', filename='admin/images/reviewer-4.png') }}" alt="Admin">
                         <span class="ml-2 text-gray-700 font-medium">Admin</span>
                     </div>
                 </div>
@@ -148,7 +164,8 @@
                 <div class="fixed inset-0 bg-gray-600 opacity-75"></div>
                 <div class="relative flex-1 flex flex-col max-w-xs w-full bg-white">
                     <div class="absolute top-0 right-0 -mr-12 pt-2">
-                        <button id="close-mobile-menu" class="ml-1 flex items-center justify-center h-10 w-10 rounded-full focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
+                        <button id="close-mobile-menu"
+                            class="ml-1 flex items-center justify-center h-10 w-10 rounded-full focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
                             <i class="fas fa-times text-white text-xl"></i>
                         </button>
                     </div>
@@ -157,7 +174,8 @@
                     </div>
                     <div class="flex flex-col flex-1 overflow-y-auto sidebar-scrollbar">
                         <div class="flex items-center justify-center flex-shrink-0 px-4 py-8">
-                            <img class="w-16 h-16 rounded-full object-cover" src="{{ url_for('static', filename='admin/images/reviewer-4.png') }}" alt="Admin">
+                            <img class="w-16 h-16 rounded-full object-cover"
+                                src="{{ url_for('static', filename='admin/images/reviewer-4.png') }}" alt="Admin">
                         </div>
                         <div class="text-center mb-6">
                             <h4 class="text-lg font-semibold text-gray-700">ADMIN</h4>
@@ -165,31 +183,43 @@
                         <nav class="flex-1 px-4 py-4 bg-white">
                             <ul class="space-y-2">
                                 <li>
-                                    <a href="/admin/dashboard" class="flex items-center px-4 py-2 text-gray-700 rounded-lg hover:bg-blue-100">
+                                    <a href="/admin/dashboard"
+                                        class="flex items-center px-4 py-2 text-gray-700 rounded-lg hover:bg-blue-100">
                                         <i class="fas fa-tachometer-alt mr-3"></i>
                                         Dashboard
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="/admin/add_projects" class="flex items-center px-4 py-2 text-white bg-blue-600 rounded-lg">
+                                    <a href="/admin/add_projects"
+                                        class="flex items-center px-4 py-2 text-white bg-blue-600 rounded-lg">
                                         <i class="fas fa-plus-circle mr-3"></i>
                                         Add Projects
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="/admin/projects" class="flex items-center px-4 py-2 text-gray-700 rounded-lg hover:bg-blue-100">
+                                    <a href="/admin/projects"
+                                        class="flex items-center px-4 py-2 text-gray-700 rounded-lg hover:bg-blue-100">
                                         <i class="fas fa-list mr-3"></i>
                                         View Projects
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="/admin/categories" class="flex items-center px-4 py-2 text-gray-700 rounded-lg hover:bg-blue-100">
+                                    <a href="/admin/categories"
+                                        class="flex items-center px-4 py-2 text-gray-700 rounded-lg hover:bg-blue-100">
                                         <i class="fas fa-tags mr-3"></i>
                                         View Categories
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="#" id="logoutBtnMobile" class="flex items-center px-4 py-2 text-gray-700 rounded-lg hover:bg-blue-100">
+                                    <a href="/admin/topics"
+                                        class="flex items-center px-4 py-2 text-gray-700 rounded-lg hover:bg-blue-100">
+                                        <i class="fas fa-folder mr-3"></i>
+                                        Manage Topics
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" id="logoutBtnMobile"
+                                        class="flex items-center px-4 py-2 text-gray-700 rounded-lg hover:bg-blue-100">
                                         <i class="fas fa-sign-out-alt mr-3"></i>
                                         Logout
                                     </a>
@@ -207,7 +237,8 @@
                     <nav class="flex" aria-label="Breadcrumb">
                         <ol class="inline-flex items-center space-x-1 md:space-x-3">
                             <li class="inline-flex items-center">
-                                <a href="/admin/dashboard" class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-blue-600">
+                                <a href="/admin/dashboard"
+                                    class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-blue-600">
                                     <i class="fas fa-home mr-2"></i>
                                     Dashboard
                                 </a>
@@ -226,8 +257,12 @@
                 <div class="bg-white rounded-lg shadow-md overflow-hidden">
                     <!-- Tab Navigation -->
                     <div class="flex border-b border-gray-300">
-                        <button id="projectTab" class="tab-active py-3 px-6 font-medium rounded-t-lg transition-colors duration-200">Add Project</button>
-                        <button id="categoryTab" class="py-3 px-6 font-medium text-gray-600 rounded-t-lg hover:bg-gray-200 transition-colors duration-200">Add Category</button>
+                        <button id="projectTab"
+                            class="tab-active py-3 px-6 font-medium rounded-t-lg transition-colors duration-200">Add
+                            Project</button>
+                        <button id="categoryTab"
+                            class="py-3 px-6 font-medium text-gray-600 rounded-t-lg hover:bg-gray-200 transition-colors duration-200">Add
+                            Category</button>
                     </div>
 
                     <!-- Add Project Form -->
@@ -241,12 +276,17 @@
                                 </div>
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                     <div>
-                                        <label class="block text-sm font-medium text-gray-700 mb-1">Project Title</label>
-                                        <input type="text" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" placeholder="Project Title" name="title" required>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Project
+                                            Title</label>
+                                        <input type="text"
+                                            class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                                            placeholder="Project Title" name="title" required>
                                     </div>
                                     <div>
                                         <label class="block text-sm font-medium text-gray-700 mb-1">Category</label>
-                                        <select class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" name="category" required>
+                                        <select
+                                            class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                                            name="category" required>
                                             <option value="">Select Category</option>
                                             {% for category in categories %}
                                             <option value="{{ category.name }}">{{ category.name }}</option>
@@ -255,16 +295,23 @@
                                     </div>
                                     <div class="md:col-span-2">
                                         <label class="block text-sm font-medium text-gray-700 mb-1">Description</label>
-                                        <textarea class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" rows="4" placeholder="Project description..." name="description" required></textarea>
+                                        <textarea
+                                            class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                                            rows="4" placeholder="Project description..." name="description"
+                                            required></textarea>
                                     </div>
                                     <div>
                                         <label class="block text-sm font-medium text-gray-700 mb-1">Tech Stack</label>
-                                        <input type="text" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" placeholder="e.g., Flask, MongoDB, HTML, CSS" name="tech_stack" required>
+                                        <input type="text"
+                                            class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                                            placeholder="e.g., Flask, MongoDB, HTML, CSS" name="tech_stack" required>
                                         <p class="text-xs text-gray-500 mt-1">Separate technologies with commas</p>
                                     </div>
                                     <div>
                                         <label class="block text-sm font-medium text-gray-700 mb-1">Price</label>
-                                        <input type="number" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" placeholder="0" name="price" min="0" value="0" required>
+                                        <input type="number"
+                                            class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                                            placeholder="0" name="price" min="0" value="0" required>
                                     </div>
                                 </div>
                             </div>
@@ -279,13 +326,16 @@
                                     <div>
                                         <label class="block text-sm font-medium text-gray-700 mb-1">Main Image</label>
                                         <div class="flex items-center justify-center w-full">
-                                            <label class="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100">
+                                            <label
+                                                class="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100">
                                                 <div class="flex flex-col items-center justify-center pt-5 pb-6">
                                                     <i class="fas fa-cloud-upload-alt text-gray-400 text-3xl mb-2"></i>
-                                                    <p class="mb-2 text-sm text-gray-500"><span class="font-semibold">Click to upload</span></p>
+                                                    <p class="mb-2 text-sm text-gray-500"><span
+                                                            class="font-semibold">Click to upload</span></p>
                                                     <p class="text-xs text-gray-500">PNG, JPG, GIF (MAX. 5MB)</p>
                                                 </div>
-                                                <input type="file" class="hidden" name="main_image" accept="image/*" required />
+                                                <input type="file" class="hidden" name="main_image" accept="image/*"
+                                                    required />
                                             </label>
                                         </div>
                                         <div id="mainImagePreview" class="mt-2 hidden">
@@ -293,30 +343,43 @@
                                         </div>
                                     </div>
                                     <div>
-                                        <label class="block text-sm font-medium text-gray-700 mb-1">Additional Images</label>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Additional
+                                            Images</label>
                                         <div class="flex items-center justify-center w-full">
-                                            <label class="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100">
+                                            <label
+                                                class="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100">
                                                 <div class="flex flex-col items-center justify-center pt-5 pb-6">
                                                     <i class="fas fa-cloud-upload-alt text-gray-400 text-3xl mb-2"></i>
-                                                    <p class="mb-2 text-sm text-gray-500"><span class="font-semibold">Click to upload</span></p>
+                                                    <p class="mb-2 text-sm text-gray-500"><span
+                                                            class="font-semibold">Click to upload</span></p>
                                                     <p class="text-xs text-gray-500">Multiple files allowed</p>
                                                 </div>
-                                                <input type="file" class="hidden" name="images" multiple accept="image/*" />
+                                                <input type="file" class="hidden" name="images" multiple
+                                                    accept="image/*" />
                                             </label>
                                         </div>
-                                        <div id="additionalImagesPreview" class="file-preview-container grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 mt-4"></div>
+                                        <div id="additionalImagesPreview"
+                                            class="file-preview-container grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 mt-4">
+                                        </div>
                                     </div>
                                     <div>
                                         <label class="block text-sm font-medium text-gray-700 mb-1">Report (PDF)</label>
-                                        <input type="file" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" name="report" accept=".pdf" />
+                                        <input type="file"
+                                            class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                                            name="report" accept=".pdf" />
                                     </div>
                                     <div>
                                         <label class="block text-sm font-medium text-gray-700 mb-1">Code (ZIP)</label>
-                                        <input type="file" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" name="code" accept=".zip,.rar,.7z" />
+                                        <input type="file"
+                                            class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                                            name="code" accept=".zip,.rar,.7z" />
                                     </div>
                                     <div class="md:col-span-2">
-                                        <label class="block text-sm font-medium text-gray-700 mb-1">Demo Video URL</label>
-                                        <input type="url" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" placeholder="https://example.com/demo-video" name="demo_video" />
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Demo Video
+                                            URL</label>
+                                        <input type="url"
+                                            class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                                            placeholder="https://example.com/demo-video" name="demo_video" />
                                     </div>
                                 </div>
                             </div>
@@ -326,13 +389,17 @@
                                 <div class="flex flex-col md:flex-row justify-between items-start md:items-center">
                                     <div class="mb-4 md:mb-0">
                                         <div class="flex items-center">
-                                            <input type="checkbox" class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded" name="terms" id="terms" required>
+                                            <input type="checkbox"
+                                                class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                                                name="terms" id="terms" required>
                                             <label for="terms" class="ml-2 block text-sm text-gray-700">
-                                                I've read and accept <a href="#" class="text-blue-600 hover:text-blue-500">terms &amp; conditions</a>
+                                                I've read and accept <a href="#"
+                                                    class="text-blue-600 hover:text-blue-500">terms &amp; conditions</a>
                                             </label>
                                         </div>
                                     </div>
-                                    <button type="submit" class="px-6 py-2 bg-blue-600 text-white font-medium rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                                    <button type="submit"
+                                        class="px-6 py-2 bg-blue-600 text-white font-medium rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
                                         Add Project
                                     </button>
                                 </div>
@@ -350,16 +417,23 @@
                                 </div>
                                 <div class="grid grid-cols-1 gap-6">
                                     <div>
-                                        <label class="block text-sm font-medium text-gray-700 mb-1">Category Name</label>
-                                        <input type="text" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" placeholder="e.g., AI/ML" name="name" required>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Category
+                                            Name</label>
+                                        <input type="text"
+                                            class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                                            placeholder="e.g., AI/ML" name="name" required>
                                     </div>
                                     <div>
                                         <label class="block text-sm font-medium text-gray-700 mb-1">Description</label>
-                                        <textarea class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" rows="4" placeholder="Category description..." name="description" required></textarea>
+                                        <textarea
+                                            class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                                            rows="4" placeholder="Category description..." name="description"
+                                            required></textarea>
                                     </div>
                                 </div>
                                 <div class="mt-6 flex justify-end">
-                                    <button type="submit" class="px-6 py-2 bg-blue-600 text-white font-medium rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                                    <button type="submit"
+                                        class="px-6 py-2 bg-blue-600 text-white font-medium rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
                                         Add Category
                                     </button>
                                 </div>
@@ -389,14 +463,14 @@
         });
 
         // Tab switching functionality
-        document.getElementById('projectTab').addEventListener('click', function() {
+        document.getElementById('projectTab').addEventListener('click', function () {
             document.getElementById('projectTab').classList.add('tab-active');
             document.getElementById('categoryTab').classList.remove('tab-active');
             document.getElementById('projectForm').classList.add('active-form');
             document.getElementById('categoryForm').classList.remove('active-form');
         });
 
-        document.getElementById('categoryTab').addEventListener('click', function() {
+        document.getElementById('categoryTab').addEventListener('click', function () {
             document.getElementById('categoryTab').classList.add('tab-active');
             document.getElementById('projectTab').classList.remove('tab-active');
             document.getElementById('categoryForm').classList.add('active-form');
@@ -404,7 +478,7 @@
         });
 
         // File preview functionality
-        document.querySelector('input[name="main_image"]').addEventListener('change', function(event) {
+        document.querySelector('input[name="main_image"]').addEventListener('change', function (event) {
             const previewContainer = document.getElementById('mainImagePreview');
             if (event.target.files.length > 0) {
                 previewContainer.classList.remove('hidden');
@@ -413,20 +487,20 @@
             }
         });
 
-        document.querySelector('input[name="images"]').addEventListener('change', function(event) {
+        document.querySelector('input[name="images"]').addEventListener('change', function (event) {
             const previewContainer = document.getElementById('additionalImagesPreview');
             previewContainer.innerHTML = '';
-            
+
             const totalFiles = event.target.files.length;
-            
+
             if (totalFiles > 0) {
                 previewContainer.classList.add('active');
-                
+
                 const previewTitle = document.createElement('p');
                 previewTitle.className = 'text-sm font-medium text-gray-700 mb-2 col-span-full';
                 previewTitle.textContent = totalFiles + ' Images Selected';
                 previewContainer.appendChild(previewTitle);
-                
+
                 for (let i = 0; i < totalFiles; i++) {
                     const img = document.createElement('img');
                     img.src = URL.createObjectURL(event.target.files[i]);
@@ -439,97 +513,97 @@
         });
 
         // Form submission handlers
-        document.getElementById('projectFormData').addEventListener('submit', function(e) {
+        document.getElementById('projectFormData').addEventListener('submit', function (e) {
             e.preventDefault();
-            
+
             const formData = new FormData(this);
-            
+
             fetch('/admin/add_project', {
                 method: 'POST',
                 body: formData
             })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Success!',
-                        text: data.message,
-                        confirmButtonColor: '#3b82f6'
-                    });
-                    this.reset();
-                    document.getElementById('mainImagePreview').classList.add('hidden');
-                    document.getElementById('additionalImagesPreview').classList.remove('active');
-                    document.getElementById('additionalImagesPreview').innerHTML = '';
-                } else {
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Success!',
+                            text: data.message,
+                            confirmButtonColor: '#3b82f6'
+                        });
+                        this.reset();
+                        document.getElementById('mainImagePreview').classList.add('hidden');
+                        document.getElementById('additionalImagesPreview').classList.remove('active');
+                        document.getElementById('additionalImagesPreview').innerHTML = '';
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error!',
+                            text: data.message,
+                            confirmButtonColor: '#ef4444'
+                        });
+                    }
+                })
+                .catch(error => {
                     Swal.fire({
                         icon: 'error',
                         title: 'Error!',
-                        text: data.message,
+                        text: 'An error occurred while adding the project',
                         confirmButtonColor: '#ef4444'
                     });
-                }
-            })
-            .catch(error => {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Error!',
-                    text: 'An error occurred while adding the project',
-                    confirmButtonColor: '#ef4444'
                 });
-            });
         });
 
-        document.getElementById('categoryFormData').addEventListener('submit', function(e) {
+        document.getElementById('categoryFormData').addEventListener('submit', function (e) {
             e.preventDefault();
-            
+
             const formData = new FormData(this);
-            
+
             fetch('/admin/add_category', {
                 method: 'POST',
                 body: formData
             })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Success!',
-                        text: data.message,
-                        confirmButtonColor: '#3b82f6'
-                    });
-                    this.reset();
-                    
-                    // Refresh the category dropdown in project form
-                    fetch('/admin/get_categories')
-                    .then(response => response.json())
-                    .then(categories => {
-                        const categorySelect = document.querySelector('select[name="category"]');
-                        categorySelect.innerHTML = '<option value="">Select Category</option>';
-                        categories.forEach(category => {
-                            const option = document.createElement('option');
-                            option.value = category.name;
-                            option.textContent = category.name;
-                            categorySelect.appendChild(option);
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Success!',
+                            text: data.message,
+                            confirmButtonColor: '#3b82f6'
                         });
-                    });
-                } else {
+                        this.reset();
+
+                        // Refresh the category dropdown in project form
+                        fetch('/admin/get_categories')
+                            .then(response => response.json())
+                            .then(categories => {
+                                const categorySelect = document.querySelector('select[name="category"]');
+                                categorySelect.innerHTML = '<option value="">Select Category</option>';
+                                categories.forEach(category => {
+                                    const option = document.createElement('option');
+                                    option.value = category.name;
+                                    option.textContent = category.name;
+                                    categorySelect.appendChild(option);
+                                });
+                            });
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error!',
+                            text: data.message,
+                            confirmButtonColor: '#ef4444'
+                        });
+                    }
+                })
+                .catch(error => {
                     Swal.fire({
                         icon: 'error',
                         title: 'Error!',
-                        text: data.message,
+                        text: 'An error occurred while adding the category',
                         confirmButtonColor: '#ef4444'
                     });
-                }
-            })
-            .catch(error => {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Error!',
-                    text: 'An error occurred while adding the category',
-                    confirmButtonColor: '#ef4444'
                 });
-            });
         });
 
         // Logout functionality
@@ -547,13 +621,14 @@
             fetch('/admin/logout', {
                 method: 'POST'
             })
-            .then(response => response.json())
-            .then(data => {
-                if (data.status === 'success') {
-                    window.location.href = '/admin/login';
-                }
-            });
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        window.location.href = '/admin/login';
+                    }
+                });
         }
     </script>
 </body>
+
 </html>

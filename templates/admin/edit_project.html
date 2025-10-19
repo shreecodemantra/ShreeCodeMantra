@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,27 +12,33 @@
         .file-input-label {
             transition: all 0.3s ease;
         }
+
         .file-input-label:hover {
             transform: translateY(-2px);
         }
+
         .image-preview {
             transition: all 0.3s ease;
         }
+
         .image-preview:hover {
             transform: scale(1.05);
         }
+
         .form-section {
             transition: all 0.3s ease;
         }
     </style>
 </head>
+
 <body class="bg-gradient-to-br from-gray-50 to-blue-50 min-h-screen">
     <!-- Navigation Header -->
     <header class="bg-white shadow-sm border-b border-gray-200 sticky top-0 z-10">
         <div class="container mx-auto px-4 py-3">
             <div class="flex items-center justify-between">
                 <div class="flex items-center space-x-4">
-                    <a href="{{ url_for('admin.view_projects') }}" class="flex items-center text-gray-600 hover:text-blue-600 transition-colors duration-200">
+                    <a href="{{ url_for('admin.view_projects') }}"
+                        class="flex items-center text-gray-600 hover:text-blue-600 transition-colors duration-200">
                         <i class="fas fa-arrow-left mr-2"></i>
                         <span class="hidden sm:inline">Back to Projects</span>
                     </a>
@@ -62,7 +69,8 @@
                     </div>
                     <div class="flex items-center justify-center sm:justify-end space-x-2 text-sm text-gray-500">
                         <i class="fas fa-history"></i>
-                        <span>Last updated: {{ project.updated_date if project.updated_date else project.upload_date }}</span>
+                        <span>Last updated: {{ project.updated_date if project.updated_date else project.upload_date
+                            }}</span>
                     </div>
                 </div>
             </div>
@@ -78,10 +86,12 @@
                 </div>
 
                 <!-- Form Content -->
-                <form id="editProjectForm" action="{{ url_for('admin.update_project', project_id=project._id) }}" method="POST" enctype="multipart/form-data" class="p-6">
+                <form id="editProjectForm" action="{{ url_for('admin.update_project', project_id=project._id) }}"
+                    method="POST" enctype="multipart/form-data" class="p-6">
                     <!-- Basic Information Section -->
                     <div class="form-section mb-10">
-                        <h3 class="text-lg font-semibold text-gray-800 mb-4 pb-2 border-b border-gray-200">Basic Information</h3>
+                        <h3 class="text-lg font-semibold text-gray-800 mb-4 pb-2 border-b border-gray-200">Basic
+                            Information</h3>
                         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                             <!-- Project Title -->
                             <div>
@@ -89,30 +99,28 @@
                                     Project Title <span class="text-red-500">*</span>
                                 </label>
                                 <div class="relative">
-                                    <input type="text" 
-                                           name="title" 
-                                           value="{{ project.title }}" 
-                                           class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
-                                           placeholder="Enter project title"
-                                           required>
+                                    <input type="text" name="title" value="{{ project.title }}"
+                                        class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                                        placeholder="Enter project title" required>
                                     <div class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">
                                         <i class="fas fa-heading"></i>
                                     </div>
                                 </div>
                             </div>
-                            
+
                             <!-- Category -->
                             <div>
                                 <label class="block text-sm font-medium text-gray-700 mb-2">
                                     Category <span class="text-red-500">*</span>
                                 </label>
                                 <div class="relative">
-                                    <select name="category" 
-                                            class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 appearance-none bg-white"
-                                            required>
+                                    <select name="category"
+                                        class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 appearance-none bg-white"
+                                        required>
                                         <option value="">Select Category</option>
                                         {% for category in categories %}
-                                        <option value="{{ category.name }}" {% if project.category == category.name %}selected{% endif %}>
+                                        <option value="{{ category.name }}" {% if project.category==category.name
+                                            %}selected{% endif %}>
                                             {{ category.name }}
                                         </option>
                                         {% endfor %}
@@ -120,60 +128,53 @@
                                     <div class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">
                                         <i class="fas fa-tag"></i>
                                     </div>
-                                    <div class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 pointer-events-none">
+                                    <div
+                                        class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 pointer-events-none">
                                         <i class="fas fa-chevron-down"></i>
                                     </div>
                                 </div>
                             </div>
-                            
+
                             <!-- Description -->
                             <div class="lg:col-span-2">
                                 <label class="block text-sm font-medium text-gray-700 mb-2">
                                     Description <span class="text-red-500">*</span>
                                 </label>
                                 <div class="relative">
-                                    <textarea name="description" 
-                                              rows="5" 
-                                              class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 resize-none"
-                                              placeholder="Describe your project in detail..."
-                                              required>{{ project.description }}</textarea>
+                                    <textarea name="description" rows="5"
+                                        class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 resize-none"
+                                        placeholder="Describe your project in detail..."
+                                        required>{{ project.description }}</textarea>
                                     <div class="absolute left-3 top-3 text-gray-400">
                                         <i class="fas fa-align-left"></i>
                                     </div>
                                 </div>
                             </div>
-                            
+
                             <!-- Price -->
                             <div>
                                 <label class="block text-sm font-medium text-gray-700 mb-2">
                                     Price ($) <span class="text-red-500">*</span>
                                 </label>
                                 <div class="relative">
-                                    <input type="number" 
-                                           name="price" 
-                                           value="{{ project.price }}" 
-                                           step="0.01" 
-                                           min="0"
-                                           class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
-                                           placeholder="0.00"
-                                           required>
+                                    <input type="number" name="price" value="{{ project.price }}" step="0.01" min="0"
+                                        class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                                        placeholder="0.00" required>
                                     <div class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">
                                         <i class="fas fa-dollar-sign"></i>
                                     </div>
                                 </div>
                             </div>
-                            
+
                             <!-- Tech Stack -->
                             <div>
                                 <label class="block text-sm font-medium text-gray-700 mb-2">
                                     Tech Stack
                                 </label>
                                 <div class="relative">
-                                    <input type="text" 
-                                           name="tech_stack" 
-                                           value="{{ project.tech_stack | join(', ') }}" 
-                                           class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
-                                           placeholder="Python, Flask, MongoDB, Tailwind CSS">
+                                    <input type="text" name="tech_stack" value="{{ project.tech_stack | join(', ') }}"
+                                        class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                                        placeholder="Python, Flask, MongoDB, Tailwind CSS">
                                     <div class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">
                                         <i class="fas fa-code"></i>
                                     </div>
@@ -185,35 +186,37 @@
 
                     <!-- Media Section -->
                     <div class="form-section mb-10">
-                        <h3 class="text-lg font-semibold text-gray-800 mb-4 pb-2 border-b border-gray-200">Media & Files</h3>
+                        <h3 class="text-lg font-semibold text-gray-800 mb-4 pb-2 border-b border-gray-200">Media & Files
+                        </h3>
                         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                             <!-- Main Image -->
                             <div class="lg:col-span-2">
                                 <label class="block text-sm font-medium text-gray-700 mb-3">Main Image</label>
-                                <div class="border-2 border-dashed border-gray-300 rounded-2xl p-6 text-center hover:border-blue-400 transition-colors duration-200 file-input-label bg-gray-50">
-                                    <input type="file" 
-                                           name="main_image" 
-                                           id="main_image"
-                                           class="hidden"
-                                           accept="image/*">
+                                <div
+                                    class="border-2 border-dashed border-gray-300 rounded-2xl p-6 text-center hover:border-blue-400 transition-colors duration-200 file-input-label bg-gray-50">
+                                    <input type="file" name="main_image" id="main_image" class="hidden"
+                                        accept="image/*">
                                     <label for="main_image" class="cursor-pointer block">
                                         <i class="fas fa-cloud-upload-alt text-3xl text-blue-500 mb-3"></i>
                                         <p class="text-gray-600 font-medium">Click to upload main image</p>
                                         <p class="text-gray-500 text-sm mt-1">PNG, JPG, JPEG up to 5MB</p>
                                     </label>
                                 </div>
-                                
+
                                 <!-- Current Main Image Preview -->
                                 {% if project.files and project.files.main_image %}
                                 <div class="mt-4">
                                     <p class="text-sm font-medium text-gray-700 mb-2">Current Image:</p>
                                     <div class="flex flex-wrap gap-4">
                                         <div class="relative group">
-                                            <img src="{{ url_for('static', filename=project.files.main_image.replace('uploads/', '').replace('\\', '/')) }}" 
-                                                 alt="Current main image" 
-                                                 class="w-40 h-40 object-cover rounded-xl shadow-md image-preview border border-gray-200">
-                                            <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 rounded-xl transition-all duration-200 flex items-center justify-center">
-                                                <span class="text-white opacity-0 group-hover:opacity-100 transition-opacity duration-200 text-sm font-medium">Main Image</span>
+                                            <img src="{{ url_for('static', filename=project.files.main_image.replace('uploads/', '').replace('\\', '/')) }}"
+                                                alt="Current main image"
+                                                class="w-40 h-40 object-cover rounded-xl shadow-md image-preview border border-gray-200">
+                                            <div
+                                                class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 rounded-xl transition-all duration-200 flex items-center justify-center">
+                                                <span
+                                                    class="text-white opacity-0 group-hover:opacity-100 transition-opacity duration-200 text-sm font-medium">Main
+                                                    Image</span>
                                             </div>
                                         </div>
                                     </div>
@@ -224,20 +227,18 @@
                             <!-- Additional Images -->
                             <div class="lg:col-span-2">
                                 <label class="block text-sm font-medium text-gray-700 mb-3">Additional Images</label>
-                                <div class="border-2 border-dashed border-gray-300 rounded-2xl p-6 text-center hover:border-blue-400 transition-colors duration-200 file-input-label bg-gray-50">
-                                    <input type="file" 
-                                           name="images" 
-                                           id="images"
-                                           class="hidden"
-                                           multiple
-                                           accept="image/*">
+                                <div
+                                    class="border-2 border-dashed border-gray-300 rounded-2xl p-6 text-center hover:border-blue-400 transition-colors duration-200 file-input-label bg-gray-50">
+                                    <input type="file" name="images" id="images" class="hidden" multiple
+                                        accept="image/*">
                                     <label for="images" class="cursor-pointer block">
                                         <i class="fas fa-images text-3xl text-green-500 mb-3"></i>
                                         <p class="text-gray-600 font-medium">Click to upload additional images</p>
-                                        <p class="text-gray-500 text-sm mt-1">Select multiple images (PNG, JPG, JPEG)</p>
+                                        <p class="text-gray-500 text-sm mt-1">Select multiple images (PNG, JPG, JPEG)
+                                        </p>
                                     </label>
                                 </div>
-                                
+
                                 <!-- Current Additional Images Preview -->
                                 {% if project.files and project.files.images %}
                                 <div class="mt-4">
@@ -245,15 +246,17 @@
                                     <div class="flex flex-wrap gap-4">
                                         {% for image in project.files.images %}
                                         <div class="relative group">
-    <img src="{{ url_for('static', filename=image.replace('uploads/', '').replace('\\', '/')) }}" 
-         alt="Additional image {{ loop.index }}" 
-         class="w-32 h-32 object-cover rounded-lg shadow-md image-preview border border-gray-200">
-    <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 rounded-lg transition-all duration-200 flex items-center justify-center">
-        <span class="text-white opacity-0 group-hover:opacity-100 transition-opacity duration-200 text-xs">
-            Image {{ loop.index }}
-        </span>
-    </div>
-</div>
+                                            <img src="{{ url_for('static', filename=image.replace('uploads/', '').replace('\\', '/')) }}"
+                                                alt="Additional image {{ loop.index }}"
+                                                class="w-32 h-32 object-cover rounded-lg shadow-md image-preview border border-gray-200">
+                                            <div
+                                                class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 rounded-lg transition-all duration-200 flex items-center justify-center">
+                                                <span
+                                                    class="text-white opacity-0 group-hover:opacity-100 transition-opacity duration-200 text-xs">
+                                                    Image {{ loop.index }}
+                                                </span>
+                                            </div>
+                                        </div>
 
                                         {% endfor %}
                                     </div>
@@ -264,26 +267,26 @@
                             <!-- Report File -->
                             <div>
                                 <label class="block text-sm font-medium text-gray-700 mb-3">Report File</label>
-                                <div class="border-2 border-dashed border-gray-300 rounded-2xl p-6 text-center hover:border-blue-400 transition-colors duration-200 file-input-label bg-gray-50">
-                                    <input type="file" 
-                                           name="report" 
-                                           id="report"
-                                           class="hidden"
-                                           accept=".pdf,.doc,.docx">
+                                <div
+                                    class="border-2 border-dashed border-gray-300 rounded-2xl p-6 text-center hover:border-blue-400 transition-colors duration-200 file-input-label bg-gray-50">
+                                    <input type="file" name="report" id="report" class="hidden"
+                                        accept=".pdf,.doc,.docx">
                                     <label for="report" class="cursor-pointer block">
                                         <i class="fas fa-file-pdf text-3xl text-red-500 mb-3"></i>
                                         <p class="text-gray-600 font-medium">Upload Report</p>
                                         <p class="text-gray-500 text-sm mt-1">PDF, DOC, DOCX up to 10MB</p>
                                     </label>
                                 </div>
-                                
+
                                 <!-- Current Report File -->
                                 {% if project.files and project.files.report %}
                                 <div class="mt-4">
                                     <p class="text-sm font-medium text-gray-700 mb-1">Current Report:</p>
-                                    <div class="flex items-center space-x-2 p-3 bg-blue-50 rounded-lg border border-blue-200">
+                                    <div
+                                        class="flex items-center space-x-2 p-3 bg-blue-50 rounded-lg border border-blue-200">
                                         <i class="fas fa-file-pdf text-red-500"></i>
-                                        <span class="text-sm text-gray-700 truncate">{{ project.files.report.split('/')[-1] }}</span>
+                                        <span class="text-sm text-gray-700 truncate">{{
+                                            project.files.report.split('/')[-1] }}</span>
                                     </div>
                                 </div>
                                 {% endif %}
@@ -292,26 +295,25 @@
                             <!-- Code Files -->
                             <div>
                                 <label class="block text-sm font-medium text-gray-700 mb-3">Code Files (ZIP)</label>
-                                <div class="border-2 border-dashed border-gray-300 rounded-2xl p-6 text-center hover:border-blue-400 transition-colors duration-200 file-input-label bg-gray-50">
-                                    <input type="file" 
-                                           name="code" 
-                                           id="code"
-                                           class="hidden"
-                                           accept=".zip,.rar,.7z">
+                                <div
+                                    class="border-2 border-dashed border-gray-300 rounded-2xl p-6 text-center hover:border-blue-400 transition-colors duration-200 file-input-label bg-gray-50">
+                                    <input type="file" name="code" id="code" class="hidden" accept=".zip,.rar,.7z">
                                     <label for="code" class="cursor-pointer block">
                                         <i class="fas fa-file-archive text-3xl text-purple-500 mb-3"></i>
                                         <p class="text-gray-600 font-medium">Upload Code Files</p>
                                         <p class="text-gray-500 text-sm mt-1">ZIP, RAR, 7Z up to 50MB</p>
                                     </label>
                                 </div>
-                                
+
                                 <!-- Current Code File -->
                                 {% if project.files and project.files.code %}
                                 <div class="mt-4">
                                     <p class="text-sm font-medium text-gray-700 mb-1">Current Code:</p>
-                                    <div class="flex items-center space-x-2 p-3 bg-purple-50 rounded-lg border border-purple-200">
+                                    <div
+                                        class="flex items-center space-x-2 p-3 bg-purple-50 rounded-lg border border-purple-200">
                                         <i class="fas fa-file-archive text-purple-500"></i>
-                                        <span class="text-sm text-gray-700 truncate">{{ project.files.code.split('/')[-1] }}</span>
+                                        <span class="text-sm text-gray-700 truncate">{{
+                                            project.files.code.split('/')[-1] }}</span>
                                     </div>
                                 </div>
                                 {% endif %}
@@ -321,11 +323,10 @@
                             <div class="lg:col-span-2">
                                 <label class="block text-sm font-medium text-gray-700 mb-2">Demo Video URL</label>
                                 <div class="relative">
-                                    <input type="url" 
-                                           name="demo_video" 
-                                           value="{{ project.files.demo_video if project.files and project.files.demo_video else '' }}"
-                                           class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
-                                           placeholder="https://www.youtube.com/watch?v=...">
+                                    <input type="url" name="demo_video"
+                                        value="{{ project.files.demo_video if project.files and project.files.demo_video else '' }}"
+                                        class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                                        placeholder="https://www.youtube.com/watch?v=...">
                                     <div class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">
                                         <i class="fas fa-video"></i>
                                     </div>
@@ -336,19 +337,20 @@
                     </div>
 
                     <!-- Form Actions -->
-                    <div class="flex flex-col sm:flex-row justify-between items-center space-y-4 sm:space-y-0 pt-6 border-t border-gray-200">
+                    <div
+                        class="flex flex-col sm:flex-row justify-between items-center space-y-4 sm:space-y-0 pt-6 border-t border-gray-200">
                         <div class="text-sm text-gray-500">
                             <i class="fas fa-info-circle mr-1"></i>
                             Fields marked with <span class="text-red-500">*</span> are required
                         </div>
                         <div class="flex space-x-3">
-                            <a href="{{ url_for('admin.view_projects') }}" 
-                               class="px-6 py-3 border border-gray-300 text-gray-700 font-medium rounded-xl hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-500 transition-all duration-200 flex items-center">
+                            <a href="{{ url_for('admin.view_projects') }}"
+                                class="px-6 py-3 border border-gray-300 text-gray-700 font-medium rounded-xl hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-500 transition-all duration-200 flex items-center">
                                 <i class="fas fa-times mr-2"></i>
                                 Cancel
                             </a>
-                            <button type="submit" 
-                                    class="px-8 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-medium rounded-xl hover:from-blue-700 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-md transition-all duration-200 transform hover:-translate-y-0.5 flex items-center">
+                            <button type="submit"
+                                class="px-8 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-medium rounded-xl hover:from-blue-700 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-md transition-all duration-200 transform hover:-translate-y-0.5 flex items-center">
                                 <i class="fas fa-save mr-2"></i>
                                 Update Project
                             </button>
@@ -376,18 +378,18 @@
     </div>
 
     <script>
-        document.getElementById('editProjectForm').addEventListener('submit', async function(e) {
+        document.getElementById('editProjectForm').addEventListener('submit', async function (e) {
             e.preventDefault();
-            
+
             const formData = new FormData(this);
             const submitButton = this.querySelector('button[type="submit"]');
             const originalButtonText = submitButton.innerHTML;
-            
+
             try {
                 // Show loading state
                 submitButton.disabled = true;
                 submitButton.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Updating...';
-                
+
                 // Show loading alert
                 Swal.fire({
                     title: 'Updating Project',
@@ -403,9 +405,9 @@
                     method: 'POST',
                     body: formData
                 });
-                
+
                 const data = await response.json();
-                
+
                 if (data.success) {
                     Swal.fire({
                         title: 'Success!',
@@ -450,17 +452,17 @@
         });
 
         // File input preview enhancement
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             // Add file name display for file inputs
             const fileInputs = document.querySelectorAll('input[type="file"]');
             fileInputs.forEach(input => {
-                input.addEventListener('change', function() {
+                input.addEventListener('change', function () {
                     const fileName = this.files[0] ? this.files[0].name : 'No file chosen';
                     const label = this.parentElement.querySelector('label');
                     if (label) {
                         const originalHTML = label.innerHTML;
                         label.innerHTML = `<i class="fas fa-check text-green-500 mr-2"></i>${fileName}`;
-                        
+
                         // Reset after 3 seconds
                         setTimeout(() => {
                             label.innerHTML = originalHTML;
@@ -468,14 +470,14 @@
                     }
                 });
             });
-            
+
             // Add image preview for new main image uploads
             const mainImageInput = document.getElementById('main_image');
             if (mainImageInput) {
-                mainImageInput.addEventListener('change', function(e) {
+                mainImageInput.addEventListener('change', function (e) {
                     if (this.files && this.files[0]) {
                         const reader = new FileReader();
-                        reader.onload = function(e) {
+                        reader.onload = function (e) {
                             // Create new preview
                             const previewContainer = document.createElement('div');
                             previewContainer.className = 'mt-4';
@@ -492,7 +494,7 @@
                                     </div>
                                 </div>
                             `;
-                            
+
                             // Insert after the file input container
                             const fileInputContainer = mainImageInput.closest('.lg\\:col-span-2');
                             const existingPreview = fileInputContainer.querySelector('.mt-4:last-child');
@@ -508,4 +510,5 @@
         });
     </script>
 </body>
+
 </html>

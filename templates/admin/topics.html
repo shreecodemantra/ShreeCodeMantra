@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shree Code Mantra - Topics Management</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        .sidebar-scrollbar::-webkit-scrollbar {
+            width: 5px;
+        }
+
+        .sidebar-scrollbar::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        .sidebar-scrollbar::-webkit-scrollbar-thumb {
+            background: #c1c1c1;
+            border-radius: 5px;
+        }
+
+        .sidebar-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #a8a8a8;
+        }
+
+        .tab-active {
+            background-color: #3b82f6;
+            color: white;
+        }
+
+        .form-container {
+            display: none;
+        }
+
+        .active-form {
+            display: block;
+        }
+
+        .table-container {
+            max-height: 600px;
+            overflow-y: auto;
+        }
+
+        .pagination-active {
+            background-color: #3b82f6;
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .mobile-hidden {
+                display: none;
+            }
+            
+            .mobile-stack {
+                grid-template-columns: 1fr !important;
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-gray-100">
+    <div class="flex h-screen">
+        <!-- Sidebar Menu -->
+        <aside class="hidden lg:flex lg:flex-col lg:w-64 bg-white shadow-md">
+            <div class="flex items-center justify-center h-16 bg-blue-600">
+                <a href="/admin/dashboard" class="text-white text-xl font-bold">Shree Code Mantra</a>
+            </div>
+            <div class="flex flex-col flex-1 overflow-y-auto sidebar-scrollbar">
+                <div class="flex items-center justify-center flex-shrink-0 px-4 py-8">
+                    <img class="w-16 h-16 rounded-full object-cover" src="{{ url_for('static', filename='admin/images/reviewer-4.png') }}" alt="Admin">
+                </div>
+                <div class="text-center mb-6">
+                    <h4 class="text-lg font-semibold text-gray-700">ADMIN</h4>
+                </div>
+                <nav class="flex-1 px-4 py-4 bg-white">
+                    <ul class="space-y-2">
+                        <li>
+                            <a href="/admin/dashboard" class="flex items-center px-4 py-2 text-gray-700 rounded-lg hover:bg-blue-100">
+                                <i class="fas fa-tachometer-alt mr-3"></i>
+                                Dashboard
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/admin/add_projects" class="flex items-center px-4 py-2 text-gray-700 rounded-lg hover:bg-blue-100">
+                                <i class="fas fa-plus-circle mr-3"></i>
+                                Add Projects
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/admin/projects" class="flex items-center px-4 py-2 text-gray-700 rounded-lg hover:bg-blue-100">
+                                <i class="fas fa-list mr-3"></i>
+                                View Projects
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/admin/categories" class="flex items-center px-4 py-2 text-gray-700 rounded-lg hover:bg-blue-100">
+                                <i class="fas fa-tags mr-3"></i>
+                                View Categories
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/admin/topics" class="flex items-center px-4 py-2 text-white bg-blue-600 rounded-lg">
+                                <i class="fas fa-folder mr-3"></i>
+                                Manage Topics
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" id="logoutBtn" class="flex items-center px-4 py-2 text-gray-700 rounded-lg hover:bg-blue-100">
+                                <i class="fas fa-sign-out-alt mr-3"></i>
+                                Logout
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <div class="flex flex-col flex-1 overflow-hidden">
+            <!-- Top Header -->
+            <header class="flex items-center justify-between px-4 sm:px-6 py-4 bg-white shadow">
+                <div class="flex items-center">
+                    <button class="lg:hidden text-gray-500 focus:outline-none mr-4" id="mobile-menu-button">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                    <div class="relative">
+                        <input type="text" id="searchInput" class="w-40 sm:w-64 pl-10 pr-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Search topics...">
+                        <div class="absolute left-3 top-2.5 text-gray-400">
+                            <i class="fas fa-search"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex items-center">
+                    <div class="relative mr-4">
+                        <button class="flex items-center text-gray-500 focus:outline-none">
+                            <i class="fas fa-bell text-xl"></i>
+                            <span class="absolute top-0 right-0 block h-2 w-2 rounded-full bg-red-500"></span>
+                        </button>
+                    </div>
+                    <div class="flex items-center">
+                        <img class="w-8 h-8 sm:w-10 sm:h-10 rounded-full object-cover" src="{{ url_for('static', filename='admin/images/reviewer-4.png') }}" alt="Admin">
+                        <span class="ml-2 text-gray-700 font-medium text-sm sm:text-base">Admin</span>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Mobile Sidebar -->
+            <div id="mobile-sidebar" class="fixed inset-0 flex z-40 lg:hidden hidden">
+                <div class="fixed inset-0 bg-gray-600 opacity-75"></div>
+                <div class="relative flex-1 flex flex-col max-w-xs w-full bg-white">
+                    <div class="absolute top-0 right-0 -mr-12 pt-2">
+                        <button id="close-mobile-menu" class="ml-1 flex items-center justify-center h-10 w-10 rounded-full focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
+                            <i class="fas fa-times text-white text-xl"></i>
+                        </button>
+                    </div>
+                    <div class="flex items-center justify-center h-16 bg-blue-600">
+                        <a href="/admin/dashboard" class="text-white text-xl font-bold">Shree Code Mantra</a>
+                    </div>
+                    <div class="flex flex-col flex-1 overflow-y-auto sidebar-scrollbar">
+                        <div class="flex items-center justify-center flex-shrink-0 px-4 py-8">
+                            <img class="w-16 h-16 rounded-full object-cover" src="{{ url_for('static', filename='admin/images/reviewer-4.png') }}" alt="Admin">
+                        </div>
+                        <div class="text-center mb-6">
+                            <h4 class="text-lg font-semibold text-gray-700">ADMIN</h4>
+                        </div>
+                        <nav class="flex-1 px-4 py-4 bg-white">
+                            <ul class="space-y-2">
+                                <li>
+                                    <a href="/admin/dashboard" class="flex items-center px-4 py-2 text-gray-700 rounded-lg hover:bg-blue-100">
+                                        <i class="fas fa-tachometer-alt mr-3"></i>
+                                        Dashboard
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/admin/add_projects" class="flex items-center px-4 py-2 text-gray-700 rounded-lg hover:bg-blue-100">
+                                        <i class="fas fa-plus-circle mr-3"></i>
+                                        Add Projects
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/admin/projects" class="flex items-center px-4 py-2 text-gray-700 rounded-lg hover:bg-blue-100">
+                                        <i class="fas fa-list mr-3"></i>
+                                        View Projects
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/admin/categories" class="flex items-center px-4 py-2 text-gray-700 rounded-lg hover:bg-blue-100">
+                                        <i class="fas fa-tags mr-3"></i>
+                                        View Categories
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/admin/topics" class="flex items-center px-4 py-2 text-white bg-blue-600 rounded-lg">
+                                        <i class="fas fa-folder mr-3"></i>
+                                        Manage Topics
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" id="logoutBtnMobile" class="flex items-center px-4 py-2 text-gray-700 rounded-lg hover:bg-blue-100">
+                                        <i class="fas fa-sign-out-alt mr-3"></i>
+                                        Logout
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Content Area -->
+            <main class="flex-1 overflow-y-auto p-4 md:p-6">
+                <!-- Breadcrumb -->
+                <div class="mb-6">
+                    <nav class="flex" aria-label="Breadcrumb">
+                        <ol class="inline-flex items-center space-x-1 md:space-x-3">
+                            <li class="inline-flex items-center">
+                                <a href="/admin/dashboard" class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-blue-600">
+                                    <i class="fas fa-home mr-2"></i>
+                                    Dashboard
+                                </a>
+                            </li>
+                            <li aria-current="page">
+                                <div class="flex items-center">
+                                    <i class="fas fa-chevron-right text-gray-400 mx-1"></i>
+                                    <span class="ml-1 text-sm font-medium text-gray-500 md:ml-2">Manage Topics</span>
+                                </div>
+                            </li>
+                        </ol>
+                    </nav>
+                </div>
+
+                <!-- Form and Table Container -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mobile-stack">
+                    <!-- Add Topic Form -->
+                    <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                        <div class="bg-blue-600 px-4 sm:px-6 py-4">
+                            <h2 class="text-lg sm:text-xl font-semibold text-white">Add New Topic</h2>
+                        </div>
+                        <form id="topicForm" enctype="multipart/form-data" class="p-4 sm:p-6">
+                            <div class="space-y-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Topic Title</label>
+                                    <input type="text" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" placeholder="Enter topic title" name="title" required>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Category</label>
+                                    <select class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" name="category" required>
+                                        <option value="">Select Category</option>
+                                        {% for category in categories %}
+                                        <option value="{{ category.name }}">{{ category.name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Year</label>
+                                    <input type="text" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" placeholder="e.g., IEEE-2023" name="year" value="IEEE-2023" required>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Report File (PDF/DOC)</label>
+                                    <input type="file" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" name="report" accept=".pdf,.doc,.docx" required>
+                                    <p class="text-xs text-gray-500 mt-1">Accepted formats: PDF, DOC, DOCX</p>
+                                </div>
+                                <div class="flex items-center">
+                                    <input type="checkbox" class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded" name="terms" id="terms" required>
+                                    <label for="terms" class="ml-2 block text-sm text-gray-700">
+                                        I accept the terms & conditions
+                                    </label>
+                                </div>
+                                <button type="submit" class="w-full px-4 py-2 bg-blue-600 text-white font-medium rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                                    Add Topic
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Topics Table -->
+                    <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                        <div class="bg-blue-600 px-4 sm:px-6 py-4 flex justify-between items-center">
+                            <h2 class="text-lg sm:text-xl font-semibold text-white">Topics List</h2>
+                            <div class="text-white text-sm">
+                                Total: <span id="totalTopics">{{ topics|length }}</span>
+                            </div>
+                        </div>
+                        <div class="p-4">
+                            <!-- Records per page selector -->
+                            <div class="flex justify-between items-center mb-4">
+                                <div class="flex items-center space-x-2">
+                                    <span class="text-sm text-gray-600">Show:</span>
+                                    <select id="recordsPerPage" class="border border-gray-300 rounded px-2 py-1 text-sm">
+                                        <option value="10">10</option>
+                                        <option value="25">25</option>
+                                        <option value="50">50</option>
+                                        <option value="100">100</option>
+                                    </select>
+                                    <span class="text-sm text-gray-600">entries</span>
+                                </div>
+                                <div class="text-sm text-gray-600">
+                                    Showing <span id="showingStart">1</span> to <span id="showingEnd">10</span> of <span id="totalRecords">{{ topics|length }}</span> entries
+                                </div>
+                            </div>
+
+                            <div class="table-container">
+                                <div class="overflow-x-auto">
+                                    <table class="min-w-full divide-y divide-gray-200">
+                                        <thead class="bg-gray-50">
+                                            <tr>
+                                                <th class="px-3 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider mobile-hidden">Topic ID</th>
+                                                <th class="px-3 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Title</th>
+                                                <th class="px-3 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider mobile-hidden">Category</th>
+                                                <th class="px-3 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider mobile-hidden">Year</th>
+                                                <th class="px-3 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Report</th>
+                                                <th class="px-3 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="bg-white divide-y divide-gray-200" id="topicsTableBody">
+                                            {% for topic in topics %}
+                                            <tr class="hover:bg-gray-50" data-page="1">
+                                                <td class="px-3 sm:px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 mobile-hidden">{{ topic.topic_id }}</td>
+                                                <td class="px-3 sm:px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                                    <div class="font-medium sm:font-normal">{{ topic.project_name }}</div>
+                                                    <div class="text-xs text-gray-400 sm:hidden">
+                                                        ID: {{ topic.topic_id }} | {{ topic.category }}
+                                                    </div>
+                                                </td>
+                                                <td class="px-3 sm:px-6 py-4 whitespace-nowrap text-sm text-gray-500 mobile-hidden">{{ topic.category }}</td>
+                                                <td class="px-3 sm:px-6 py-4 whitespace-nowrap text-sm text-gray-500 mobile-hidden">{{ topic.year }}</td>
+                                                <td class="px-3 sm:px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                                    {% if topic.report %}
+                                                    <a href="/admin/download_report/{{ topic.report }}" class="text-blue-600 hover:text-blue-900 flex items-center">
+                                                        <i class="fas fa-download mr-1"></i>
+                                                        <span class="hidden sm:inline">Download</span>
+                                                    </a>
+                                                    {% else %}
+                                                    <span class="text-gray-400">No file</span>
+                                                    {% endif %}
+                                                </td>
+                                                <td class="px-3 sm:px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                                    <button onclick="deleteTopic('{{ topic.topic_id }}')" class="text-red-600 hover:text-red-900" title="Delete Topic">
+                                                        <i class="fas fa-trash"></i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                    {% if not topics %}
+                                    <div class="text-center py-8 text-gray-500">
+                                        <i class="fas fa-folder-open text-4xl mb-2"></i>
+                                        <p>No topics found. Add your first topic!</p>
+                                    </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+
+                            <!-- Pagination -->
+                            <div class="flex flex-col sm:flex-row items-center justify-between mt-4 space-y-2 sm:space-y-0">
+                                <div class="text-sm text-gray-600">
+                                    Showing <span id="currentPageStart">1</span> to <span id="currentPageEnd">10</span> of <span id="totalPagesCount">{{ topics|length }}</span> entries
+                                </div>
+                                <div class="flex space-x-1" id="paginationContainer">
+                                    <!-- Pagination buttons will be generated here -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+
+            <!-- Footer -->
+            <footer class="bg-white py-4 px-6 border-t border-gray-200">
+                <div class="text-center text-gray-600 text-sm">
+                    <p>© 2025 Shree Code Mantra. All rights reserved.</p>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <script>
+        // Mobile menu functionality
+        document.getElementById('mobile-menu-button').addEventListener('click', function () {
+            document.getElementById('mobile-sidebar').classList.remove('hidden');
+        });
+
+        document.getElementById('close-mobile-menu').addEventListener('click', function () {
+            document.getElementById('mobile-sidebar').classList.add('hidden');
+        });
+
+        // Pagination variables
+        let currentPage = 1;
+        let recordsPerPage = 10;
+        let allTopics = Array.from(document.querySelectorAll('#topicsTableBody tr'));
+
+        // Initialize pagination
+        function initializePagination() {
+            updatePagination();
+            showPage(1);
+        }
+
+        // Show specific page
+        function showPage(page) {
+            currentPage = page;
+            const startIndex = (page - 1) * recordsPerPage;
+            const endIndex = startIndex + recordsPerPage;
+            
+            // Hide all rows
+            allTopics.forEach(row => {
+                row.style.display = 'none';
+            });
+            
+            // Show rows for current page
+            const currentPageRows = allTopics.slice(startIndex, endIndex);
+            currentPageRows.forEach(row => {
+                row.style.display = '';
+            });
+            
+            // Update pagination info
+            document.getElementById('currentPageStart').textContent = startIndex + 1;
+            document.getElementById('currentPageEnd').textContent = Math.min(endIndex, allTopics.length);
+            document.getElementById('totalPagesCount').textContent = allTopics.length;
+            
+            // Update pagination buttons
+            updatePaginationButtons();
+        }
+
+        // Update pagination buttons
+        function updatePaginationButtons() {
+            const totalPages = Math.ceil(allTopics.length / recordsPerPage);
+            const paginationContainer = document.getElementById('paginationContainer');
+            paginationContainer.innerHTML = '';
+            
+            // Previous button
+            const prevButton = document.createElement('button');
+            prevButton.innerHTML = '<i class="fas fa-chevron-left"></i>';
+            prevButton.className = `px-3 py-1 rounded border ${currentPage === 1 ? 'bg-gray-100 text-gray-400 cursor-not-allowed' : 'bg-white text-gray-700 hover:bg-gray-50'}`;
+            prevButton.disabled = currentPage === 1;
+            prevButton.onclick = () => currentPage > 1 && showPage(currentPage - 1);
+            paginationContainer.appendChild(prevButton);
+            
+            // Page buttons
+            const maxVisiblePages = 5;
+            let startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
+            let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
+            
+            if (endPage - startPage + 1 < maxVisiblePages) {
+                startPage = Math.max(1, endPage - maxVisiblePages + 1);
+            }
+            
+            for (let i = startPage; i <= endPage; i++) {
+                const pageButton = document.createElement('button');
+                pageButton.textContent = i;
+                pageButton.className = `px-3 py-1 rounded border ${currentPage === i ? 'pagination-active' : 'bg-white text-gray-700 hover:bg-gray-50'}`;
+                pageButton.onclick = () => showPage(i);
+                paginationContainer.appendChild(pageButton);
+            }
+            
+            // Next button
+            const nextButton = document.createElement('button');
+            nextButton.innerHTML = '<i class="fas fa-chevron-right"></i>';
+            nextButton.className = `px-3 py-1 rounded border ${currentPage === totalPages ? 'bg-gray-100 text-gray-400 cursor-not-allowed' : 'bg-white text-gray-700 hover:bg-gray-50'}`;
+            nextButton.disabled = currentPage === totalPages;
+            nextButton.onclick = () => currentPage < totalPages && showPage(currentPage + 1);
+            paginationContainer.appendChild(nextButton);
+        }
+
+        // Update pagination when records per page changes
+        function updatePagination() {
+            recordsPerPage = parseInt(document.getElementById('recordsPerPage').value);
+            showPage(1);
+        }
+
+        // Search functionality
+        document.getElementById('searchInput').addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            
+            allTopics = Array.from(document.querySelectorAll('#topicsTableBody tr')).filter(row => {
+                const text = row.textContent.toLowerCase();
+                const matches = text.includes(searchTerm);
+                row.style.display = matches ? '' : 'none';
+                return matches;
+            });
+            
+            showPage(1);
+        });
+
+        // Records per page change event
+        document.getElementById('recordsPerPage').addEventListener('change', updatePagination);
+
+        // Topic form submission
+        document.getElementById('topicForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const submitBtn = this.querySelector('button[type="submit"]');
+            const originalText = submitBtn.innerHTML;
+            
+            // Show loading state
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Adding...';
+            submitBtn.disabled = true;
+            
+            const formData = new FormData(this);
+            
+            fetch('/admin/add_topic', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Success!',
+                        text: data.message,
+                        confirmButtonColor: '#3b82f6'
+                    });
+                    this.reset();
+                    // Reload the page to show updated topics
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 1500);
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error!',
+                        text: data.message,
+                        confirmButtonColor: '#ef4444'
+                    });
+                }
+            })
+            .catch(error => {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error!',
+                    text: 'An error occurred while adding the topic',
+                    confirmButtonColor: '#ef4444'
+                });
+            })
+            .finally(() => {
+                // Reset button state
+                submitBtn.innerHTML = originalText;
+                submitBtn.disabled = false;
+            });
+        });
+
+        // Delete topic function
+        function deleteTopic(topicId) {
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#ef4444',
+                cancelButtonColor: '#6b7280',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    fetch(`/admin/delete_topic/${topicId}`, {
+                        method: 'DELETE'
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Deleted!',
+                                text: data.message,
+                                confirmButtonColor: '#3b82f6'
+                            });
+                            // Reload the page to show updated topics
+                            setTimeout(() => {
+                                window.location.reload();
+                            }, 1500);
+                        } else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Error!',
+                                text: data.message,
+                                confirmButtonColor: '#ef4444'
+                            });
+                        }
+                    })
+                    .catch(error => {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error!',
+                            text: 'An error occurred while deleting the topic',
+                            confirmButtonColor: '#ef4444'
+                        });
+                    });
+                }
+            });
+        }
+
+        // Logout functionality
+        document.querySelector("#logoutBtn").addEventListener("click", function (e) {
+            e.preventDefault();
+            logout();
+        });
+
+        document.querySelector("#logoutBtnMobile").addEventListener("click", function (e) {
+            e.preventDefault();
+            logout();
+        });
+
+        function logout() {
+            fetch('/admin/logout', {
+                method: 'POST'
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    window.location.href = '/admin/login';
+                }
+            });
+        }
+
+        // Initialize pagination when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            initializePagination();
+        });
+    </script>
+</body>
+</html>

@@ -83,6 +83,13 @@
                             </a>
                         </li>
                         <li>
+                            <a href="/admin/topics"
+                                class="flex items-center px-4 py-2 text-gray-700 rounded-lg hover:bg-blue-100">
+                                <i class="fas fa-folder mr-3"></i>
+                                Manage Topics
+                            </a>
+                        </li>
+                        <li>
                             <a href="#" id="logoutBtn"
                                 class="flex items-center px-4 py-2 text-gray-700 rounded-lg hover:bg-blue-100">
                                 <i class="fas fa-sign-out-alt mr-3"></i>
@@ -93,6 +100,79 @@
                 </nav>
             </div>
         </aside>
+
+
+
+        <div id="mobile-sidebar" class="fixed inset-0 flex z-40 lg:hidden hidden">
+            <div class="fixed inset-0 bg-gray-600 opacity-75"></div>
+            <div class="relative flex-1 flex flex-col max-w-xs w-full bg-white">
+                <div class="absolute top-0 right-0 -mr-12 pt-2">
+                    <button id="close-mobile-menu"
+                        class="ml-1 flex items-center justify-center h-10 w-10 rounded-full focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
+                        <i class="fas fa-times text-white text-xl"></i>
+                    </button>
+                </div>
+                <div class="flex items-center justify-center h-16 bg-blue-600">
+                    <a href="/admin/dashboard" class="text-white text-xl font-bold">Shree Code Mantra</a>
+                </div>
+                <div class="flex flex-col flex-1 overflow-y-auto sidebar-scrollbar">
+                    <div class="flex items-center justify-center flex-shrink-0 px-4 py-8">
+                        <img class="w-16 h-16 rounded-full object-cover" src="../static/admin/images/reviewer-4.png"
+                            alt="Admin">
+                    </div>
+                    <div class="text-center mb-6">
+                        <h4 class="text-lg font-semibold text-gray-700">ADMIN</h4>
+                    </div>
+                    <nav class="flex-1 px-4 py-4 bg-white">
+                        <ul class="space-y-2">
+                            <li>
+                                <a href="/admin/dashboard"
+                                    class="flex items-center px-4 py-2 text-white bg-blue-600 rounded-lg">
+                                    <i class="fas fa-tachometer-alt mr-3"></i>
+                                    Dashboard
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/admin/add_projects"
+                                    class="flex items-center px-4 py-2 text-gray-700 rounded-lg hover:bg-blue-100">
+                                    <i class="fas fa-plus-circle mr-3"></i>
+                                    Add Projects
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/admin/projects"
+                                    class="flex items-center px-4 py-2 text-gray-700 rounded-lg hover:bg-blue-100">
+                                    <i class="fas fa-list mr-3"></i>
+                                    View Projects
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/admin/categories"
+                                    class="flex items-center px-4 py-2 text-gray-700 rounded-lg hover:bg-blue-100">
+                                    <i class="fas fa-tags mr-3"></i>
+                                    Categories
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/admin/topics"
+                                    class="flex items-center px-4 py-2 text-gray-700 rounded-lg hover:bg-blue-100">
+                                    <i class="fas fa-folder mr-3"></i>
+                                    Manage Topics
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" id="logoutBtnMobile"
+                                    class="flex items-center px-4 py-2 text-gray-700 rounded-lg hover:bg-blue-100">
+                                    <i class="fas fa-sign-out-alt mr-3"></i>
+                                    Logout
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+
 
         <!-- Main Content -->
         <div class="flex flex-col flex-1 overflow-hidden">
