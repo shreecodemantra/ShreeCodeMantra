@@ -14,21 +14,66 @@
 </div>
 
 <div class="services">
+
   <div class="container">
+    <div class="callback-form contact-us mb-5" style="padding: 5px;">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="contact-form">
+              <form id="filter-form" method="POST" action="/users/services">
+                <div class="row">
+
+                  <div class="col-lg-5 col-md-12 col-sm-12">
+                    <fieldset>
+                      <input name="search" type="text" class="form-control" id="globalSearch"
+                        placeholder="Search Projects ...">
+                    </fieldset>
+                  </div>
+
+                  <div class="col-lg-5 col-md-12 col-sm-12">
+                    <fieldset>
+                      <select name="category" class="service-page-select" id="categoryFilter">
+                        <option value="" selected>Select Category</option>
+                        {% for category in categories %}
+                        <option value="{{ category.name }}" {% if category_filter==category.name %}selected{% endif %}>
+                          {{ category.name }}
+                        </option>
+                        {% endfor %}
+                      </select>
+                    </fieldset>
+                  </div>
+
+                  <div class="col-lg-2 col-md-12 col-sm-12">
+                    <fieldset>
+                      <button id="apply" class="filled-button" onclick="applyFilters()">Apply Filters</button>
+                    </fieldset>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div class="row">
+      {% if projects and projects|length > 0 %}
       {% for project in projects %}
       <div class="col-md-4 mb-5">
         <div class="service-item" style="position: relative;">
           {% if project.files and project.files.main_image %}
           <img
             src="{{ url_for('static', filename=project.files.main_image.replace('uploads/', '').replace('\\', '/')) }}"
-            alt="{{ project.title }}" style="height: 220px; object-fit: cover; display: block; width: 100%;">
+            alt="{{ project.title }}" style="height: 220px; object-fit: cover; display: block; width: 100%;"
+            onerror="this.onerror=null;this.src='static/assets/images/browse.jpg';">
           {% else %}
           <img src="static/assets/images/browse.jpg" alt=""
             style="height: 220px; object-fit: cover; display: block; width: 100%;">
           {% endif %}
+
           {% if project.category %}
-            <div style="
+          <div style="
               position: absolute;
               top: 10px;
               right: 10px;
@@ -38,19 +83,43 @@
               border-radius: 20px;
               font-size: 0.7em;
               font-weight: 400;">
-              {{ project.category }}
-            </div>
+            {{ project.category }}
+          </div>
           {% endif %}
+
           <div class="down-content">
             <h4>{{ project.title }}</h4>
             <p>{{ project.description[:100] }}{% if project.description|length > 100 %}...{% endif %}</p>
-            <a href="" class="filled-button">Buy Now</a>
+            <a href="/users/project/{{project._id}}" class="filled-button">More Details</a>
           </div>
         </div>
       </div>
       {% endfor %}
+      {% else %}
+      <div class="col-md-12 text-center mb-5">
+        <img src="{{ url_for('static', filename='assets/images/empty-folder.png') }}" alt="No Projects Found"
+          style="width: 80px; opacity: 0.7;">
+        <h5 class="mt-3" style="color: #333;">No Projects Found</h5>
+        <p style="color: #777;">No projects match your search or filters. Please try adjusting your criteria.</p>
+      </div>
+      {% endif %}
     </div>
+
   </div>
 </div>
+
+<script>
+  function applyFilters() {
+    document.getElementById('filterForm').submit();
+  }
+
+  // Enter key support for search
+  document.getElementById('globalSearch').addEventListener('keypress', function (e) {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      applyFilters();
+    }
+  });
+</script>
 
 {% endblock %}
