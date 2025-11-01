@@ -1,9 +1,6 @@
-from flask import Blueprint, render_template, request, make_response, jsonify, session, flash
-from werkzeug.security import generate_password_hash, check_password_hash
-from extensions import mongo, mail
-from auth.auth_utils import create_jwt_token, token_required
-import random
-from flask_mail import Message
+from flask import Blueprint, render_template, request, redirect, url_for, flash
+from extensions import mongo
+from bson import ObjectId
 
 user_bp = Blueprint('users', __name__, url_prefix='/users', static_folder='../static')
 
@@ -14,8 +11,12 @@ def aboutus():
 @user_bp.route('/services', methods=['GET', 'POST'])
 def services():
     try:
-        search_query = request.args.get('search', '')
-        category_filter = request.args.get('category', '')
+        if request.method == 'POST':
+            search_query = request.form.get('search', '')
+            category_filter = request.form.get('category', '')
+        else:
+            search_query = ''
+            category_filter = ''
         
         query = {}
         
@@ -40,6 +41,19 @@ def services():
     except Exception as e:
         flash('Error retrieving projects', 'error')
         return render_template('users/services.html', projects=[])
+    
+@user_bp.route('/project/<project_id>')
+def project_details(project_id):
+    try:
+        project = mongo.db.projects.find_one({'_id': ObjectId(project_id)})
+        if not project:
+            flash('Project not found', 'error')
+            return redirect(url_for('user_bp.services'))
+
+        return render_template('users/project_details.html', project=project)
+    except Exception as e:
+        flash('Error loading project details', 'error')
+        return redirect(url_for('user_bp.services'))
 
 @user_bp.route('/contact', methods=['GET', 'POST'])
 def contact():
