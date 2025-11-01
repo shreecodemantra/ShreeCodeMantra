@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Topics - Shree Code Mantra</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://kit.fontawesome.com/a2d04a1d2f.js" crossorigin="anonymous"></script>
+</head>
+
+<body class="bg-gray-100 min-h-screen flex flex-col">
+    <!-- Header -->
+    <header class="bg-blue-600 text-white py-4 shadow-md">
+        <div class="container mx-auto flex justify-between items-center px-4">
+            <h1 class="text-xl sm:text-2xl font-semibold">Shree Code Mantra - Topics</h1>
+            
+        </div>
+    </header>
+
+    <!-- Main Section -->
+    <main class="flex-1 container mx-auto px-4 py-6">
+        <!-- Search -->
+        <div class="flex flex-col sm:flex-row justify-between items-center mb-4 gap-4">
+            <h2 class="text-lg sm:text-xl font-semibold text-gray-700">All Topics</h2>
+            <div class="relative w-full sm:w-1/3">
+                <input id="searchInput" type="text" placeholder="Search topic..."
+                    class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <i class="fas fa-search absolute left-3 top-2.5 text-gray-400"></i>
+            </div>
+        </div>
+
+        <!-- Table Container -->
+        <div class="bg-white shadow-md rounded-lg overflow-hidden">
+            <table class="min-w-full table-auto divide-y divide-gray-200">
+                <thead class="bg-blue-50">
+                    <tr>
+                        <th class="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase">ID</th>
+                        <th class="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase">Title</th>
+                        <th class="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase">Category</th>
+                        <th class="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase">Year</th>
+                        <th class="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase">Report</th>
+                        <th class="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase">Created At</th>
+                    </tr>
+                </thead>
+                <tbody id="topicsTable" class="divide-y divide-gray-100">
+  {% for topic in topics %}
+  <tr class="hover:bg-gray-50 transition duration-150">
+    <td class="px-4 py-3 text-sm text-gray-700 font-medium">{{ topic.topic_id }}</td>
+    <td class="px-4 py-3 text-sm text-gray-700 capitalize">{{ topic.project_name }}</td>
+    <td class="px-4 py-3 text-sm text-gray-700">{{ topic.category }}</td>
+    <td class="px-4 py-3 text-sm text-gray-700">{{ topic.year }}</td>
+    <td class="px-4 py-3 text-sm">
+      {% if topic.report %}
+      <button class="text-blue-600 hover:text-blue-800 font-medium flex items-center"
+              data-pdf-url="{{ url_for('static', filename=topic.report.replace('\\', '/')) }}"
+              onclick="viewPDF(this.getAttribute('data-pdf-url'))">
+        <i class="fas fa-eye mr-1"></i> View PDF
+      </button>
+      {% else %}
+      <span class="text-gray-400">No file</span>
+      {% endif %}
+    </td>
+    <td class="px-4 py-3 text-sm text-gray-600">
+      {{ topic.created_at.strftime('%Y-%m-%d %H:%M') }}
+    </td>
+  </tr>
+  {% endfor %}
+</tbody>
+            </table>
+
+            {% if not topics %}
+            <div class="p-6 text-center text-gray-500">
+                <i class="fas fa-folder-open text-3xl mb-2"></i>
+                <p>No topics available</p>
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- Pagination -->
+        <div class="flex flex-col sm:flex-row justify-between items-center mt-6">
+            <p class="text-sm text-gray-600">Showing <span id="startIdx">1</span> to <span id="endIdx">10</span> of
+                <span id="totalCount">{{ topics|length }}</span> entries</p>
+            <div id="pagination" class="flex gap-1 mt-2 sm:mt-0"></div>
+        </div>
+    </main>
+
+    <!-- PDF Modal -->
+    <div id="pdfModal" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center hidden z-50">
+        <div class="bg-white w-11/12 lg:w-3/4 h-5/6 rounded-lg shadow-lg overflow-hidden relative">
+            <button onclick="closePDF()"
+                class="absolute top-2 right-2 bg-red-600 text-white px-3 py-1 rounded-md hover:bg-red-700"><i
+                    class="fas fa-times"></i></button>
+            <iframe id="pdfFrame" src="" class="w-full h-full"></iframe>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-gray-200 text-center py-4 text-gray-600 text-sm">
+        © 2025 Shree Code Mantra. All rights reserved.
+    </footer>
+
+    <script>
+        const rows = Array.from(document.querySelectorAll('#topicsTable tr'));
+        const perPage = 10;
+        let currentPage = 1;
+
+        function paginate() {
+            const total = rows.length;
+            const totalPages = Math.ceil(total / perPage);
+            rows.forEach((r, i) => r.style.display = (i >= (currentPage - 1) * perPage && i < currentPage * perPage) ? '' : 'none');
+            document.getElementById('startIdx').textContent = (currentPage - 1) * perPage + 1;
+            document.getElementById('endIdx').textContent = Math.min(currentPage * perPage, total);
+            renderPagination(totalPages);
+        }
+
+        function renderPagination(totalPages) {
+            const container = document.getElementById('pagination');
+            container.innerHTML = '';
+            for (let i = 1; i <= totalPages; i++) {
+                const btn = document.createElement('button');
+                btn.textContent = i;
+                btn.className = `px-3 py-1 border rounded ${i === currentPage ? 'bg-blue-600 text-white' : 'bg-white hover:bg-blue-50'}`;
+                btn.onclick = () => { currentPage = i; paginate(); };
+                container.appendChild(btn);
+            }
+        }
+
+        // Search filter
+        document.getElementById('searchInput').addEventListener('input', function () {
+            const search = this.value.toLowerCase();
+            rows.forEach(row => {
+                const text = row.textContent.toLowerCase();
+                row.style.display = text.includes(search) ? '' : 'none';
+            });
+        });
+
+        // PDF modal functions
+        function viewPDF(url) {
+            document.getElementById('pdfFrame').src = url;
+            document.getElementById('pdfModal').classList.remove('hidden');
+        }
+
+        function closePDF() {
+            document.getElementById('pdfFrame').src = '';
+            document.getElementById('pdfModal').classList.add('hidden');
+        }
+
+        document.addEventListener('DOMContentLoaded', paginate);
+    </script>
+</body>
+
+</html>

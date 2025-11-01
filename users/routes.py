@@ -41,6 +41,11 @@ def services():
     except Exception as e:
         flash('Error retrieving projects', 'error')
         return render_template('users/services.html', projects=[])
+
+@user_bp.route('/view_topics')
+def view_topics():
+    topics = list(mongo.db.topics.find().sort('created_at', -1))
+    return render_template('users/view_topics.html', topics=topics)
     
 @user_bp.route('/project/<project_id>')
 def project_details(project_id):
