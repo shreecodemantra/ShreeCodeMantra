@@ -44,7 +44,625 @@ https://templatemo.com/tm-545-finance-business
       width: 100%;
     }
   </style>
-  
+
+
+  <!-- Swiper CSS & JS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+
+  <style>
+    /* ---- Page Background ---- */
+    body {
+      background-color: #f1f3f6;
+    }
+
+    /* ---- Main Layout ---- */
+    .project-layout {
+      display: grid;
+      grid-template-columns: 370px 1fr 1fr;
+      gap: 15px;
+      margin-top: 20px;
+      align-items: start;
+    }
+
+    /* Adjust width dynamically for mid-screen sizes */
+    @media (max-width: 1200px) {
+      .project-layout {
+        grid-template-columns: 280px 1fr 1fr;
+      }
+    }
+
+    /* Stack columns for tablet view */
+    @media (max-width: 992px) {
+      .project-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .main-image-section,
+      .summary-sidebar {
+        position: relative;
+        top: 0;
+      }
+
+      .main-image-section {
+        max-width: 500px;
+        margin: 0 auto 20px;
+      }
+    }
+
+    /* Mobile responsiveness */
+    @media (max-width: 576px) {
+      .main-image-box img {
+        height: 250px;
+      }
+    }
+
+    /* ---- LEFT: Main Image (Static) ---- */
+    .main-image-section {
+      background: white;
+      padding: 20px;
+      border-radius: 4px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      position: sticky;
+      top: 20px;
+    }
+
+    .main-image-box {
+      position: relative;
+      margin-bottom: 15px;
+      cursor: pointer;
+    }
+
+    .main-image-box img {
+      width: 100%;
+      height: 350px;
+      object-fit: contain;
+      border: 1px solid #f0f0f0;
+      background: #fafafa;
+      border-radius: 6px;
+      transition: transform 0.3s ease;
+    }
+
+    .main-image-box:hover img {
+      transform: scale(1.02);
+    }
+
+    /* Action Buttons under main image */
+    .action-buttons {
+      display: flex;
+      gap: 10px;
+      margin-top: 15px;
+    }
+
+    .btn-action {
+      flex: 1;
+      padding: 12px;
+      border: none;
+      border-radius: 4px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .btn-primary-action {
+      background: #ff9f00;
+      color: white;
+    }
+
+    .btn-primary-action:hover {
+      background: #e68a00;
+    }
+
+    .btn-secondary-action {
+      background: #fb641b;
+      color: white;
+    }
+
+    .btn-secondary-action:hover {
+      background: #e05a19;
+    }
+
+    /* ---- CENTER: Image Gallery & Details ---- */
+    .center-content {
+      background: white;
+      border-radius: 4px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Image Thumbnails Slider */
+    .thumbnails-section {
+      padding: 20px;
+      border-bottom: 1px solid #f0f0f0;
+    }
+
+    .thumbnails-label {
+      font-size: 0.9em;
+      color: #878787;
+      margin-bottom: 12px;
+    }
+
+    .swiper-thumbnails {
+      width: 100%;
+      height: 70px;
+    }
+
+    .swiper-thumbnails .swiper-slide {
+      cursor: pointer;
+      opacity: 0.6;
+      transition: all 0.3s ease;
+      border: 2px solid transparent;
+      border-radius: 4px;
+      width: 70px !important;
+      flex-shrink: 0;
+    }
+
+    .swiper-thumbnails .swiper-slide:hover,
+    .swiper-thumbnails .swiper-slide-thumb-active {
+      opacity: 1;
+      border-color: #2874f0;
+    }
+
+    .swiper-thumbnails img {
+      width: 70px;
+      height: 70px;
+      object-fit: cover;
+      border-radius: 4px;
+    }
+
+    /* Project Details Section */
+    .details-section {
+      padding: 25px;
+    }
+
+    .project-title {
+      font-size: 1.5em;
+      color: #212121;
+      font-weight: 500;
+      margin-bottom: 10px;
+    }
+
+    .category-badge {
+      display: inline-block;
+      background: #f0f0f0;
+      padding: 5px 12px;
+      border-radius: 3px;
+      font-size: 0.85em;
+      color: #878787;
+      margin-bottom: 20px;
+    }
+
+    .detail-row {
+      display: flex;
+      padding: 12px 0;
+      border-bottom: 1px solid #f0f0f0;
+    }
+
+    .detail-row:last-child {
+      border-bottom: none;
+    }
+
+    .detail-label {
+      width: 140px;
+      color: #878787;
+      font-size: 0.95em;
+    }
+
+    .detail-value {
+      flex: 1;
+      color: #212121;
+      font-size: 0.95em;
+    }
+
+    /* Tech Stack */
+    .tech-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .tech-tag {
+      background: #e3f2fd;
+      color: #1976d2;
+      padding: 5px 12px;
+      border-radius: 12px;
+      font-size: 0.85em;
+      font-weight: 500;
+    }
+
+    /* Description */
+    .description-section {
+      margin-top: 20px;
+      padding-top: 20px;
+      border-top: 1px solid #f0f0f0;
+    }
+
+    .section-title {
+      font-size: 1.1em;
+      color: #212121;
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+
+    .description-text {
+      color: #212121;
+      line-height: 1.7;
+      font-size: 0.95em;
+    }
+
+    /* ---- RIGHT: Order Summary Style ---- */
+    .summary-sidebar {
+      position: sticky;
+      top: 20px;
+    }
+
+    .summary-card {
+      background: white;
+      border-radius: 4px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      margin-bottom: 15px;
+    }
+
+    .summary-header {
+      padding: 15px 20px;
+      background: #fafafa;
+      border-bottom: 1px solid #f0f0f0;
+      font-weight: 600;
+      color: #212121;
+      font-size: 1em;
+    }
+
+    .summary-content {
+      padding: 20px;
+    }
+
+    /* Price Section */
+    .price-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+      padding-bottom: 15px;
+      border-bottom: 1px solid #f0f0f0;
+    }
+
+    .price-label {
+      color: #878787;
+      font-size: 0.95em;
+    }
+
+    .price-value {
+      font-size: 1.8em;
+      color: #212121;
+      font-weight: 600;
+    }
+
+    /* Report Preview */
+    .report-preview {
+      width: 100%;
+      height: 180px;
+      border: 1px solid #f0f0f0;
+      border-radius: 4px;
+      margin-bottom: 10px;
+      overflow: hidden;
+    }
+
+    .report-preview iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      pointer-events: none;
+    }
+
+    .download-link {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      color: #2874f0;
+      text-decoration: none;
+      font-size: 0.9em;
+      font-weight: 500;
+      padding: 8px;
+      border: 1px solid #2874f0;
+      border-radius: 4px;
+      transition: all 0.3s ease;
+    }
+
+    .download-link:hover {
+      background: #2874f0;
+      color: white;
+    }
+
+    /* Video Preview */
+    .video-preview {
+      width: 100%;
+      height: 180px;
+      border-radius: 4px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .video-preview iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    .video-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .video-overlay:hover {
+      background: rgba(0, 0, 0, 0.5);
+    }
+
+    .play-icon {
+      width: 60px;
+      height: 60px;
+      background: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5em;
+      color: #2874f0;
+    }
+
+    /* Delivery Info Style */
+    .info-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 12px 0;
+      border-bottom: 1px solid #f0f0f0;
+    }
+
+    .info-item:last-child {
+      border-bottom: none;
+    }
+
+    .info-icon {
+      width: 24px;
+      height: 24px;
+      color: #2874f0;
+    }
+
+    .info-text {
+      flex: 1;
+    }
+
+    .info-title {
+      font-size: 0.9em;
+      color: #212121;
+      font-weight: 500;
+      margin-bottom: 4px;
+    }
+
+    .info-desc {
+      font-size: 0.85em;
+      color: #878787;
+    }
+
+    /* ---- Thumbnails Below Main Image ---- */
+    .thumbnails-section.below-main {
+      margin-top: 15px;
+      padding: 10px;
+      background: #fff;
+      border: 1px solid #f0f0f0;
+      border-radius: 4px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .thumbnails-section.below-main .thumbnails-label {
+      font-size: 0.85em;
+      color: #878787;
+      margin-bottom: 8px;
+    }
+
+    .thumbnails-section.below-main .swiper-thumbnails {
+      width: 100%;
+      height: 100px;
+    }
+
+    .thumbnails-section.below-main .swiper-slide {
+      width: 90px !important;
+      height: 90px;
+      opacity: 0.7;
+      transition: all 0.3s ease;
+      border-radius: 6px;
+      overflow: hidden;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .thumbnails-section.below-main .swiper-slide:hover {
+      opacity: 1;
+      transform: scale(1.1);
+      z-index: 5;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    .thumbnails-section.below-main img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* Scrollbar hidden but scrollable */
+    .swiper-thumbnails .swiper-wrapper {
+      scrollbar-width: none;
+    }
+
+    .swiper-thumbnails .swiper-wrapper::-webkit-scrollbar {
+      display: none;
+    }
+
+    /* Keep sidebar visually same width as center */
+    .summary-sidebar {
+      width: 100%;
+    }
+
+    .center-content,
+    .summary-sidebar {
+      min-width: 0;
+    }
+
+    /* ---- IMAGE MODAL (Flipkart Style) ---- */
+    .image-modal {
+      display: none;
+      position: fixed;
+      z-index: 9999;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.95);
+      animation: fadeIn 0.3s ease;
+    }
+
+    .image-modal.active {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+
+      to {
+        opacity: 1;
+      }
+    }
+
+    .modal-content-wrapper {
+      position: relative;
+      max-width: 90%;
+      max-height: 90vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-image {
+      max-width: 100%;
+      max-height: 90vh;
+      object-fit: contain;
+      border-radius: 8px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+    }
+
+    .modal-close {
+      position: absolute;
+      top: -40px;
+      right: 0;
+      color: white;
+      font-size: 35px;
+      font-weight: bold;
+      cursor: pointer;
+      background: rgba(255, 255, 255, 0.1);
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+    }
+
+    .modal-close:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: rotate(90deg);
+    }
+
+    .modal-nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      font-size: 30px;
+      padding: 15px 20px;
+      cursor: pointer;
+      border-radius: 50%;
+      transition: all 0.3s ease;
+      user-select: none;
+    }
+
+    .modal-nav:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: translateY(-50%) scale(1.1);
+    }
+
+    .modal-prev {
+      left: 20px;
+    }
+
+    .modal-next {
+      right: 20px;
+    }
+
+    .modal-counter {
+      position: absolute;
+      bottom: -40px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: white;
+      font-size: 14px;
+      background: rgba(255, 255, 255, 0.1);
+      padding: 8px 16px;
+      border-radius: 20px;
+    }
+
+    /* ---- Responsive Design ---- */
+    @media (max-width: 1200px) {
+      .project-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .main-image-section,
+      .summary-sidebar {
+        position: relative;
+        top: 0;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .main-image-box img {
+        height: 300px;
+      }
+
+      .price-value {
+        font-size: 1.5em;
+      }
+
+      .modal-nav {
+        font-size: 20px;
+        padding: 10px 15px;
+      }
+
+      .modal-prev {
+        left: 10px;
+      }
+
+      .modal-next {
+        right: 10px;
+      }
+    }
+  </style>
+
 </head>
 
 <body>
@@ -101,14 +719,14 @@ https://templatemo.com/tm-545-finance-business
             <li class="nav-item {% if request.path.startswith('/users/services') %}active{% endif %}">
               <a class="nav-link" href="/users/services">Our Services</a>
             </li>
+            <li class="nav-item {% if request.path.startswith('/users/topics') %}active{% endif %}">
+              <a class="nav-link" href="/users/topics">Topics</a>
+            </li>
             <li class="nav-item {% if request.path.startswith('/users/aboutus') %}active{% endif %}">
               <a class="nav-link" href="/users/aboutus">About Us</a>
             </li>
             <li class="nav-item {% if request.path.startswith('/users/contact') %}active{% endif %}">
               <a class="nav-link" href="/users/contact">Contact Us</a>
-            </li>
-            <li class="nav-item {% if request.path.startswith('/users/view_topics') %}active{% endif %}">
-  <a class="nav-link" href="/users/view_topics">Topics</a>
             </li>
             <li class="nav-item {% if request.path.startswith('/admin/login') %}active{% endif %}">
               <a class="nav-link" href="/admin/login">Admin</a>
@@ -145,53 +763,59 @@ https://templatemo.com/tm-545-finance-business
 
   <!-- Footer Starts Here -->
   <footer style="background-color: #121212; color: #f8f9fa; padding: 40px 0;">
-  <div style="width: 90%; margin: auto;">
-    <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 30px; text-align: left;">
+    <div style="width: 90%; margin: auto;">
+      <div
+        style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 30px; text-align: left;">
 
-      <!-- Brand Info -->
-      <div style="flex: 1; min-width: 300px;">
-        <div style="display:flex; align-items:center; gap:15px;">
-          <img src="/static/images/logo.png" alt="Shree Code Mantra Logo" style="width:70px; border-radius:10px;">
-          <h4 style="text-transform: uppercase; color: #ffc107; margin:0;">Shree Code Mantra</h4>
+        <!-- Brand Info -->
+        <div style="flex: 1; min-width: 300px;">
+          <div style="display:flex; align-items:center; gap:15px;">
+            <img src="/static/images/logo.png" alt="Shree Code Mantra Logo" style="width:70px; border-radius:10px;">
+            <h4 style="text-transform: uppercase; color: #ffc107; margin:0;">Shree Code Mantra</h4>
+          </div>
+          <p style="margin:15px 0; max-width:320px;">Empowering coders with knowledge and creativity. Learn, build, and
+            grow with us.</p>
+          <div style="display: flex; gap: 12px;">
+            <a href="https://www.instagram.com/shreecodemantra" target="_blank"
+              style="background:#2d2d2d; width:35px; height:35px; border-radius:50%; display:flex; align-items:center; justify-content:center; color:#fff; text-decoration:none;">
+              <i class="fa fa-instagram"></i>
+            </a>
+            <a href="https://github.com/shreecodemantra" target="_blank"
+              style="background:#2d2d2d; width:35px; height:35px; border-radius:50%; display:flex; align-items:center; justify-content:center; color:#fff; text-decoration:none;">
+              <i class="fa fa-github"></i>
+            </a>
+            <a href="https://wa.me/919999999999" target="_blank"
+              style="background:#2d2d2d; width:35px; height:35px; border-radius:50%; display:flex; align-items:center; justify-content:center; color:#fff; text-decoration:none;">
+              <i class="fa fa-whatsapp"></i>
+            </a>
+          </div>
         </div>
-        <p style="margin:15px 0; max-width:320px;">Empowering coders with knowledge and creativity. Learn, build, and grow with us.</p>
-        <div style="display: flex; gap: 12px;">
-          <a href="https://www.instagram.com/shreecodemantra" target="_blank" style="background:#2d2d2d; width:35px; height:35px; border-radius:50%; display:flex; align-items:center; justify-content:center; color:#fff; text-decoration:none;">
-            <i class="fa fa-instagram"></i>
-          </a>
-          <a href="https://github.com/shreecodemantra" target="_blank" style="background:#2d2d2d; width:35px; height:35px; border-radius:50%; display:flex; align-items:center; justify-content:center; color:#fff; text-decoration:none;">
-            <i class="fa fa-github"></i>
-          </a>
-          <a href="https://wa.me/919999999999" target="_blank" style="background:#2d2d2d; width:35px; height:35px; border-radius:50%; display:flex; align-items:center; justify-content:center; color:#fff; text-decoration:none;">
-            <i class="fa fa-whatsapp"></i>
-          </a>
+
+        <!-- Useful Links -->
+        <div style="flex: 1; min-width: 250px;">
+          <h5 style="text-transform: uppercase; color: #ffc107; margin-bottom: 15px;">Useful Links</h5>
+          <ul style="list-style:none; padding:0; margin:0;">
+            <li><a href="/" style="color:#f8f9fa; text-decoration:none;">Home</a></li>
+            <li><a href="/users/services" style="color:#f8f9fa; text-decoration:none;">Our Services</a></li>
+            <li><a href="/users/aboutus" style="color:#f8f9fa; text-decoration:none;">About Us</a></li>
+            <li><a href="/users/topics" style="color:#f8f9fa; text-decoration:none;">Topics</a></li>
+            <li><a href="/users/contact" style="color:#f8f9fa; text-decoration:none;">Contact</a></li>
+          </ul>
+        </div>
+
+        <!-- Contact -->
+        <div style="flex: 1; min-width: 250px;">
+          <h5 style="text-transform: uppercase; color: #ffc107; margin-bottom: 15px;">Get in Touch</h5>
+          <p style="margin-bottom:10px;"><i class="fa fa-envelope" style="margin-right:8px; color:#ffc107;"></i>
+            codemantra2025@gmail.com</p>
+          <p><i class="fa fa-phone" style="margin-right:8px; color:#ffc107;"></i> +91 93260 56474</p>
         </div>
       </div>
 
-      <!-- Useful Links -->
-      <div style="flex: 1; min-width: 250px;">
-        <h5 style="text-transform: uppercase; color: #ffc107; margin-bottom: 15px;">Useful Links</h5>
-        <ul style="list-style:none; padding:0; margin:0;">
-          <li><a href="/" style="color:#f8f9fa; text-decoration:none;">Home</a></li>
-          <li><a href="/users/services" style="color:#f8f9fa; text-decoration:none;">Our Services</a></li>
-          <li><a href="/users/aboutus" style="color:#f8f9fa; text-decoration:none;">About Us</a></li>
-          <li><a href="/users/view_topics" style="color:#f8f9fa; text-decoration:none;">Topics</a></li>
-          <li><a href="/users/contact" style="color:#f8f9fa; text-decoration:none;">Contact</a></li>
-        </ul>
-      </div>
+      <hr style="border-color: #555; margin: 25px 0;">
 
-      <!-- Contact -->
-      <div style="flex: 1; min-width: 250px;">
-        <h5 style="text-transform: uppercase; color: #ffc107; margin-bottom: 15px;">Get in Touch</h5>
-        <p style="margin-bottom:10px;"><i class="fa fa-envelope" style="margin-right:8px; color:#ffc107;"></i> codemantra2025@gmail.com</p>
-        <p><i class="fa fa-phone" style="margin-right:8px; color:#ffc107;"></i> +91 93260 56474</p>
-      </div>
     </div>
-
-    <hr style="border-color: #555; margin: 25px 0;">
-    
-  </div>
-</footer>
+  </footer>
 
 
 

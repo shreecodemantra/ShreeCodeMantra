@@ -42,7 +42,7 @@ def services():
         flash('Error retrieving projects', 'error')
         return render_template('users/services.html', projects=[])
 
-@user_bp.route('/view_topics')
+@user_bp.route('/topics')
 def view_topics():
     topics = list(mongo.db.topics.find().sort('created_at', -1))
     return render_template('users/view_topics.html', topics=topics)
