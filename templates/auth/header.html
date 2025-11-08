@@ -71,9 +71,8 @@ https://templatemo.com/tm-545-finance-business
         </div>
         <div class="col-md-4">
           <ul class="right-icons">
-            <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-            <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-            <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+            <li><a href="#" class="text-light me-3"><i class="fa fa-instagram"></i></a></li>
+            <li><a href="#" class="text-light"><i class="fa fa-github"></i></a></li>
             <li><a href="https://wa.me/9326056474"><i class="fa fa-whatsapp"></i></a></li>
           </ul>
         </div>
@@ -108,6 +107,13 @@ https://templatemo.com/tm-545-finance-business
             <li class="nav-item {% if request.path.startswith('/users/contact') %}active{% endif %}">
               <a class="nav-link" href="/users/contact">Contact Us</a>
             </li>
+            <li class="nav-item {% if request.path.startswith('/users/view_topics') %}active{% endif %}">
+  <a class="nav-link" href="/users/view_topics">Topics</a>
+            </li>
+            <li class="nav-item {% if request.path.startswith('/admin/login') %}active{% endif %}">
+              <a class="nav-link" href="/admin/login">Admin</a>
+            </li>
+
 
             <!-- {% if g.user %}
             <li class="nav-item dropdown">
@@ -138,74 +144,57 @@ https://templatemo.com/tm-545-finance-business
 
 
   <!-- Footer Starts Here -->
-  <footer>
-    <div class="container">
-      <div class="row">
-        <div class="col-md-3 footer-item">
-          <h4>Shree Code Mantra</h4>
-          <p>Vivamus tellus mi. Nulla ne cursus elit,vulputate. Sed ne cursus augue hasellus lacinia sapien vitae.</p>
-          <ul class="social-icons">
-            <li><a rel="nofollow" href="https://fb.com/templatemo" target="_blank"><i class="fa fa-facebook"></i></a>
-            </li>
-            <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-            <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
-            <li><a href="#"><i class="fa fa-behance"></i></a></li>
-          </ul>
+  <footer style="background-color: #121212; color: #f8f9fa; padding: 40px 0;">
+  <div style="width: 90%; margin: auto;">
+    <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 30px; text-align: left;">
+
+      <!-- Brand Info -->
+      <div style="flex: 1; min-width: 300px;">
+        <div style="display:flex; align-items:center; gap:15px;">
+          <img src="/static/images/logo.png" alt="Shree Code Mantra Logo" style="width:70px; border-radius:10px;">
+          <h4 style="text-transform: uppercase; color: #ffc107; margin:0;">Shree Code Mantra</h4>
         </div>
-        <div class="col-md-3 footer-item">
-          <h4>Useful Links</h4>
-          <ul class="menu-list">
-            <li><a href="#">Vivamus ut tellus mi</a></li>
-            <li><a href="#">Nulla nec cursus elit</a></li>
-            <li><a href="#">Vulputate sed nec</a></li>
-            <li><a href="#">Cursus augue hasellus</a></li>
-            <li><a href="#">Lacinia ac sapien</a></li>
-          </ul>
-        </div>
-        <div class="col-md-3 footer-item">
-          <h4>Additional Pages</h4>
-          <ul class="menu-list">
-            <li><a href="#">About Us</a></li>
-            <li><a href="#">How We Work</a></li>
-            <li><a href="#">Quick Support</a></li>
-            <li><a href="#">Contact Us</a></li>
-            <li><a href="#">Privacy Policy</a></li>
-          </ul>
-        </div>
-        <div class="col-md-3 footer-item last-item">
-          <h4>Contact Us</h4>
-          <div class="contact-form">
-            <form id="contact footer-contact" action="" method="post">
-              <div class="row">
-                <div class="col-lg-12 col-md-12 col-sm-12">
-                  <fieldset>
-                    <input name="name" type="text" class="form-control" id="name" placeholder="Full Name" required="">
-                  </fieldset>
-                </div>
-                <div class="col-lg-12 col-md-12 col-sm-12">
-                  <fieldset>
-                    <input name="email" type="text" class="form-control" id="email" pattern="[^ @]*@[^ @]*"
-                      placeholder="E-Mail Address" required="">
-                  </fieldset>
-                </div>
-                <div class="col-lg-12">
-                  <fieldset>
-                    <textarea name="message" rows="6" class="form-control" id="message" placeholder="Your Message"
-                      required=""></textarea>
-                  </fieldset>
-                </div>
-                <div class="col-lg-12">
-                  <fieldset>
-                    <button type="submit" id="form-submit" class="filled-button">Send Message</button>
-                  </fieldset>
-                </div>
-              </div>
-            </form>
-          </div>
+        <p style="margin:15px 0; max-width:320px;">Empowering coders with knowledge and creativity. Learn, build, and grow with us.</p>
+        <div style="display: flex; gap: 12px;">
+          <a href="https://www.instagram.com/shreecodemantra" target="_blank" style="background:#2d2d2d; width:35px; height:35px; border-radius:50%; display:flex; align-items:center; justify-content:center; color:#fff; text-decoration:none;">
+            <i class="fa fa-instagram"></i>
+          </a>
+          <a href="https://github.com/shreecodemantra" target="_blank" style="background:#2d2d2d; width:35px; height:35px; border-radius:50%; display:flex; align-items:center; justify-content:center; color:#fff; text-decoration:none;">
+            <i class="fa fa-github"></i>
+          </a>
+          <a href="https://wa.me/919999999999" target="_blank" style="background:#2d2d2d; width:35px; height:35px; border-radius:50%; display:flex; align-items:center; justify-content:center; color:#fff; text-decoration:none;">
+            <i class="fa fa-whatsapp"></i>
+          </a>
         </div>
       </div>
+
+      <!-- Useful Links -->
+      <div style="flex: 1; min-width: 250px;">
+        <h5 style="text-transform: uppercase; color: #ffc107; margin-bottom: 15px;">Useful Links</h5>
+        <ul style="list-style:none; padding:0; margin:0;">
+          <li><a href="/" style="color:#f8f9fa; text-decoration:none;">Home</a></li>
+          <li><a href="/users/services" style="color:#f8f9fa; text-decoration:none;">Our Services</a></li>
+          <li><a href="/users/aboutus" style="color:#f8f9fa; text-decoration:none;">About Us</a></li>
+          <li><a href="/users/view_topics" style="color:#f8f9fa; text-decoration:none;">Topics</a></li>
+          <li><a href="/users/contact" style="color:#f8f9fa; text-decoration:none;">Contact</a></li>
+        </ul>
+      </div>
+
+      <!-- Contact -->
+      <div style="flex: 1; min-width: 250px;">
+        <h5 style="text-transform: uppercase; color: #ffc107; margin-bottom: 15px;">Get in Touch</h5>
+        <p style="margin-bottom:10px;"><i class="fa fa-envelope" style="margin-right:8px; color:#ffc107;"></i> codemantra2025@gmail.com</p>
+        <p><i class="fa fa-phone" style="margin-right:8px; color:#ffc107;"></i> +91 93260 56474</p>
+      </div>
     </div>
-  </footer>
+
+    <hr style="border-color: #555; margin: 25px 0;">
+    
+  </div>
+</footer>
+
+
+
 
   <div class="sub-footer">
     <div class="container">
