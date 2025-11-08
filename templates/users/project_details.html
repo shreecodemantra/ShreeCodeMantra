@@ -1,12 +1,13 @@
 {% extends 'auth/header.html'%}
 {% block content %}
 
-<!-- Page Heading -->
+<!-- Page Content -->
 <div class="page-heading header-text">
   <div class="container">
     <div class="row">
-      <div class="col-md-12 text-center">
-        <h1>Project Details</h1>
+      <div class="col-md-12">
+        <h1>Academic Projects Hub</h1>
+        <span>Your trusted partner for ready-made and custom projects — quality and timely delivery guaranteed.</span>
       </div>
     </div>
   </div>
@@ -17,218 +18,924 @@
 <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
 
 <style>
-  /* ---- Layout ---- */
-  .project-wrapper {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 30px;
-    margin-top: 40px;
-  }
-  .main-image-box, .side-gallery {
-    flex: 1;
-    min-width: 300px;
+  /* ---- Page Background ---- */
+  body {
+    background-color: #f1f3f6;
   }
 
-  /* ---- Main Image ---- */
+  /* ---- Main Layout ---- */
+  .project-layout {
+    display: grid;
+    grid-template-columns: 370px 1fr 1fr;
+    gap: 15px;
+    margin-top: 20px;
+    align-items: start;
+  }
+
+  /* Adjust width dynamically for mid-screen sizes */
+  @media (max-width: 1200px) {
+    .project-layout {
+      grid-template-columns: 280px 1fr 1fr;
+    }
+  }
+
+  /* Stack columns for tablet view */
+  @media (max-width: 992px) {
+    .project-layout {
+      grid-template-columns: 1fr;
+    }
+
+    .main-image-section,
+    .summary-sidebar {
+      position: relative;
+      top: 0;
+    }
+
+    .main-image-section {
+      max-width: 500px;
+      margin: 0 auto 20px;
+    }
+  }
+
+  /* Mobile responsiveness */
+  @media (max-width: 576px) {
+    .main-image-box img {
+      height: 250px;
+    }
+  }
+
+  /* ---- LEFT: Main Image (Static) ---- */
+  .main-image-section {
+    background: white;
+    padding: 20px;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 20px;
+  }
+
+  .main-image-box {
+    position: relative;
+    margin-bottom: 15px;
+    cursor: pointer;
+  }
+
   .main-image-box img {
     width: 100%;
-    height: 420px;
-    object-fit: cover;
-    border-radius: 12px;
-    box-shadow: 0 5px 18px rgba(0,0,0,0.12);
-    transition: transform 0.4s ease;
+    height: 350px;
+    object-fit: contain;
+    border: 1px solid #f0f0f0;
+    background: #fafafa;
+    border-radius: 6px;
+    transition: transform 0.3s ease;
   }
-  .main-image-box img:hover {
+
+  .main-image-box:hover img {
     transform: scale(1.02);
   }
 
-  /* ---- Swiper Gallery ---- */
-  .swiper {
-    width: 100%;
-    height: 420px;
-    border-radius: 12px;
-    box-shadow: 0 5px 18px rgba(0,0,0,0.1);
-  }
-  .swiper-slide img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 12px;
+  /* Action Buttons under main image */
+  .action-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
   }
 
-  /* ---- Project Info ---- */
-  .project-info {
-    margin-top: 50px;
-    background: #fff;
-    border-radius: 16px;
-    padding: 40px;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.08);
-  }
-  .project-info h5 {
-    color: #3F51B5;
+  .btn-action {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    border-radius: 4px;
     font-weight: 600;
-    margin-top: 20px;
-  }
-  .project-info p {
-    color: #555;
-    line-height: 1.7;
-  }
-
-  /* ---- Report ---- */
-  .report-viewer iframe {
-    width: 100%;
-    height: 250px;
-    border: 1px solid #ddd;
-    border-radius: 10px;
-  }
-
-  .btn-custom {
-    background-color: #3F51B5;
-    color: #fff;
-    padding: 6px 16px;
-    border-radius: 25px;
-    text-decoration: none;
-    display: inline-block;
-    margin-top: 10px;
+    cursor: pointer;
     transition: all 0.3s ease;
   }
-  .btn-custom:hover {
-    background-color: #2c3e9b;
-    color: #fff;
+
+  .btn-primary-action {
+    background: #ff9f00;
+    color: white;
   }
 
-  /* ---- Demo Video ---- */
-  .video-container {
-    position: relative;
-    padding-bottom: 56.25%;
-    height: 0;
-    overflow: hidden;
-    border-radius: 12px;
-    margin-top: 10px;
-    box-shadow: 0 5px 18px rgba(0,0,0,0.08);
-    max-width: 500px;
-  }
-  .video-container iframe {
-    position: absolute;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    border: none;
-    border-radius: 12px;
+  .btn-primary-action:hover {
+    background: #e68a00;
   }
 
-  /* ---- Text Header ---- */
-  .project-header {
-    text-align: center;
+  .btn-secondary-action {
+    background: #fb641b;
+    color: white;
+  }
+
+  .btn-secondary-action:hover {
+    background: #e05a19;
+  }
+
+  /* ---- CENTER: Image Gallery & Details ---- */
+  .center-content {
+    background: white;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  /* Image Thumbnails Slider */
+  .thumbnails-section {
+    padding: 20px;
+    border-bottom: 1px solid #f0f0f0;
+  }
+
+  .thumbnails-label {
+    font-size: 0.9em;
+    color: #878787;
+    margin-bottom: 12px;
+  }
+
+  .swiper-thumbnails {
+    width: 100%;
+    height: 70px;
+  }
+
+  .swiper-thumbnails .swiper-slide {
+    cursor: pointer;
+    opacity: 0.6;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+    border-radius: 4px;
+    width: 70px !important;
+    flex-shrink: 0;
+  }
+
+  .swiper-thumbnails .swiper-slide:hover,
+  .swiper-thumbnails .swiper-slide-thumb-active {
+    opacity: 1;
+    border-color: #2874f0;
+  }
+
+  .swiper-thumbnails img {
+    width: 70px;
+    height: 70px;
+    object-fit: cover;
+    border-radius: 4px;
+  }
+
+  /* Project Details Section */
+  .details-section {
+    padding: 25px;
+  }
+
+  .project-title {
+    font-size: 1.5em;
+    color: #212121;
+    font-weight: 500;
+    margin-bottom: 10px;
+  }
+
+  .category-badge {
+    display: inline-block;
+    background: #f0f0f0;
+    padding: 5px 12px;
+    border-radius: 3px;
+    font-size: 0.85em;
+    color: #878787;
     margin-bottom: 20px;
   }
-  .project-header h2 {
-    color: #3F51B5;
-    font-weight: 600;
+
+  .detail-row {
+    display: flex;
+    padding: 12px 0;
+    border-bottom: 1px solid #f0f0f0;
   }
-  .project-meta {
-    color: #777;
+
+  .detail-row:last-child {
+    border-bottom: none;
+  }
+
+  .detail-label {
+    width: 140px;
+    color: #878787;
     font-size: 0.95em;
   }
 
-  /* ---- Responsive ---- */
-  @media (max-width: 992px) {
-    .project-wrapper {
-      flex-direction: column;
+  .detail-value {
+    flex: 1;
+    color: #212121;
+    font-size: 0.95em;
+  }
+
+  /* Tech Stack */
+  .tech-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .tech-tag {
+    background: #e3f2fd;
+    color: #1976d2;
+    padding: 5px 12px;
+    border-radius: 12px;
+    font-size: 0.85em;
+    font-weight: 500;
+  }
+
+  /* Description */
+  .description-section {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid #f0f0f0;
+  }
+
+  .section-title {
+    font-size: 1.1em;
+    color: #212121;
+    font-weight: 600;
+    margin-bottom: 12px;
+  }
+
+  .description-text {
+    color: #212121;
+    line-height: 1.7;
+    font-size: 0.95em;
+  }
+
+  /* ---- RIGHT: Order Summary Style ---- */
+  .summary-sidebar {
+    position: sticky;
+    top: 20px;
+  }
+
+  .summary-card {
+    background: white;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    margin-bottom: 15px;
+  }
+
+  .summary-header {
+    padding: 15px 20px;
+    background: #fafafa;
+    border-bottom: 1px solid #f0f0f0;
+    font-weight: 600;
+    color: #212121;
+    font-size: 1em;
+  }
+
+  .summary-content {
+    padding: 20px;
+  }
+
+  /* Price Section */
+  .price-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #f0f0f0;
+  }
+
+  .price-label {
+    color: #878787;
+    font-size: 0.95em;
+  }
+
+  .price-value {
+    font-size: 1.8em;
+    color: #212121;
+    font-weight: 600;
+  }
+
+  /* Report Preview */
+  .report-preview {
+    width: 100%;
+    height: 180px;
+    border: 1px solid #f0f0f0;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    overflow: hidden;
+  }
+
+  .report-preview iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    pointer-events: none;
+  }
+
+  .download-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    color: #2874f0;
+    text-decoration: none;
+    font-size: 0.9em;
+    font-weight: 500;
+    padding: 8px;
+    border: 1px solid #2874f0;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+  }
+
+  .download-link:hover {
+    background: #2874f0;
+    color: white;
+  }
+
+  /* Video Preview */
+  .video-preview {
+    width: 100%;
+    height: 180px;
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .video-preview iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+  }
+
+  .video-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .video-overlay:hover {
+    background: rgba(0, 0, 0, 0.5);
+  }
+
+  .play-icon {
+    width: 60px;
+    height: 60px;
+    background: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5em;
+    color: #2874f0;
+  }
+
+  /* Delivery Info Style */
+  .info-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 12px 0;
+    border-bottom: 1px solid #f0f0f0;
+  }
+
+  .info-item:last-child {
+    border-bottom: none;
+  }
+
+  .info-icon {
+    width: 24px;
+    height: 24px;
+    color: #2874f0;
+  }
+
+  .info-text {
+    flex: 1;
+  }
+
+  .info-title {
+    font-size: 0.9em;
+    color: #212121;
+    font-weight: 500;
+    margin-bottom: 4px;
+  }
+
+  .info-desc {
+    font-size: 0.85em;
+    color: #878787;
+  }
+
+  /* ---- Thumbnails Below Main Image ---- */
+  .thumbnails-section.below-main {
+    margin-top: 15px;
+    padding: 10px;
+    background: #fff;
+    border: 1px solid #f0f0f0;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .thumbnails-section.below-main .thumbnails-label {
+    font-size: 0.85em;
+    color: #878787;
+    margin-bottom: 8px;
+  }
+
+  .thumbnails-section.below-main .swiper-thumbnails {
+    width: 100%;
+    height: 100px;
+  }
+
+  .thumbnails-section.below-main .swiper-slide {
+    width: 90px !important;
+    height: 90px;
+    opacity: 0.7;
+    transition: all 0.3s ease;
+    border-radius: 6px;
+    overflow: hidden;
+    cursor: pointer;
+    position: relative;
+  }
+
+  .thumbnails-section.below-main .swiper-slide:hover {
+    opacity: 1;
+    transform: scale(1.1);
+    z-index: 5;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  }
+
+  .thumbnails-section.below-main img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* Scrollbar hidden but scrollable */
+  .swiper-thumbnails .swiper-wrapper {
+    scrollbar-width: none;
+  }
+
+  .swiper-thumbnails .swiper-wrapper::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Keep sidebar visually same width as center */
+  .summary-sidebar {
+    width: 100%;
+  }
+
+  .center-content,
+  .summary-sidebar {
+    min-width: 0;
+  }
+
+  /* ---- IMAGE MODAL (Flipkart Style) ---- */
+  .image-modal {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.95);
+    animation: fadeIn 0.3s ease;
+  }
+
+  .image-modal.active {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
     }
-    .main-image-box img, .swiper {
+    to {
+      opacity: 1;
+    }
+  }
+
+  .modal-content-wrapper {
+    position: relative;
+    max-width: 90%;
+    max-height: 90vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .modal-image {
+    max-width: 100%;
+    max-height: 90vh;
+    object-fit: contain;
+    border-radius: 8px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+  }
+
+  .modal-close {
+    position: absolute;
+    top: -40px;
+    right: 0;
+    color: white;
+    font-size: 35px;
+    font-weight: bold;
+    cursor: pointer;
+    background: rgba(255, 255, 255, 0.1);
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+  }
+
+  .modal-close:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: rotate(90deg);
+  }
+
+  .modal-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    font-size: 30px;
+    padding: 15px 20px;
+    cursor: pointer;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+    user-select: none;
+  }
+
+  .modal-nav:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-50%) scale(1.1);
+  }
+
+  .modal-prev {
+    left: 20px;
+  }
+
+  .modal-next {
+    right: 20px;
+  }
+
+  .modal-counter {
+    position: absolute;
+    bottom: -40px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: white;
+    font-size: 14px;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 8px 16px;
+    border-radius: 20px;
+  }
+
+  /* ---- Responsive Design ---- */
+  @media (max-width: 1200px) {
+    .project-layout {
+      grid-template-columns: 1fr;
+    }
+
+    .main-image-section,
+    .summary-sidebar {
+      position: relative;
+      top: 0;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .main-image-box img {
       height: 300px;
+    }
+
+    .price-value {
+      font-size: 1.5em;
+    }
+
+    .modal-nav {
+      font-size: 20px;
+      padding: 10px 15px;
+    }
+
+    .modal-prev {
+      left: 10px;
+    }
+
+    .modal-next {
+      right: 10px;
     }
   }
 </style>
 
-<!-- ===== PAGE CONTENT ===== -->
-<div class="services py-5">
+<!-- Main Content -->
+<div class="services py-4">
   <div class="container">
+    <div class="project-layout">
 
-    <!-- Header -->
-    <div class="project-header">
-      <h2>{{ project.title }}</h2>
-      {% if project.category %}
-        <p class="project-meta">Category: {{ project.category }}</p>
-      {% endif %}
-    </div>
+      <!-- LEFT: Main Image (Static) -->
+      <div class="main-image-section">
+        {% if project.files and project.files.main_image %}
+        <div class="main-image-box" onclick="openImageModal(0)">
+          <img
+            id="mainImage"
+            src="{{ url_for('static', filename=project.files.main_image.replace('uploads/', '').replace('\\', '/')) }}"
+            alt="{{ project.title }}">
+        </div>
 
-    <!-- Main Image + Other Images Side by Side -->
-    <div class="project-wrapper">
-      <!-- Left: Main Image -->
-      {% if project.files and project.files.main_image %}
-      <div class="main-image-box">
-        <img src="{{ url_for('static', filename=project.files.main_image.replace('uploads/', '').replace('\\', '/')) }}"
-             alt="{{ project.title }}">
-      </div>
-      {% endif %}
-
-      <!-- Right: Other Images Slider -->
-      {% if project.files.images %}
-      <div class="side-gallery">
-        <div class="swiper">
-          <div class="swiper-wrapper">
-            {% for img in project.files.images %}
-            <div class="swiper-slide">
-              <img src="{{ url_for('static', filename=img.replace('uploads/', '').replace('\\', '/')) }}" alt="Project Image">
+        <!-- Thumbnails Slider -->
+        {% if project.files.images %}
+        <div class="thumbnails-section below-main" id="thumbnailsContainer">
+          <div class="thumbnails-label">More Images</div>
+          <div class="swiper swiper-thumbnails">
+            <div class="swiper-wrapper">
+              {% for img in project.files.images %}
+              <div class="swiper-slide" onclick="openImageModal({{ loop.index0 }})">
+                <img src="{{ url_for('static', filename=img.replace('uploads/', '').replace('\\', '/')) }}"
+                  alt="Thumbnail">
+              </div>
+              {% endfor %}
             </div>
-            {% endfor %}
           </div>
-          <div class="swiper-pagination"></div>
-          <div class="swiper-button-next"></div>
-          <div class="swiper-button-prev"></div>
+        </div>
+        {% endif %}
+        {% endif %}
+      </div>
+
+      <!-- CENTER: Gallery & Details -->
+      <div class="center-content">
+        <!-- Project Details -->
+        <div class="details-section">
+          <h1 class="project-title">{{ project.title }}</h1>
+          {% if project.category %}
+          <span class="category-badge">{{ project.category }}</span>
+          {% endif %}
+
+          <div class="detail-row">
+            <div class="detail-label">Project Type</div>
+            <div class="detail-value">{{ project.category or 'Custom Development' }}</div>
+          </div>
+
+          {% if project.tech_stack %}
+          <div class="detail-row">
+            <div class="detail-label">Technologies</div>
+            <div class="detail-value">
+              <div class="tech-tags">
+                {% if project.tech_stack is iterable and project.tech_stack is not string %}
+                {% for tech in project.tech_stack %}
+                <span class="tech-tag">{{ tech }}</span>
+                {% endfor %}
+                {% else %}
+                <span class="tech-tag">{{ project.tech_stack }}</span>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+          {% endif %}
+
+          <div class="description-section">
+            <div class="section-title">📋 Project Description</div>
+            <p class="description-text">{{ project.description }}</p>
+          </div>
+
+          <div class="description-section">
+            <div class="section-title">✨ Key Features</div>
+            <p class="description-text">
+              • Modern and responsive design<br>
+              • Clean and maintainable code<br>
+              • Full documentation included<br>
+              • Ready to deploy
+            </p>
+          </div>
         </div>
       </div>
-      {% endif %}
-    </div>
 
-    <!-- Project Info -->
-    <div class="project-info">
-      <h5>Description</h5>
-      <p>{{ project.description }}</p>
+      <!-- RIGHT: Order Summary Sidebar -->
+      <div class="summary-sidebar">
+        <!-- Price Card -->
+        {% if project.price %}
+        <div class="summary-card">
+          <div class="summary-header">💰 Price Details</div>
+          <div class="summary-content">
+            <div class="price-row">
+              <div class="price-label">Project Cost</div>
+              <div class="price-value">₹{{ project.price }}</div>
+            </div>
+            <div class="info-item">
+              <div class="info-icon">✓</div>
+              <div class="info-text">
+                <div class="info-title">Source Code Included</div>
+                <div class="info-desc">Complete project files</div>
+              </div>
+            </div>
+            <div class="info-item">
+              <div class="info-icon">✓</div>
+              <div class="info-text">
+                <div class="info-title">Documentation</div>
+                <div class="info-desc">Full setup guide included</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endif %}
 
-      {% if project.tech_stack %}
-      <h5>Tech Stack</h5>
-      <p>{{ project.tech_stack | join(', ') if project.tech_stack is iterable else project.tech_stack }}</p>
-      {% endif %}
+        <!-- Project Report Card -->
+        {% if project.files.report %}
+        <div class="summary-card">
+          <div class="summary-header">📄 Project Report</div>
+          <div class="summary-content">
+            <div class="report-preview">
+              <iframe
+                src="{{ url_for('static', filename=project.files.report.replace('uploads/', '').replace('\\', '/')) }}"></iframe>
+            </div>
+            <a href="{{ url_for('static', filename=project.files.report.replace('uploads/', '').replace('\\', '/')) }}"
+              class="download-link" download>
+              ⬇️ Download Full Report
+            </a>
+          </div>
+        </div>
+        {% endif %}
 
-      {% if project.price %}
-      <h5>Price</h5>
-      <p><strong>₹{{ project.price }}</strong></p>
-      {% endif %}
+        <!-- Demo Video Card -->
+        {% if project.files.demo_video %}
+        <div class="summary-card">
+          <div class="summary-header">🎥 Demo Video</div>
+          <div class="summary-content">
+            <div class="video-preview"
+              onclick="this.querySelector('iframe').src=this.querySelector('iframe').src+'&autoplay=1'; this.querySelector('.video-overlay').style.display='none';">
+              <iframe src="{{ project.files.demo_video.replace('watch?v=', 'embed/') }}" allowfullscreen></iframe>
+              <div class="video-overlay">
+                <div class="play-icon">▶</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endif %}
 
-      {% if project.files.report %}
-      <h5>Project Report</h5>
-      <div class="report-viewer">
-        <iframe src="{{ url_for('static', filename=project.files.report.replace('uploads/', '').replace('\\', '/')) }}"></iframe>
-        <a href="{{ url_for('static', filename=project.files.report.replace('uploads/', '').replace('\\', '/')) }}" 
-           class="btn-custom" download>Download Report</a>
+        <!-- Project Info -->
+        <div class="summary-card">
+          <div class="summary-header">ℹ️ Project Information</div>
+          <div class="summary-content">
+            <div class="info-item">
+              <div class="info-icon">🔒</div>
+              <div class="info-text">
+                <div class="info-title">Secure Purchase</div>
+                <div class="info-desc">100% secure transaction</div>
+              </div>
+            </div>
+            <div class="info-item">
+              <div class="info-icon">💬</div>
+              <div class="info-text">
+                <div class="info-title">Support Available</div>
+                <div class="info-desc">Post-purchase assistance</div>
+              </div>
+            </div>
+            <div class="info-item">
+              <div class="info-icon">⚡</div>
+              <div class="info-text">
+                <div class="info-title">Instant Download</div>
+                <div class="info-desc">Get files immediately</div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-      {% endif %}
 
-      {% if project.files.demo_video %}
-      <h5>Demo Video</h5>
-      <div class="video-container">
-        <iframe src="{{ project.files.demo_video.replace('watch?v=', 'embed/') }}" 
-                title="Demo Video" allowfullscreen></iframe>
-      </div>
-      {% endif %}
     </div>
-
   </div>
 </div>
 
-<!-- Swiper Script -->
+<!-- Image Modal -->
+<div id="imageModal" class="image-modal">
+  <div class="modal-content-wrapper">
+    <span class="modal-close" onclick="closeImageModal()">&times;</span>
+    <div class="modal-prev modal-nav" onclick="changeImage(-1)">❮</div>
+    <img id="modalImage" class="modal-image" src="" alt="Full view">
+    <div class="modal-next modal-nav" onclick="changeImage(1)">❯</div>
+    <div class="modal-counter" id="modalCounter">1 / 1</div>
+  </div>
+</div>
+
 <script>
-  var swiper = new Swiper('.swiper', {
-    loop: true,
-    spaceBetween: 10,
-    slidesPerView: 1,
-    pagination: { el: '.swiper-pagination', clickable: true },
-    navigation: {
-      nextEl: '.swiper-button-next',
-      prevEl: '.swiper-button-prev',
-    },
+  let thumbsSwiper;
+  let currentImageIndex = 0;
+  let allImages = [];
+
+  // Initialize Swiper
+  function initSwiper() {
+    thumbsSwiper = new Swiper('.swiper-thumbnails', {
+      spaceBetween: 10,
+      slidesPerView: 'auto',
+      freeMode: true,
+      loop: true,
+      autoplay: {
+        delay: 2500,
+        disableOnInteraction: false,
+      },
+      watchSlidesProgress: true
+    });
+  }
+
+  // Collect all image URLs (only thumbnails, not main image to avoid duplication)
+  function collectImages() {
+    const thumbnails = document.querySelectorAll('.thumbnails-section.below-main .swiper-slide img');
+    thumbnails.forEach(img => {
+      allImages.push(img.src);
+    });
+  }
+
+  // Open modal with specific image
+  function openImageModal(index) {
+    currentImageIndex = index;
+    const modal = document.getElementById('imageModal');
+    const modalImg = document.getElementById('modalImage');
+    const counter = document.getElementById('modalCounter');
+
+    modalImg.src = allImages[currentImageIndex];
+    counter.textContent = `${currentImageIndex + 1} / ${allImages.length}`;
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+
+    // Stop autoplay when modal opens
+    if (thumbsSwiper && thumbsSwiper.autoplay) {
+      thumbsSwiper.autoplay.stop();
+    }
+  }
+
+  // Close modal
+  function closeImageModal() {
+    const modal = document.getElementById('imageModal');
+    modal.classList.remove('active');
+    document.body.style.overflow = 'auto';
+
+    // Resume autoplay when modal closes
+    if (thumbsSwiper && thumbsSwiper.autoplay) {
+      thumbsSwiper.autoplay.start();
+    }
+  }
+
+  // Navigate images in modal
+  function changeImage(direction) {
+    currentImageIndex += direction;
+    
+    if (currentImageIndex >= allImages.length) {
+      currentImageIndex = 0;
+    } else if (currentImageIndex < 0) {
+      currentImageIndex = allImages.length - 1;
+    }
+
+    const modalImg = document.getElementById('modalImage');
+    const counter = document.getElementById('modalCounter');
+    
+    modalImg.style.opacity = '0';
+    setTimeout(() => {
+      modalImg.src = allImages[currentImageIndex];
+      counter.textContent = `${currentImageIndex + 1} / ${allImages.length}`;
+      modalImg.style.opacity = '1';
+    }, 150);
+  }
+
+  // Keyboard navigation
+  document.addEventListener('keydown', function(event) {
+    const modal = document.getElementById('imageModal');
+    if (modal.classList.contains('active')) {
+      if (event.key === 'Escape') {
+        closeImageModal();
+      } else if (event.key === 'ArrowLeft') {
+        changeImage(-1);
+      } else if (event.key === 'ArrowRight') {
+        changeImage(1);
+      }
+    }
+  });
+
+  // Close modal when clicking outside image
+  document.getElementById('imageModal').addEventListener('click', function(e) {
+    if (e.target === this) {
+      closeImageModal();
+    }
+  });
+
+  // Stop autoplay on hover, resume on mouse leave
+  document.addEventListener('DOMContentLoaded', function() {
+    initSwiper();
+    collectImages();
+
+    const thumbnailsContainer = document.getElementById('thumbnailsContainer');
+    if (thumbnailsContainer && thumbsSwiper) {
+      thumbnailsContainer.addEventListener('mouseenter', function() {
+        if (thumbsSwiper.autoplay) {
+          thumbsSwiper.autoplay.stop();
+        }
+      });
+
+      thumbnailsContainer.addEventListener('mouseleave', function() {
+        if (thumbsSwiper.autoplay) {
+          thumbsSwiper.autoplay.start();
+        }
+      });
+    }
   });
 </script>
 
