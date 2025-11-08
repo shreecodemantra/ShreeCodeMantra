@@ -1,6 +1,23 @@
 {% extends 'auth/header.html'%}
 {% block content %}
 
+<style>
+  .error-label {
+    color: red;
+    font-size: 11px;
+    display: block;
+    text-align: left;
+  }
+
+  .form-control.is-invalid {
+    border-color: #dc3545;
+  }
+
+  .form-control.is-valid {
+    border-color: #198754;
+  }
+</style>
+
 <!-- Page Content -->
 <div class="page-heading header-text">
   <div class="container">
@@ -82,23 +99,6 @@
     </div>
   </div>
 </div>
-
-<style>
-  .error-label {
-    color: red;
-    font-size: 11px;
-    display: block;
-    text-align: left;
-  }
-
-  .form-control.is-invalid {
-    border-color: #dc3545;
-  }
-
-  .form-control.is-valid {
-    border-color: #198754;
-  }
-</style>
 
 <script>
   document.addEventListener("DOMContentLoaded", function () {

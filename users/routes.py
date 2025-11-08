@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, redirect, url_for, flash
+from flask import Blueprint, render_template, request, redirect, url_for, flash, jsonify
 from extensions import mongo
 from bson import ObjectId
 
@@ -62,4 +62,24 @@ def project_details(project_id):
 
 @user_bp.route('/contact', methods=['GET', 'POST'])
 def contact():
+    if request.method == 'POST':  
+        try:
+            fname = request.form['fname']
+            email = request.form['email']
+            subject = request.form['subject']
+            message = request.form['message']
+
+            mongo.db.contact.insert_one({
+                'fname': fname,
+                'email':email,
+                'subject':subject,
+                'message':message
+            })
+
+            return jsonify({
+                "status": "success",
+                "message": "Response submitted successfully!"
+            })
+        except Exception as e:
+            return jsonify({"status": "fail", "error": str(e)})
     return render_template('users/contact.html')

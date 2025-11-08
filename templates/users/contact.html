@@ -1,6 +1,23 @@
 {% extends 'auth/header.html'%}
 {% block content %}
 
+<style>
+  .error-label {
+    color: red;
+    font-size: 11px;
+    display: block;
+    text-align: left;
+  }
+
+  .form-control.is-invalid {
+    border-color: #dc3545;
+  }
+
+  .form-control.is-valid {
+    border-color: #198754;
+  }
+</style>
+
 <!-- Page Content -->
 <div class="page-heading header-text">
   <div class="container">
@@ -16,30 +33,32 @@
 <div class="contact-information">
   <div class="container">
     <div class="row">
-      <div class="col-md-4">
+      <div class="col-md-6">
         <div class="contact-item">
           <i class="fa fa-phone"></i>
           <h4>Phone</h4>
-          <p>Vivamus ut tellus mi. Nulla nec cursus elit, id vulputate nec cursus augue.</p>
-          <a href="#">090-080-0760</a>
+          <p>If you’d like to discuss project collaborations or development opportunities, feel free to reach out.</p>
+          <a href="tel:54654654">+91 93260 56474</a>
         </div>
       </div>
-      <div class="col-md-4">
+
+      <div class="col-md-6">
         <div class="contact-item">
           <i class="fa fa-envelope"></i>
           <h4>Email</h4>
-          <p>Vivamus ut tellus mi. Nulla nec cursus elit, id vulputate nec cursus augue.</p>
-          <a href="#">info@company.com</a>
+          <p>Have a project idea or need backend API development? Let’s connect and make it happen.</p>
+          <a href="mailto:ygydgys.com">codemantra2025@gmail.com</a>
         </div>
       </div>
-      <div class="col-md-4">
+
+      <!-- <div class="col-md-4">
         <div class="contact-item">
           <i class="fa fa-map-marker"></i>
           <h4>Location</h4>
           <p>1020 New Mountain Street<br>Forest Park, FP 11220</p>
           <a href="#">View on Google Maps</a>
         </div>
-      </div>
+      </div> -->
     </div>
   </div>
 </div>
@@ -55,33 +74,36 @@
       </div>
       <div class="col-md-12">
         <div class="contact-form">
-          <form id="contact" action="" method="get">
+          <form id="contactForm" method="post">
             <div class="row">
               <div class="col-lg-4 col-md-12 col-sm-12">
                 <fieldset>
-                  <input name="name" type="text" class="form-control" id="name" placeholder="Full Name" required="">
+                  <input name="fname" type="text" class="form-control" id="fname" placeholder="Full Name">
+                  <small id="fnameError" class="error-label"></small>
                 </fieldset>
               </div>
               <div class="col-lg-4 col-md-12 col-sm-12">
                 <fieldset>
-                  <input name="email" type="text" class="form-control" id="email" pattern="[^ @]*@[^ @]*"
-                    placeholder="E-Mail Address" required="">
+                  <input name="email" type="text" class="form-control" id="emailadd" placeholder="E-Mail Address">
+                  <small id="emailError" class="error-label"></small>
                 </fieldset>
               </div>
               <div class="col-lg-4 col-md-12 col-sm-12">
                 <fieldset>
-                  <input name="subject" type="text" class="form-control" id="subject" placeholder="Subject" required="">
+                  <input name="subject" type="text" class="form-control" id="subject" placeholder="Subject">
+                  <small id="subjectError" class="error-label"></small>
                 </fieldset>
               </div>
-              <div class="col-lg-12">
+              <div class="col-lg-12 mt-3">
                 <fieldset>
                   <textarea name="message" rows="6" class="form-control" id="message" placeholder="Your Message"
                     required=""></textarea>
+                  <small id="messageError" class="error-label"></small>
                 </fieldset>
               </div>
               <div class="col-lg-12">
                 <fieldset>
-                  <button type="submit" id="form-submit" class="filled-button">Send Message</button>
+                  <button type="submit" id="submit" class="filled-button">Send Message</button>
                 </fieldset>
               </div>
             </div>
@@ -92,30 +114,145 @@
   </div>
 </div>
 
-<div id="map">
-  <!-- How to change your own map point
-	1. Go to Google Maps
-	2. Click on your location point
-	3. Click "Share" and choose "Embed map" tab
-	4. Copy only URL and paste it within the src="" field below
--->
-  <iframe
-    src="https://maps.google.com/maps?q=Av.+Lúcio+Costa,+Rio+de+Janeiro+-+RJ,+Brazil&t=&z=13&ie=UTF8&iwloc=&output=embed"
-    width="100%" height="500px" frameborder="0" style="border:0" allowfullscreen></iframe>
-</div>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const form = document.getElementById("contactForm");
+    const submit = document.getElementById("submit");
 
-<div class="partners contact-partners">
-  <div class="container">
-    <div class="row">
-      <div class="col-md-12">
-        <div class="owl-partners owl-carousel">
-          <div class="partner-item">
-            <img src="static/assets/images/client-01.png" alt="">
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+    const fields = {
+      name: document.getElementById("fname"),
+      email: document.getElementById("emailadd"),
+      subject: document.getElementById("subject"),
+      message: document.getElementById("message"),
+    };
+
+    const errors = {
+      name: document.getElementById("fnameError"),
+      email: document.getElementById("emailError"),
+      subject: document.getElementById("subjectError"),
+      message: document.getElementById("messageError"),
+    };
+
+    // Mark field valid/invalid
+    function markInvalid(field) {
+      field.classList.add("is-invalid");
+      field.classList.remove("is-valid");
+    }
+
+    function markValid(field) {
+      field.classList.remove("is-invalid");
+      field.classList.add("is-valid");
+    }
+
+    // Validate functions
+    function validateName() {
+      const value = fields.name.value.trim();
+      if (value === "") {
+        errors.name.textContent = " * Name is required.";
+        markInvalid(fields.name);
+        return false;
+      } else if (value.split(" ").length < 2) {
+        errors.name.textContent = " * Enter both first and last name.";
+        markInvalid(fields.name);
+        return false;
+      } else if (!/^[A-Za-z\s]+$/.test(value)) {
+        errors.name.textContent = " * Name can only contain letters.";
+        markInvalid(fields.name);
+        return false;
+      }
+      errors.name.textContent = "";
+      markValid(fields.name);
+      return true;
+    }
+
+    function validateEmail() {
+      const value = fields.email.value.trim();
+      const pattern = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
+      if (value === "") {
+        errors.email.textContent = " * Email is required.";
+        markInvalid(fields.email);
+        return false;
+      } else if (!pattern.test(value)) {
+        errors.email.textContent = " * Please enter a valid email address.";
+        markInvalid(fields.email);
+        return false;
+      }
+      errors.email.textContent = "";
+      markValid(fields.email);
+      return true;
+    }
+
+    function validateSubject() {
+      const value = fields.subject.value.trim();
+      if (value === "") {
+        errors.subject.textContent = " * Subject is required.";
+        markInvalid(fields.subject);
+        return false;
+      }
+      errors.subject.textContent = "";
+      markValid(fields.subject);
+      return true;
+    }
+
+    function validateMessage() {
+      const value = fields.message.value.trim();
+      if (value === "") {
+        errors.message.textContent = " * Message is required.";
+        markInvalid(fields.message);
+        return false;
+      }
+      errors.message.textContent = "";
+      markValid(fields.message);
+      return true;
+    }
+
+    // 🟢 Real-time validation (hides errors while typing)
+    fields.name.addEventListener("input", validateName);
+    fields.email.addEventListener("input", validateEmail);
+    fields.subject.addEventListener("input", validateSubject);
+    fields.message.addEventListener("input", validateMessage);
+
+    // On blur validation (backup check)
+    fields.name.addEventListener("blur", validateName);
+    fields.email.addEventListener("blur", validateEmail);
+    fields.subject.addEventListener("blur", validateSubject);
+    fields.message.addEventListener("blur", validateMessage);
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const isNameValid = validateName();
+      const isEmailValid = validateEmail();
+      const isSubjectValid = validateSubject();
+      const isMessageValid = validateMessage();
+      const valid = isNameValid && isEmailValid && isSubjectValid && isMessageValid;
+
+      if (!valid) return;
+
+      // disable sign-up button to prevent multiple clicks
+      submit.disabled = true;
+
+      // Step 1: send sign-up + OTP request
+      $.ajax({
+        type: "POST",
+        url: "/users/contact",
+        data: $("#contactForm").serialize(),
+        success: function (response) {
+          if (response.status === "success") {
+            alert(response.message);
+            $("#contactForm")[0].reset();
+          } else {
+            alert(response.error);
+          }
+        },
+        error: function (e) {
+          console.error("ERROR:", e);
+          submit.disabled = false;
+        }
+      });
+    });
+
+  });
+</script>
 
 {% endblock %}
