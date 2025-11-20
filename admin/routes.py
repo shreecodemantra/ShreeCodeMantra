@@ -762,3 +762,63 @@ def download_report(filename):
         )
     except Exception as e:
         return jsonify({"error": "File not found"}), 404
+
+
+
+@admin_bp.route('/viewmails', methods=['GET'])
+# @token_required
+def viewmails():
+    """Admin add_projects - protected route."""
+    Mails = list(mongo.db.contact.find())
+    # print(Mails)
+    return render_template('admin/viewmails.html',Mails=Mails)
+
+
+@admin_bp.route('/delete-mail/<mail_id>', methods=['DELETE'])
+# @token_required  # Uncomment if you have authentication
+def delete_mail(mail_id):
+    """Delete a contact mail message with enhanced error handling"""
+    try:
+        # Validate input
+        if not mail_id or not mail_id.strip():
+            return jsonify({
+                'success': False,
+                'message': 'Mail ID is required'
+            }), 400
+
+        # Validate ObjectId format
+        if not ObjectId.is_valid(mail_id):
+            return jsonify({
+                'success': False,
+                'message': 'Invalid mail ID format'
+            }), 400
+
+        # Check if mail exists before deleting
+        existing_mail = mongo.db.contact.find_one({'_id': ObjectId(mail_id)})
+        if not existing_mail:
+            return jsonify({
+                'success': False,
+                'message': 'Mail not found'
+            }), 404
+
+        # Delete the mail
+        result = mongo.db.contact.delete_one({'_id': ObjectId(mail_id)})
+        
+        if result.deleted_count == 1:
+            print(f"Mail {mail_id} deleted successfully")
+            return jsonify({
+                'success': True,
+                'message': 'Mail deleted successfully'
+            })
+        else:
+            return jsonify({
+                'success': False,
+                'message': 'Failed to delete mail'
+            }), 500
+
+    except Exception as e:
+        print(f"Error deleting mail {mail_id}: {str(e)}")
+        return jsonify({
+            'success': False,
+            'message': 'An internal server error occurred'
+        }), 500
