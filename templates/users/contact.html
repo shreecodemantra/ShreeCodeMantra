@@ -229,9 +229,6 @@
 
       if (!valid) return;
 
-      // disable sign-up button to prevent multiple clicks
-      submit.disabled = true;
-
       // Step 1: send sign-up + OTP request
       $.ajax({
         type: "POST",

@@ -387,15 +387,15 @@ header .navbar {
 }
 
 .Modern-Slider .item-1 .img-fill {
-	background-image: url(../images/slide_01.jpg);
+	background-image: url(../images/slide_01.png);
 }
 
 .Modern-Slider .item-2 .img-fill {
-	background-image: url(../images/slide_02.jpg);
+	background-image: url(../images/slide_02.png);
 }
 
 .Modern-Slider .item-3 .img-fill {
-	background-image: url(../images/slide_03.jpg);
+	background-image: url(../images/slide_03.png);
 }
 
 .Modern-Slider .NextArrow{
@@ -579,7 +579,7 @@ ul.slick-dots {
 /* Fun Facts */
 
 .fun-facts {
-	margin-top: 40px;
+	/* margin-top: 40px; */
 	background-image: url(../images/fun-facts-bg.jpg);
 	background-position: center center;
 	background-repeat: no-repeat;
@@ -1084,7 +1084,7 @@ footer .contact-form button.filled-button:hover {
 	background-color: #f7f7f7;
 	margin-top: 40px;
 	margin-bottom: -140px;
-	padding: 120px 0px;
+	padding: 50px 0px 130px 0px;
 }
 
 .team-item img {
