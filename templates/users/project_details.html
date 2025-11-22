@@ -27,7 +27,7 @@
         </div>
 
         <!-- Thumbnails Slider -->
-        {% if project.files.images %}
+        <!-- {% if project.files.images %}
         <div class="thumbnails-section below-main" id="thumbnailsContainer">
           <div class="thumbnails-label">More Images</div>
           <div class="swiper swiper-thumbnails">
@@ -41,7 +41,29 @@
             </div>
           </div>
         </div>
+        {% endif %} -->
+
+        {% if project.files.images %}
+        <div class="thumbnails-section below-main" id="thumbnailsContainer">
+          <div class="thumbnails-label">More Images</div>
+
+          <div class="swiper swiper-thumbnails">
+            <div class="swiper-wrapper">
+
+              {% for img in project.files.images %}
+              <div class="swiper-slide" onclick="openImageModal({{ loop.index0 }})">
+
+                <img src="{{ url_for('static', filename=img.replace('\\', '/')) }}" alt="Thumbnail"
+                  class="object-cover">
+
+              </div>
+              {% endfor %}
+
+            </div>
+          </div>
+        </div>
         {% endif %}
+
         {% endif %}
       </div>
 
