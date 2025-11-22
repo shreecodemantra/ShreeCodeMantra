@@ -226,7 +226,7 @@
                         <!-- Project Image -->
                         <div class="h-48 bg-gray-200 relative">
                             {% if project.files and project.files.main_image %}
-                            <img src="{{ url_for('static', filename=project.files.main_image.replace('uploads/', '').replace('\\', '/')) }}"
+                            <img src="{{ url_for('static', filename=project.files.main_image.replace('\\', '/')) }}"
                                 alt="{{ project.title }}" class="w-full h-full object-cover">
                             <div class="w-full h-full hidden items-center justify-center bg-gray-100">
                                 <i class="fas fa-image text-gray-400 text-4xl"></i>

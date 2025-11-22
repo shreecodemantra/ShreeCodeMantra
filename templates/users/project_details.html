@@ -22,9 +22,7 @@
       <div class="main-image-section">
         {% if project.files and project.files.main_image %}
         <div class="main-image-box" onclick="openImageModal(0)">
-          <img
-            id="mainImage"
-            src="{{ url_for('static', filename=project.files.main_image.replace('uploads/', '').replace('\\', '/')) }}"
+          <img src="{{ url_for('static', filename=project.files.main_image.replace('\\', '/')) }}" id="mainImage"
             alt="{{ project.title }}">
         </div>
 
@@ -36,7 +34,7 @@
             <div class="swiper-wrapper">
               {% for img in project.files.images %}
               <div class="swiper-slide" onclick="openImageModal({{ loop.index0 }})">
-                <img src="{{ url_for('static', filename=img.replace('uploads/', '').replace('\\', '/')) }}"
+                <img src="{{ url_for('static', filename=project.files.main_image.replace('\\', '/')) }}"
                   alt="Thumbnail">
               </div>
               {% endfor %}
@@ -130,11 +128,11 @@
           <div class="summary-header">📄 Project Report</div>
           <div class="summary-content">
             <div class="report-preview">
-              <iframe
-                src="{{ url_for('static', filename=project.files.report.replace('uploads/', '').replace('\\', '/')) }}"></iframe>
+              <iframe src="{{ url_for('static', filename=project.files.report.replace('\\', '/')) }}">
+              </iframe>
             </div>
-            <a href="{{ url_for('static', filename=project.files.report.replace('uploads/', '').replace('\\', '/')) }}"
-              class="download-link" download>
+            <a href="{{ url_for('static', filename=project.files.report.replace('\\', '/')) }}" class="download-link"
+              download>
               ⬇️ Download Full Report
             </a>
           </div>
@@ -262,7 +260,7 @@
   // Navigate images in modal
   function changeImage(direction) {
     currentImageIndex += direction;
-    
+
     if (currentImageIndex >= allImages.length) {
       currentImageIndex = 0;
     } else if (currentImageIndex < 0) {
@@ -271,7 +269,7 @@
 
     const modalImg = document.getElementById('modalImage');
     const counter = document.getElementById('modalCounter');
-    
+
     modalImg.style.opacity = '0';
     setTimeout(() => {
       modalImg.src = allImages[currentImageIndex];
@@ -281,7 +279,7 @@
   }
 
   // Keyboard navigation
-  document.addEventListener('keydown', function(event) {
+  document.addEventListener('keydown', function (event) {
     const modal = document.getElementById('imageModal');
     if (modal.classList.contains('active')) {
       if (event.key === 'Escape') {
@@ -295,26 +293,26 @@
   });
 
   // Close modal when clicking outside image
-  document.getElementById('imageModal').addEventListener('click', function(e) {
+  document.getElementById('imageModal').addEventListener('click', function (e) {
     if (e.target === this) {
       closeImageModal();
     }
   });
 
   // Stop autoplay on hover, resume on mouse leave
-  document.addEventListener('DOMContentLoaded', function() {
+  document.addEventListener('DOMContentLoaded', function () {
     initSwiper();
     collectImages();
 
     const thumbnailsContainer = document.getElementById('thumbnailsContainer');
     if (thumbnailsContainer && thumbsSwiper) {
-      thumbnailsContainer.addEventListener('mouseenter', function() {
+      thumbnailsContainer.addEventListener('mouseenter', function () {
         if (thumbsSwiper.autoplay) {
           thumbsSwiper.autoplay.stop();
         }
       });
 
-      thumbnailsContainer.addEventListener('mouseleave', function() {
+      thumbnailsContainer.addEventListener('mouseleave', function () {
         if (thumbsSwiper.autoplay) {
           thumbsSwiper.autoplay.start();
         }
