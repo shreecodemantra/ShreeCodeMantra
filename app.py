@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template,send_from_directory
 from config import Config
 from extensions import mongo, mail
 from auth.routes import auth_bp
@@ -27,6 +27,10 @@ app.register_blueprint(user_bp)
 @app.route('/')
 def home():
     return render_template("users/index.html")
+
+@app.route('/sitemap.xml')
+def sitemap():
+    return send_from_directory('.', 'sitemap.xml')
 
 if __name__ == '__main__':
     app.run("0.0.0.0", debug=True)
