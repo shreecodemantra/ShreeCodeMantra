@@ -63,8 +63,7 @@
       <div class="col-md-4 mb-5">
         <div class="service-item" style="position: relative;">
           {% if project.files and project.files.main_image %}
-          <img
-            src="{{ url_for('static', filename=project.files.main_image.replace('uploads/', '').replace('\\', '/')) }}"
+          <img src="{{ url_for('static', filename=project.files.main_image.replace('\\', '/')) }}"
             alt="{{ project.title }}" style="height: 220px; object-fit: cover; display: block; width: 100%;"
             onerror="this.onerror=null;this.src='static/assets/images/browse.jpg';">
           {% else %}

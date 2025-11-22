@@ -10,7 +10,7 @@ from datetime import datetime
 admin_bp = Blueprint('admin', __name__, url_prefix='/admin')
 
 # File upload configuration
-UPLOAD_FOLDER = 'static/uploads'
+UPLOAD_FOLDER = 'static/uploads/'
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif', 'pdf', 'zip', 'rar', '7z'}
 ALLOWED_EXTENSIONS1 = {'pdf', 'doc', 'docx'}
 def allowed_file(filename):
