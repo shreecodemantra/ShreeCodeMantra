@@ -1,7 +1,7 @@
 import jwt
 import datetime
 from functools import wraps
-from flask import request, jsonify, current_app, render_template
+from flask import redirect, request, jsonify, current_app, render_template, url_for
 
 def create_jwt_token(user_id, email):
     """Generate JWT token with expiration"""
@@ -41,5 +41,27 @@ def token_required(f):
 
         # attach decoded user info
         request.user = decoded
+        return f(*args, **kwargs)
+    return decorated
+
+
+
+def admin_token_required(f):
+    @wraps(f)
+    def decorated(*args, **kwargs):
+        token = request.cookies.get('admin_token') or request.headers.get('Authorization')
+
+        if not token:
+            return redirect(url_for('admin.admin_login'))
+
+        # If using Bearer token from header
+        if isinstance(token, str) and token.startswith("Bearer "):
+            token = token.replace("Bearer ", "")
+
+        decoded = decode_jwt_token(token)
+        if 'error' in decoded:
+            return redirect(url_for('admin.admin_login'))
+
+        request.admin = decoded
         return f(*args, **kwargs)
     return decorated

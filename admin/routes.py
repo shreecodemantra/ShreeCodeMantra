@@ -3,7 +3,7 @@ from flask import Blueprint, flash, redirect, render_template, request, jsonify,
 from werkzeug.security import check_password_hash
 from werkzeug.utils import secure_filename
 from extensions import mongo
-from auth.auth_utils import create_jwt_token, token_required
+from auth.auth_utils import admin_token_required, create_jwt_token, token_required
 import os
 from datetime import datetime
 
@@ -84,7 +84,7 @@ def admin_login():
     return render_template('admin/admin-login.html')
 
 @admin_bp.route('/dashboard', methods=['GET'])
-# @token_required
+@admin_token_required
 def dashboard():
     """Admin dashboard - protected route."""
     # Get stats for dashboard
@@ -110,14 +110,14 @@ def logout():
     return resp
 
 @admin_bp.route('/add_projects', methods=['GET'])
-# @token_required
+@admin_token_required
 def add_projects():
     """Admin add_projects - protected route."""
     categories = list(mongo.db.categories.find())
     return render_template('admin/add_projects.html', categories=categories)
 
 @admin_bp.route('/add_project', methods=['POST'])
-# @token_required
+@admin_token_required
 def add_project():
     try:
         # Get form data
@@ -195,7 +195,7 @@ def add_project():
         }), 500
 
 @admin_bp.route('/add_category', methods=['POST'])
-# @token_required
+@admin_token_required
 def add_category():
     try:
         # Get form data
@@ -233,13 +233,13 @@ def add_category():
         }), 500
 
 @admin_bp.route('/get_categories')
-# @token_required
+@admin_token_required
 def get_categories():
     categories = list(mongo.db.categories.find({}, {'_id': 0, 'name': 1}))
     return jsonify(categories)
 
 @admin_bp.route('/categories')
-# @token_required
+@admin_token_required
 def view_categories():
     """View all categories."""
     try:
@@ -251,7 +251,7 @@ def view_categories():
         return render_template('admin/categories.html', categories=[])
 
 @admin_bp.route('/projects')
-# @token_required
+@admin_token_required
 def view_projects():
     """View all projects with search and filter functionality."""
     try:
@@ -284,7 +284,7 @@ def view_projects():
         return render_template('admin/projects.html', projects=[])
     
 @admin_bp.route('/project/<project_id>')
-# @token_required
+@admin_token_required
 def view_project(project_id):
     """View single project details."""
     try:
@@ -300,7 +300,7 @@ def view_project(project_id):
         return redirect(url_for('admin.view_projects'))
 
 @admin_bp.route('/project/edit/<project_id>', methods=['GET'])
-# @token_required
+@admin_token_required
 def edit_project_form(project_id):
     """Show edit project form."""
     try:
@@ -320,7 +320,7 @@ def edit_project_form(project_id):
         return redirect(url_for('admin.view_projects'))
 
 @admin_bp.route('/project/edit/<project_id>', methods=['POST'])
-# @token_required
+@admin_token_required
 def update_project(project_id):
     """Update project data."""
     try:
@@ -418,7 +418,7 @@ def update_project(project_id):
         }), 500
 
 @admin_bp.route('/project/delete/<project_id>', methods=['DELETE'])
-# @token_required
+@admin_token_required
 def delete_project(project_id):
     """Delete project and related downloads."""
     try:
@@ -447,7 +447,7 @@ def delete_project(project_id):
         }), 500
 
 @admin_bp.route('/api/project/<project_id>')
-# @token_required
+@admin_token_required
 def get_project_details(project_id):
     """API endpoint to get project details for modal view."""
     try:
@@ -482,7 +482,7 @@ def get_project_details(project_id):
         }), 500
 
 @admin_bp.route('/category/delete/<category_id>', methods=['DELETE'])
-# @token_required
+@admin_token_required
 def delete_category(category_id):
     """Delete category if no projects are using it."""
     try:
@@ -525,7 +525,7 @@ def delete_category(category_id):
         }), 500
 
 @admin_bp.route('/downloads')
-# @token_required
+@admin_token_required
 def view_downloads():
     """View download statistics."""
     try:
@@ -578,7 +578,7 @@ def uploaded_file(filename):
 
 
 @admin_bp.route('/edit_category/<category_id>', methods=['PUT'])
-# @token_required
+@admin_token_required
 def edit_category(category_id):
     try:
         # Get form data
@@ -638,6 +638,7 @@ def edit_category(category_id):
 
 
 @admin_bp.route('/topics', methods=['GET'])
+@admin_token_required
 def topics():
     try:
         topics_list = list(mongo.db.topics.find().sort("created_at", -1))
@@ -650,6 +651,7 @@ def topics():
     
 
 @admin_bp.route('/add_topic', methods=['POST'])
+@admin_token_required
 def add_topic():
     try:
         # Validate required fields
@@ -710,6 +712,7 @@ def add_topic():
         }), 500
 
 @admin_bp.route('/delete_topic/<topic_id>', methods=['DELETE'])
+@admin_token_required
 def delete_topic(topic_id):
     try:
         # Find the topic
@@ -766,7 +769,7 @@ def download_report(filename):
 
 
 @admin_bp.route('/viewmails', methods=['GET'])
-# @token_required
+@admin_token_required
 def viewmails():
     """Admin add_projects - protected route."""
     Mails = list(mongo.db.contact.find())
@@ -775,7 +778,7 @@ def viewmails():
 
 
 @admin_bp.route('/delete-mail/<mail_id>', methods=['DELETE'])
-# @token_required  # Uncomment if you have authentication
+@admin_token_required  # Uncomment if you have authentication
 def delete_mail(mail_id):
     """Delete a contact mail message with enhanced error handling"""
     try:
