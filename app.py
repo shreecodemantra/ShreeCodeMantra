@@ -28,6 +28,8 @@ app.register_blueprint(user_bp)
 def home():
     return render_template("users/index.html")
 
+
+
 @app.route('/sitemap.xml')
 def sitemap():
     return send_from_directory('.', 'sitemap.xml')

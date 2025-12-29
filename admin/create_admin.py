@@ -1,16 +1,19 @@
 from werkzeug.security import generate_password_hash
 from pymongo import MongoClient
+from urllib.parse import quote_plus
 
-# Connect to MongoDB
-client = MongoClient("mongodb://localhost:27017/")
-db = client["shreecodemanta"]
+username = "admin"
+password = "UnknownHacker@2000"
+password_encoded = quote_plus(password)
 
-# Insert admin user
+client = MongoClient(f"mongodb://{username}:{password_encoded}@localhost:27017/shreecodemantra?authSource=admin")
+db = client["shreecodemantra"]
+
 db.admin.insert_one({
-    "name": "Yash Salvi",
-    "email": "yash.salvi1209@gmail.com",
-    "password": generate_password_hash("Yash@1234"),
+    "name": "shree mantra",
+    "email": "shreecodemantra@gmail.com",
+    "password": generate_password_hash(password),
     "role": "admin"
 })
 
-print("✅ Admin user added successfully to 'shreecodemanta.users'")
+print("✅ Admin user added successfully to 'shreecodemantra.admin'")

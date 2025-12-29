@@ -8,6 +8,10 @@ user_bp = Blueprint('users', __name__, url_prefix='/users', static_folder='../st
 def aboutus():
     return render_template('users/about.html')
 
+@user_bp.route('/blogs')
+def blogs():
+    return render_template("users/blog.html")
+
 @user_bp.route('/services', methods=['GET', 'POST'])
 def services():
     try:
