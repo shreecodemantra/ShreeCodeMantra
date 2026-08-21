@@ -5,12 +5,15 @@
 
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="">
+  {% block robots %}{% endblock %}
+  <meta name="description" content="{% block description %}Explore high-quality final-year academic projects with source code, documentation, reports, and full support at Shree Code Mantra.{% endblock %}">
   <meta name="author" content="TemplateMo">
   <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900&display=swap"
     rel="stylesheet">
 
-  <title>Shree Code Mantra - Contact Page</title>
+  <title>{% block title %}Final Year Projects for Computer Science Students | Shree Code Mantra{% endblock %}</title>
+  <link rel="canonical" href="{% block canonical %}{{ request.url }}{% endblock %}">
+  {% block structured_data %}{% endblock %}
   <link rel="icon" type="image/x-icon" href="../../static/images/favicon.ico">
 
   <!-- Bootstrap core CSS -->

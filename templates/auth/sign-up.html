@@ -1,103 +1,90 @@
-{% extends 'auth/header.html'%}
+{% extends 'base.html' %}
+{% block robots %}<meta name="robots" content="noindex, nofollow">{% endblock %}
+
+{% block title %}Sign Up | Shree Code Mantra{% endblock %}
+{% block description %}Create a student profile to browse, download, and request final-year academic project packages.{% endblock %}
+
 {% block content %}
-
 <style>
-  .error-label {
-    color: red;
-    font-size: 11px;
-    display: block;
-    text-align: left;
+  .is-invalid {
+    border-color: #ef4444 !important;
+    background-color: #fef2f2 !important;
   }
-
-  .form-control.is-invalid {
-    border-color: #dc3545;
-  }
-
-  .form-control.is-valid {
-    border-color: #198754;
+  .is-valid {
+    border-color: #10b981 !important;
+    background-color: #ecfdf5 !important;
   }
 </style>
 
-<!-- Page Content -->
-<div class="page-heading header-text">
-  <div class="container">
-    <div class="row">
-      <div class="col-md-12">
-        <h1>Sign Up</h1>
-        <span>feel free to send us a message now!</span>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="callback-form contact-us">
-  <div class="container">
-    <div class="row">
-      <div class="col-md-12">
-        <div class="contact-form">
-          <form id="signupForm" method="post">
-            <div class="row">
-
-              <!-- Full Name -->
-              <div class="col-lg-6 col-md-12 col-sm-12 mb-3">
-                <fieldset>
-                  <input name="name" type="text" class="form-control" id="fullname" placeholder="Full Name">
-                  <small id="nameError" class="error-label"></small>
-                </fieldset>
-              </div>
-
-              <!-- Email -->
-              <div class="col-lg-6 col-md-12 col-sm-12 mb-3">
-                <fieldset>
-                  <input name="email" type="text" class="form-control" id="emailadd" placeholder="E-Mail Address">
-                  <small id="emailError" class="error-label"></small>
-                </fieldset>
-              </div>
-
-              <!-- Password -->
-              <div class="col-lg-6 col-md-12 col-sm-12 mb-3">
-                <fieldset>
-                  <input name="password" type="password" class="form-control" id="password" placeholder="Password">
-                  <small id="passwordError" class="error-label"></small>
-                </fieldset>
-              </div>
-
-              <!-- Confirm Password -->
-              <div class="col-lg-6 col-md-12 col-sm-12 mb-3">
-                <fieldset>
-                  <input name="cpassword" type="password" class="form-control" id="cpassword"
-                    placeholder="Confirm Password">
-                  <small id="cpasswordError" class="error-label"></small>
-                </fieldset>
-              </div>
-
-              <!-- Submit -->
-              <div class="col-lg-12 text-center mt-3">
-                <fieldset>
-                  <button type="submit" id="submit" class="filled-button">Sign Up</button>
-                </fieldset>
-              </div>
-
-              <!-- OTP Field (hidden by default) -->
-              <div class="col-lg-12 col-md-12 col-sm-12 mt-3" id="otpSection" style="display: none;">
-                <fieldset>
-                  <input name="otpInput" type="number" class="form-control" id="otpInput" placeholder="Enter OTP">
-                  <small id="otpError" class="error-label"></small>
-                </fieldset>
-              </div>
-
-              <!-- Buttons -->
-              <div class="col-lg-12 text-center mt-3" id="OtpBtnSection" style="display: none;">
-                <fieldset>
-                  <button id="verifyOtpBtn" class="filled-button">Validate OTP</button>
-                </fieldset>
-              </div>
+<div class="py-16 bg-slate-50 min-h-[85vh] flex items-center justify-center">
+    <div class="w-full max-w-xl px-4">
+        
+        <div class="bg-white rounded-2xl border border-slate-100 p-6 sm:p-8 shadow-md space-y-6">
+            <!-- Header Info -->
+            <div class="text-center space-y-2">
+                <h1 class="text-2xl font-extrabold text-slate-900">Create Your Profile</h1>
+                <p class="text-sm text-slate-500">Register to access verified academic projects and guides</p>
             </div>
-          </form>
+
+            <!-- Form -->
+            <form id="signupForm" class="space-y-4">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <!-- Full Name -->
+                    <div class="space-y-1.5">
+                        <label for="fullname" class="text-xs font-bold text-slate-700 uppercase tracking-wider">Full Name</label>
+                        <input name="name" type="text" class="block w-full px-4 py-2.5 border border-slate-200 rounded-xl bg-slate-50/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand/20 focus:border-brand text-sm transition" id="fullname" placeholder="John Doe">
+                        <small id="nameError" class="text-xs text-red-500 font-semibold block"></small>
+                    </div>
+
+                    <!-- Email -->
+                    <div class="space-y-1.5">
+                        <label for="emailadd" class="text-xs font-bold text-slate-700 uppercase tracking-wider">Email Address</label>
+                        <input name="email" type="text" class="block w-full px-4 py-2.5 border border-slate-200 rounded-xl bg-slate-50/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand/20 focus:border-brand text-sm transition" id="emailadd" placeholder="john@example.com">
+                        <small id="emailError" class="text-xs text-red-500 font-semibold block"></small>
+                    </div>
+
+                    <!-- Password -->
+                    <div class="space-y-1.5">
+                        <label for="password" class="text-xs font-bold text-slate-700 uppercase tracking-wider">Password</label>
+                        <input name="password" type="password" class="block w-full px-4 py-2.5 border border-slate-200 rounded-xl bg-slate-50/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand/20 focus:border-brand text-sm transition" id="password" placeholder="••••••••">
+                        <small id="passwordError" class="text-xs text-red-500 font-semibold block"></small>
+                    </div>
+
+                    <!-- Confirm Password -->
+                    <div class="space-y-1.5">
+                        <label for="cpassword" class="text-xs font-bold text-slate-700 uppercase tracking-wider">Confirm Password</label>
+                        <input name="cpassword" type="password" class="block w-full px-4 py-2.5 border border-slate-200 rounded-xl bg-slate-50/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand/20 focus:border-brand text-sm transition" id="cpassword" placeholder="••••••••">
+                        <small id="cpasswordError" class="text-xs text-red-500 font-semibold block"></small>
+                    </div>
+                </div>
+
+                <!-- OTP Input (hidden by default) -->
+                <div class="space-y-1.5 pt-2" id="otpSection" style="display: none;">
+                    <label for="otpInput" class="text-xs font-bold text-slate-700 uppercase tracking-wider">Verification OTP Code</label>
+                    <input name="otpInput" type="number" class="block w-full px-4 py-2.5 border border-slate-200 rounded-xl bg-slate-50/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand/20 focus:border-brand text-sm transition" id="otpInput" placeholder="Enter 6-digit OTP code">
+                    <small id="otpError" class="text-xs text-red-500 font-semibold block"></small>
+                </div>
+
+                <!-- Sign Up Actions -->
+                <div class="pt-2">
+                    <button type="submit" id="submit" class="w-full inline-flex justify-center items-center px-4 py-2.5 text-sm font-semibold text-white bg-brand hover:bg-brand-hover rounded-xl shadow-sm transition duration-150">
+                        Sign Up
+                    </button>
+                    
+                    <button id="verifyOtpBtn" class="hidden w-full inline-flex justify-center items-center px-4 py-2.5 text-sm font-semibold text-white bg-emerald-600 hover:bg-emerald-700 rounded-xl shadow-sm transition duration-150" style="display: none;">
+                        Validate OTP
+                    </button>
+                </div>
+
+                <!-- Links -->
+                <div class="text-center text-xs text-slate-550 pt-2">
+                    Already have an account? 
+                    <a href="{{ url_for('auth.sign_in') }}" class="font-bold text-brand hover:underline">Sign In</a>
+                </div>
+            </form>
         </div>
-      </div>
+
     </div>
-  </div>
 </div>
 
 <script>
@@ -105,7 +92,6 @@
     const form = document.getElementById("signupForm");
     const verifyOtpBtn = document.getElementById("verifyOtpBtn");
     const otpSection = document.getElementById("otpSection");
-    const OtpBtnSection = document.getElementById("OtpBtnSection");
     const submit = document.getElementById("submit");
 
     const fields = {
@@ -124,7 +110,6 @@
       otpInput: document.getElementById("otpError")
     };
 
-    // Mark field valid/invalid
     function markInvalid(field) {
       field.classList.add("is-invalid");
       field.classList.remove("is-valid");
@@ -134,19 +119,18 @@
       field.classList.add("is-valid");
     }
 
-    // Validate functions
     function validateName() {
       const value = fields.name.value.trim();
       if (value === "") {
-        errors.name.textContent = " * Name is required.";
+        errors.name.textContent = "Name is required.";
         markInvalid(fields.name);
         return false;
       } else if (value.split(" ").length < 2) {
-        errors.name.textContent = " * Enter both first and last name.";
+        errors.name.textContent = "Enter both first and last name.";
         markInvalid(fields.name);
         return false;
       } else if (!/^[A-Za-z\s]+$/.test(value)) {
-        errors.name.textContent = " * Name can only contain letters.";
+        errors.name.textContent = "Name can only contain letters.";
         markInvalid(fields.name);
         return false;
       }
@@ -159,11 +143,11 @@
       const value = fields.email.value.trim();
       const pattern = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
       if (value === "") {
-        errors.email.textContent = " * Email is required.";
+        errors.email.textContent = "Email is required.";
         markInvalid(fields.email);
         return false;
       } else if (!pattern.test(value)) {
-        errors.email.textContent = " * Please enter a valid email address.";
+        errors.email.textContent = "Please enter a valid email address.";
         markInvalid(fields.email);
         return false;
       }
@@ -175,23 +159,23 @@
     function validatePassword() {
       const value = fields.password.value.trim();
       if (value === "") {
-        errors.password.textContent = " * Password is required.";
+        errors.password.textContent = "Password is required.";
         markInvalid(fields.password);
         return false;
       } else if (value.length < 8) {
-        errors.password.textContent = " * Password must be at least 8 characters.";
+        errors.password.textContent = "Password must be at least 8 characters.";
         markInvalid(fields.password);
         return false;
       } else if (!/[A-Z]/.test(value)) {
-        errors.password.textContent = " * Include at least one uppercase letter.";
+        errors.password.textContent = "Include at least one uppercase letter.";
         markInvalid(fields.password);
         return false;
       } else if (!/[0-9]/.test(value)) {
-        errors.password.textContent = " * Include at least one number.";
+        errors.password.textContent = "Include at least one number.";
         markInvalid(fields.password);
         return false;
       } else if (!/[!@#$%^&*]/.test(value)) {
-        errors.password.textContent = " * Include at least one special character (!@#$%^&*).";
+        errors.password.textContent = "Include at least one special character (!@#$%^&*).";
         markInvalid(fields.password);
         return false;
       }
@@ -203,11 +187,11 @@
     function validateCPassword() {
       const value = fields.cpassword.value.trim();
       if (value === "") {
-        errors.cpassword.textContent = " * Confirm your password.";
+        errors.cpassword.textContent = "Confirm your password.";
         markInvalid(fields.cpassword);
         return false;
       } else if (value !== fields.password.value.trim()) {
-        errors.cpassword.textContent = " * Passwords do not match.";
+        errors.cpassword.textContent = "Passwords do not match.";
         markInvalid(fields.cpassword);
         return false;
       }
@@ -216,13 +200,11 @@
       return true;
     }
 
-    // 🟢 Real-time validation (hides errors while typing)
     fields.name.addEventListener("input", validateName);
     fields.email.addEventListener("input", validateEmail);
     fields.password.addEventListener("input", validatePassword);
     fields.cpassword.addEventListener("input", validateCPassword);
 
-    // On blur validation (backup check)
     fields.name.addEventListener("blur", validateName);
     fields.email.addEventListener("blur", validateEmail);
     fields.password.addEventListener("blur", validatePassword);
@@ -239,10 +221,8 @@
 
       if (!valid) return;
 
-      // disable sign-up button to prevent multiple clicks
       submit.disabled = true;
 
-      // Step 1: send sign-up + OTP request
       $.ajax({
         type: "POST",
         url: "/auth/sign-up",
@@ -251,10 +231,12 @@
           if (response.status === "otp_sent") {
             alert(response.message);
             otpSection.style.display = "block";
-            OtpBtnSection.style.display = "block";
-            verifyOtpBtn.style.display = "inline-block";
+            
+            // Swap display of action buttons
+            submit.style.display = "none";
+            verifyOtpBtn.style.display = "inline-flex";
+            verifyOtpBtn.classList.remove("hidden");
 
-            // disable other fields (user can’t change them)
             $("#signupForm input").not("#otpInput").prop("disabled", true);
           } else if (response.status === "fail") {
             alert(response.error);
@@ -268,41 +250,42 @@
       });
     });
 
-    // Step 2: Verify OTP
     verifyOtpBtn.addEventListener("click", function (e) {
       e.preventDefault();
       const otpVal = fields.otpInput.value.trim();
-      console.log(otpVal);
       if (!otpVal) {
-        document.getElementById("otpError").textContent = " * OTP is required.";
+        errors.otpInput.textContent = "OTP is required.";
+        markInvalid(fields.otpInput);
         return;
       }
-      else {
-        var formData = $("#signupForm")
-          .find("input, select, textarea") // include all input types
-          .map(function () {
-            return { name: this.name, value: $(this).val() };
-          }).get();
-        $.ajax({
-          type: "POST",
-          url: "/auth/otpvalidate",
-          data: formData,
-          success: function (response) {
-            if (response.status === "success") {
-              alert(response.message);
-              window.location.replace("/auth/sign-in");
-            } else {
-              alert(response.error);
-            }
-          },
-          error: function (e) {
-            console.error("ERROR:", e);
+      
+      errors.otpInput.textContent = "";
+      markValid(fields.otpInput);
+
+      var formData = $("#signupForm")
+        .find("input, select, textarea")
+        .map(function () {
+          return { name: this.name, value: $(this).val() };
+        }).get();
+
+      $.ajax({
+        type: "POST",
+        url: "/auth/otpvalidate",
+        data: formData,
+        success: function (response) {
+          if (response.status === "success") {
+            alert(response.message);
+            window.location.replace("/auth/sign-in");
+          } else {
+            alert(response.error);
           }
-        });
-      }
+        },
+        error: function (e) {
+          console.error("ERROR:", e);
+        }
+      });
     });
 
   });
 </script>
-
 {% endblock %}

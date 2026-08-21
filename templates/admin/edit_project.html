@@ -1,63 +1,32 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'admin/admin_base.html' %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Project - Shree Code Mantra</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <style>
-        .file-input-label {
-            transition: all 0.3s ease;
-        }
+{% block title %}Edit Project{% endblock %}
 
-        .file-input-label:hover {
-            transform: translateY(-2px);
-        }
+{% block head %}
+<style>
+    .file-input-label {
+        transition: all 0.3s ease;
+    }
 
-        .image-preview {
-            transition: all 0.3s ease;
-        }
+    .file-input-label:hover {
+        transform: translateY(-2px);
+    }
 
-        .image-preview:hover {
-            transform: scale(1.05);
-        }
+    .image-preview {
+        transition: all 0.3s ease;
+    }
 
-        .form-section {
-            transition: all 0.3s ease;
-        }
-    </style>
-</head>
+    .image-preview:hover {
+        transform: scale(1.05);
+    }
 
-<body class="bg-gradient-to-br from-gray-50 to-blue-50 min-h-screen">
-    <!-- Navigation Header -->
-    <header class="bg-white shadow-sm border-b border-gray-200 sticky top-0 z-10">
-        <div class="container mx-auto px-4 py-3">
-            <div class="flex items-center justify-between">
-                <div class="flex items-center space-x-4">
-                    <a href="{{ url_for('admin.view_projects') }}"
-                        class="flex items-center text-gray-600 hover:text-blue-600 transition-colors duration-200">
-                        <i class="fas fa-arrow-left mr-2"></i>
-                        <span class="hidden sm:inline">Back to Projects</span>
-                    </a>
-                    <div class="h-6 w-px bg-gray-300"></div>
-                    <div>
-                        <h1 class="text-xl font-bold text-gray-800">Shree Code Mantra</h1>
-                    </div>
-                </div>
-                <div class="flex items-center space-x-4">
-                    <div class="hidden sm:flex items-center space-x-2 text-sm text-gray-600">
-                        <i class="fas fa-user-circle"></i>
-                        <span>Admin</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </header>
+    .form-section {
+        transition: all 0.3s ease;
+    }
+</style>
+{% endblock %}
 
-    <!-- Main Content -->
+{% block content %}
     <div class="container mx-auto px-4 py-6">
         <div class="max-w-6xl mx-auto">
             <!-- Page Header -->
@@ -86,7 +55,7 @@
                 </div>
 
                 <!-- Form Content -->
-                <form id="editProjectForm" action="{{ url_for('admin.update_project', project_id=project._id) }}"
+                <form id="editProjectForm" action="{{ url_for('admin.update_project', id_or_slug=project._id) }}"
                     method="POST" enctype="multipart/form-data" class="p-6">
                     <!-- Basic Information Section -->
                     <div class="form-section mb-10">
@@ -239,30 +208,6 @@
                                     </label>
                                 </div>
 
-                                <!-- Current Additional Images Preview -->
-                                <!-- {% if project.files and project.files.images %}
-                                <div class="mt-4">
-                                    <p class="text-sm font-medium text-gray-700 mb-2">Current Additional Images:</p>
-                                    <div class="flex flex-wrap gap-4">
-                                        {% for image in project.files.images %}
-                                        <div class="relative group">
-                                            <img src="{{ url_for('static', filename=project.files.main_image.replace('\\', '/')) }}"
-                                                alt="Additional image {{ loop.index }}"
-                                                class="w-32 h-32 object-cover rounded-lg shadow-md image-preview border border-gray-200">
-                                            <div
-                                                class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 rounded-lg transition-all duration-200 flex items-center justify-center">
-                                                <span
-                                                    class="text-white opacity-0 group-hover:opacity-100 transition-opacity duration-200 text-xs">
-                                                    Image {{ loop.index }}
-                                                </span>
-                                            </div>
-                                        </div>
-
-                                        {% endfor %}
-                                    </div>
-                                </div>
-                                {% endif %} -->
-
                                 {% if project.files and project.files.images %}
                                 <div class="mt-4">
                                     <p class="text-sm font-medium text-gray-700 mb-2">Current Additional Images:</p>
@@ -400,7 +345,9 @@
             </div>
         </div>
     </div>
+{% endblock %}
 
+{% block scripts %}
     <script>
         document.getElementById('editProjectForm').addEventListener('submit', async function (e) {
             e.preventDefault();
@@ -533,6 +480,4 @@
             }
         });
     </script>
-</body>
-
-</html>
+{% endblock %}

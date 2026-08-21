@@ -6,6 +6,8 @@ from extensions import mongo
 from auth.auth_utils import admin_token_required, create_jwt_token, token_required
 import os
 from datetime import datetime
+from utils.slug import slugify
+import math
 
 admin_bp = Blueprint('admin', __name__, url_prefix='/admin')
 
@@ -75,7 +77,8 @@ def admin_login():
                 httponly=True,
                 secure=False,   # Set True in production (HTTPS)
                 samesite="Strict",
-                max_age=2 * 60 * 60  # 2 hours
+                max_age=2 * 60 * 60,  # 2 hours
+                path='/'
             )
             return resp
 
@@ -106,7 +109,7 @@ def logout():
         "status": "success",
         "message": "Admin logged out!"
     }))
-    resp.delete_cookie("admin_token")
+    resp.delete_cookie("admin_token", path='/')
     return resp
 
 @admin_bp.route('/add_projects', methods=['GET'])
@@ -170,6 +173,7 @@ def add_project():
         # Create project document
         project = {
             "title": title,
+            "slug": slugify(title),
             "category": category,
             "description": description,
             "tech_stack": tech_stack,
@@ -250,6 +254,15 @@ def view_categories():
         flash('Error retrieving categories', 'error')
         return render_template('admin/categories.html', categories=[])
 
+def get_project_by_id_or_slug(id_or_slug):
+    """Helper to fetch a project by ObjectId or slug."""
+    project = None
+    if len(id_or_slug) == 24 and all(c in '0123456789abcdefABCDEF' for c in id_or_slug):
+        project = mongo.db.projects.find_one({'_id': ObjectId(id_or_slug)})
+    if not project:
+        project = mongo.db.projects.find_one({'slug': id_or_slug})
+    return project
+
 @admin_bp.route('/projects')
 @admin_token_required
 def view_projects():
@@ -257,6 +270,8 @@ def view_projects():
     try:
         search_query = request.args.get('search', '')
         category_filter = request.args.get('category', '')
+        page = request.args.get('page', 1, type=int)
+        per_page = 9
         
         query = {}
         
@@ -269,26 +284,38 @@ def view_projects():
         
         if category_filter:
             query['category'] = category_filter
+            
+        total_projects = mongo.db.projects.count_documents(query)
+        total_pages = math.ceil(total_projects / per_page)
         
-        projects = list(mongo.db.projects.find(query).sort('upload_date', -1))
+        if page < 1:
+            page = 1
+        elif page > total_pages and total_pages > 0:
+            page = total_pages
+            
+        skip = (page - 1) * per_page
+        
+        projects = list(mongo.db.projects.find(query).sort('upload_date', -1).skip(skip).limit(per_page))
         categories = list(mongo.db.categories.find())
         
         return render_template('admin/projects.html', 
                              projects=projects, 
                              categories=categories,
                              search_query=search_query,
-                             category_filter=category_filter)
+                             category_filter=category_filter,
+                             page=page,
+                             total_pages=total_pages)
     except Exception as e:
         current_app.logger.error(f"Error retrieving projects: {str(e)}")
         flash('Error retrieving projects', 'error')
-        return render_template('admin/projects.html', projects=[])
+        return render_template('admin/projects.html', projects=[], page=1, total_pages=1)
     
-@admin_bp.route('/project/<project_id>')
+@admin_bp.route('/project/<id_or_slug>')
 @admin_token_required
-def view_project(project_id):
+def view_project(id_or_slug):
     """View single project details."""
     try:
-        project = mongo.db.projects.find_one({'_id': ObjectId(project_id)})
+        project = get_project_by_id_or_slug(id_or_slug)
         if not project:
             flash('Project not found', 'error')
             return redirect(url_for('admin.view_projects'))
@@ -299,12 +326,12 @@ def view_project(project_id):
         flash('Error retrieving project', 'error')
         return redirect(url_for('admin.view_projects'))
 
-@admin_bp.route('/project/edit/<project_id>', methods=['GET'])
+@admin_bp.route('/project/edit/<id_or_slug>', methods=['GET'])
 @admin_token_required
-def edit_project_form(project_id):
+def edit_project_form(id_or_slug):
     """Show edit project form."""
     try:
-        project = mongo.db.projects.find_one({'_id': ObjectId(project_id)})
+        project = get_project_by_id_or_slug(id_or_slug)
         categories = list(mongo.db.categories.find())
         
         if not project:
@@ -315,13 +342,15 @@ def edit_project_form(project_id):
                              project=project, 
                              categories=categories)
     except Exception as e:
+        import traceback
+        traceback.print_exc()
         current_app.logger.error(f"Error loading project for editing: {str(e)}")
-        flash('Error loading project', 'error')
+        flash(f'Error loading project: {str(e)}', 'error')
         return redirect(url_for('admin.view_projects'))
 
-@admin_bp.route('/project/edit/<project_id>', methods=['POST'])
+@admin_bp.route('/project/edit/<id_or_slug>', methods=['POST'])
 @admin_token_required
-def update_project(project_id):
+def update_project(id_or_slug):
     """Update project data."""
     try:
         # Get form data
@@ -332,7 +361,7 @@ def update_project(project_id):
         price = float(request.form.get('price', 0))
         
         # Get existing project data
-        existing_project = mongo.db.projects.find_one({'_id': ObjectId(project_id)})
+        existing_project = get_project_by_id_or_slug(id_or_slug)
         if not existing_project:
             return jsonify({
                 "success": False,
@@ -385,6 +414,7 @@ def update_project(project_id):
         # Update project document
         update_data = {
             "title": title,
+            "slug": slugify(title),
             "category": category,
             "description": description,
             "tech_stack": tech_stack,
@@ -395,7 +425,7 @@ def update_project(project_id):
         
         # Update in MongoDB
         result = mongo.db.projects.update_one(
-            {'_id': ObjectId(project_id)},
+            {'_id': existing_project['_id']},
             {'$set': update_data}
         )
         
@@ -417,17 +447,24 @@ def update_project(project_id):
             "message": f"Error updating project: {str(e)}"
         }), 500
 
-@admin_bp.route('/project/delete/<project_id>', methods=['DELETE'])
+@admin_bp.route('/project/delete/<id_or_slug>', methods=['DELETE'])
 @admin_token_required
-def delete_project(project_id):
+def delete_project(id_or_slug):
     """Delete project and related downloads."""
     try:
+        project = get_project_by_id_or_slug(id_or_slug)
+        if not project:
+            return jsonify({
+                "success": False,
+                "message": "Project not found"
+            }), 404
+            
         # Delete project
-        result = mongo.db.projects.delete_one({'_id': ObjectId(project_id)})
+        result = mongo.db.projects.delete_one({'_id': project['_id']})
         
         if result.deleted_count > 0:
             # Delete related downloads
-            mongo.db.downloads.delete_many({'project_id': ObjectId(project_id)})
+            mongo.db.downloads.delete_many({'project_id': project['_id']})
             
             return jsonify({
                 "success": True,
@@ -446,12 +483,12 @@ def delete_project(project_id):
             "message": f"Error deleting project: {str(e)}"
         }), 500
 
-@admin_bp.route('/api/project/<project_id>')
+@admin_bp.route('/api/project/<id_or_slug>')
 @admin_token_required
-def get_project_details(project_id):
+def get_project_details(id_or_slug):
     """API endpoint to get project details for modal view."""
     try:
-        project = mongo.db.projects.find_one({'_id': ObjectId(project_id)})
+        project = get_project_by_id_or_slug(id_or_slug)
         if project:
             # Convert ObjectId to string for JSON serialization
             project['_id'] = str(project['_id'])

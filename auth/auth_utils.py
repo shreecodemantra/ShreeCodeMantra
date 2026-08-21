@@ -12,6 +12,8 @@ def create_jwt_token(user_id, email):
         'iat': datetime.datetime.utcnow()
     }
     token = jwt.encode(payload, current_app.config['SECRET_KEY'], algorithm='HS256')
+    if isinstance(token, bytes):
+        token = token.decode('utf-8')
     return token
 
 def decode_jwt_token(token):

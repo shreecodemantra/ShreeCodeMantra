@@ -1,84 +1,64 @@
-{% extends 'auth/header.html'%}
+{% extends 'base.html' %}
+{% block robots %}<meta name="robots" content="noindex, nofollow">{% endblock %}
+
+{% block title %}Sign In | Shree Code Mantra{% endblock %}
+{% block description %}Log in to your Shree Code Mantra student profile to manage your project library and access career mentorship.{% endblock %}
+
 {% block content %}
-
-<!-- Page Content -->
-<div class="page-heading header-text">
-  <div class="container">
-    <div class="row">
-      <div class="col-md-12">
-        <h1>Sign In</h1>
-        <span>feel free to send us a message now!</span>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="callback-form contact-us">
-  <div class="container">
-    <div class="row">
-      <!-- <div class="col-md-12">
-        <div class="section-heading">
-          <h2><em>Sign In</em></h2>
-          <span>Suspendisse a ante in neque iaculis lacinia</span>
-        </div>
-      </div> -->
-      <div class="col-md-12">
-        <div class="contact-form">
-          <form id="signinForm" action="" method="get">
-            <div class="row">
-
-              <!-- Email -->
-              <div class="col-lg-12 col-md-12 col-sm-12 mb-3">
-                <fieldset>
-                  <input name="email" type="text" class="form-control" id="emailadd" placeholder="E-Mail Address">
-                  <small id="emailError" class="error-label"></small>
-                </fieldset>
-              </div>
-
-              <!-- Password -->
-              <div class="col-lg-12 col-md-12 col-sm-12 mb-3">
-                <fieldset>
-                  <input name="password" type="password" class="form-control" id="password" placeholder="Password">
-                  <small id="passwordError" class="error-label"></small>
-                </fieldset>
-              </div>
-
-              <div class="col-lg-12">
-                <fieldset>
-                  <button type="submit" id="submit" class="filled-button">Sign In</button>
-                </fieldset>
-              </div>
-
-              <div class="col-lg-12 text-center mt-3">
-                <p style="margin-top:10px;">
-                  Don’t have an account?
-                  <a href="{{ url_for('auth.sign_up') }}" style="color:#007bff; text-decoration:none;">Sign Up</a>
-                </p>
-              </div>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
 <style>
-  .error-label {
-    color: red;
-    font-size: 11px;
-    display: block;
-    text-align: left;
+  .is-invalid {
+    border-color: #ef4444 !important;
+    background-color: #fef2f2 !important;
   }
-
-  .form-control.is-invalid {
-    border-color: #dc3545;
-  }
-
-  .form-control.is-valid {
-    border-color: #198754;
+  .is-valid {
+    border-color: #10b981 !important;
+    background-color: #ecfdf5 !important;
   }
 </style>
+
+<div class="py-16 bg-slate-50 min-h-[75vh] flex items-center justify-center">
+    <div class="w-full max-w-md px-4">
+        
+        <div class="bg-white rounded-2xl border border-slate-100 p-6 sm:p-8 shadow-md space-y-6">
+            <!-- Header Info -->
+            <div class="text-center space-y-2">
+                <h1 class="text-2xl font-extrabold text-slate-900">Welcome Back</h1>
+                <p class="text-sm text-slate-500">Sign in to manage your student project resources</p>
+            </div>
+
+            <!-- Form -->
+            <form id="signinForm" class="space-y-4">
+                <!-- Email -->
+                <div class="space-y-1.5">
+                    <label for="emailadd" class="text-xs font-bold text-slate-705 uppercase tracking-wider">Email Address</label>
+                    <input name="email" type="text" class="block w-full px-4 py-2.5 border border-slate-200 rounded-xl bg-slate-50/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand/20 focus:border-brand text-sm transition" id="emailadd" placeholder="john@example.com">
+                    <small id="emailError" class="text-xs text-red-500 font-semibold block"></small>
+                </div>
+
+                <!-- Password -->
+                <div class="space-y-1.5">
+                    <label for="password" class="text-xs font-bold text-slate-705 uppercase tracking-wider">Password</label>
+                    <input name="password" type="password" class="block w-full px-4 py-2.5 border border-slate-200 rounded-xl bg-slate-50/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand/20 focus:border-brand text-sm transition" id="password" placeholder="••••••••">
+                    <small id="passwordError" class="text-xs text-red-500 font-semibold block"></small>
+                </div>
+
+                <!-- Submit -->
+                <div class="pt-2">
+                    <button type="submit" id="submit" class="w-full inline-flex justify-center items-center px-4 py-2.5 text-sm font-semibold text-white bg-brand hover:bg-brand-hover rounded-xl shadow-sm transition duration-150">
+                        Sign In
+                    </button>
+                </div>
+
+                <!-- Links -->
+                <div class="text-center text-xs text-slate-550 pt-2">
+                    Don't have an account? 
+                    <a href="{{ url_for('auth.sign_up') }}" class="font-bold text-brand hover:underline">Get Started</a>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
 
 <script>
   document.addEventListener("DOMContentLoaded", function () {
@@ -94,7 +74,6 @@
       password: document.getElementById("passwordError")
     };
 
-    // Mark field valid/invalid
     function markInvalid(field) {
       field.classList.add("is-invalid");
       field.classList.remove("is-valid");
@@ -108,11 +87,11 @@
       const value = fields.email.value.trim();
       const pattern = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
       if (value === "") {
-        errors.email.textContent = " * Email is required.";
+        errors.email.textContent = "Email is required.";
         markInvalid(fields.email);
         return false;
       } else if (!pattern.test(value)) {
-        errors.email.textContent = " * Please enter a valid email address.";
+        errors.email.textContent = "Please enter a valid email address.";
         markInvalid(fields.email);
         return false;
       }
@@ -124,7 +103,7 @@
     function validatePassword() {
       const value = fields.password.value.trim();
       if (value === "") {
-        errors.password.textContent = " * Password is required.";
+        errors.password.textContent = "Password is required.";
         markInvalid(fields.password);
         return false;
       }
@@ -133,40 +112,34 @@
       return true;
     }
 
-    // 🟢 Real-time validation (hides errors while typing)
     fields.email.addEventListener("input", validateEmail);
     fields.password.addEventListener("input", validatePassword);
 
-    // On blur validation (backup check)
     fields.email.addEventListener("blur", validateEmail);
     fields.password.addEventListener("blur", validatePassword);
 
     form.addEventListener("submit", function (e) {
       e.preventDefault();
 
-      // Run all validations separately
       const isEmailValid = validateEmail();
       const isPasswordValid = validatePassword();
-
-      // Check all together
       const valid = isEmailValid && isPasswordValid;
 
       if (valid) {
+        $("#submit").prop("disabled", true);
         $.ajax({
           type: "POST",
           url: "/auth/sign-in",
           data: $("#signinForm").serialize(),
           success: function (response) {
-            // console.log(response);
             if (response.status == "success") {
               window.location.replace("/");
             }
             else {
-              alert(response.error)
-              var inputs = document.querySelectorAll('input');
-              inputs.forEach(function (input) {
-                input.value = '';
-              });
+              alert(response.error);
+              fields.password.value = '';
+              fields.password.classList.remove("is-valid");
+              $("#submit").prop("disabled", false);
             }
           },
           error: function (e) {
@@ -179,5 +152,4 @@
 
   });
 </script>
-
 {% endblock %}

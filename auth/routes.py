@@ -110,7 +110,8 @@ def sign_in():
                     httponly=True,
                     secure=False,    # True in production
                     samesite="Strict",
-                    max_age=2 * 60 * 60
+                    max_age=2 * 60 * 60,
+                    path='/'
                 )
                 return resp
 
@@ -122,5 +123,5 @@ def sign_in():
 @auth_bp.route('/logout')
 def logout():
     response = redirect('/')
-    response.delete_cookie('token')
+    response.delete_cookie('token', path='/')
     return response

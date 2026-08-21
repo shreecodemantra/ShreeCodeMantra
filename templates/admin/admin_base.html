@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Admin Dashboard{% endblock %} | Shree Code Mantra</title>
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
+    
+    <!-- Google Fonts - Syne & Space Grotesk -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com/3.4.15"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            light: 'rgba(255,85,0,0.15)', 
+                            DEFAULT: '#FF5500',  
+                            hover: '#ff7733',    
+                            dark: '#0a0300',     
+                        },
+                        blue: {
+                            50: '#fff0e6',
+                            100: '#ffdbcc',
+                            200: '#ffb399',
+                            300: '#ff8c66',
+                            400: '#ff6633',
+                            500: '#FF5500',
+                            600: '#e44500',
+                            700: '#cc3d00',
+                            800: '#992e00',
+                            900: '#661f00',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Space Grotesk', 'sans-serif'],
+                        head: ['Syne', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- External Libraries -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    
+    <style>
+        /* Custom scrollbar for sidebar */
+        .sidebar-scrollbar::-webkit-scrollbar { width: 5px; }
+        .sidebar-scrollbar::-webkit-scrollbar-track { background: #f9fafb; }
+        .sidebar-scrollbar::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 5px; }
+        .sidebar-scrollbar::-webkit-scrollbar-thumb:hover { background: #FF5500; }
+    </style>
+    {% block head %}{% endblock %}
+</head>
+
+<body class="bg-[#f8fafc] text-[#0e0e0e] font-sans antialiased selection:bg-brand selection:text-white">
+    <div class="flex h-screen overflow-hidden">
+        
+        <!-- Sidebar Menu (Hidden on mobile) -->
+        <aside class="hidden lg:flex lg:flex-col lg:w-64 bg-white border-r border-slate-200 shadow-sm z-20">
+            <div class="flex items-center justify-center h-20 border-b border-slate-100">
+                <a href="/admin/dashboard" class="text-xl font-head font-extrabold tracking-tight">
+                    SHREE <span class="text-brand">ADMIN</span>
+                </a>
+            </div>
+            
+            <div class="flex flex-col flex-1 overflow-y-auto sidebar-scrollbar py-6">
+                <!-- User Profile -->
+                <div class="flex flex-col items-center justify-center mb-8">
+                    <div class="w-16 h-16 rounded-full bg-brand-light flex items-center justify-center mb-3 border border-brand/20 shadow-sm">
+                        <i class="fa-solid fa-user-shield text-brand text-2xl"></i>
+                    </div>
+                    <h4 class="text-sm font-bold text-slate-800 uppercase tracking-wider">Administrator</h4>
+                </div>
+                
+                <!-- Navigation -->
+                <nav class="flex-1 px-4">
+                    <ul class="space-y-1.5">
+                        {% set current_path = request.path %}
+                        
+                        <li>
+                            <a href="/admin/dashboard" class="flex items-center px-4 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 {% if current_path == '/admin/dashboard' %}bg-brand text-white shadow-md shadow-brand/20{% else %}text-slate-600 hover:bg-brand-light hover:text-brand{% endif %}">
+                                <i class="fas fa-chart-pie w-5 mr-2"></i> Dashboard
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/admin/add_projects" class="flex items-center px-4 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 {% if current_path == '/admin/add_projects' %}bg-brand text-white shadow-md shadow-brand/20{% else %}text-slate-600 hover:bg-brand-light hover:text-brand{% endif %}">
+                                <i class="fas fa-plus-circle w-5 mr-2"></i> Add Projects
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/admin/projects" class="flex items-center px-4 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 {% if current_path == '/admin/projects' %}bg-brand text-white shadow-md shadow-brand/20{% else %}text-slate-600 hover:bg-brand-light hover:text-brand{% endif %}">
+                                <i class="fas fa-folder-open w-5 mr-2"></i> View Projects
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/admin/categories" class="flex items-center px-4 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 {% if current_path == '/admin/categories' %}bg-brand text-white shadow-md shadow-brand/20{% else %}text-slate-600 hover:bg-brand-light hover:text-brand{% endif %}">
+                                <i class="fas fa-tags w-5 mr-2"></i> Categories
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/admin/topics" class="flex items-center px-4 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 {% if current_path == '/admin/topics' %}bg-brand text-white shadow-md shadow-brand/20{% else %}text-slate-600 hover:bg-brand-light hover:text-brand{% endif %}">
+                                <i class="fas fa-book w-5 mr-2"></i> Manage Topics
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/admin/viewmails" class="flex items-center px-4 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 {% if current_path == '/admin/viewmails' %}bg-brand text-white shadow-md shadow-brand/20{% else %}text-slate-600 hover:bg-brand-light hover:text-brand{% endif %}">
+                                <i class="fas fa-envelope w-5 mr-2"></i> View Mails
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+            
+            <div class="p-4 border-t border-slate-100">
+                <a href="#" id="logoutBtn" class="flex items-center justify-center w-full px-4 py-2.5 text-sm font-bold text-slate-600 bg-slate-50 hover:bg-red-50 hover:text-red-600 rounded-xl transition-colors border border-slate-200 hover:border-red-200">
+                    <i class="fas fa-sign-out-alt mr-2"></i> Logout
+                </a>
+            </div>
+        </aside>
+
+        <!-- Main Content Wrapper -->
+        <div class="flex flex-col flex-1 overflow-hidden">
+            <!-- Top Header -->
+            <header class="flex items-center justify-between px-6 h-20 bg-white border-b border-slate-200 shadow-sm z-10">
+                <div class="flex items-center">
+                    <button class="lg:hidden text-slate-500 hover:text-brand focus:outline-none mr-4 transition-colors" id="mobile-menu-button">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                    
+                    <!-- Optional Header Search (Can be overridden by pages) -->
+                    {% block header_search %}
+                    <div class="relative hidden sm:block">
+                        <i class="fas fa-search absolute left-3 top-3 text-slate-400 text-sm"></i>
+                        <input type="text" class="pl-9 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-brand/20 focus:border-brand transition-all w-64" placeholder="Search...">
+                    </div>
+                    {% endblock %}
+                </div>
+                
+                <div class="flex items-center space-x-4">
+                    <a href="/" target="_blank" class="hidden md:flex items-center px-3 py-1.5 text-xs font-semibold text-slate-500 bg-slate-100 hover:bg-slate-200 rounded-lg transition-colors">
+                        <i class="fa-solid fa-arrow-up-right-from-square mr-1.5"></i> View Site
+                    </a>
+                    <button class="relative p-2 text-slate-400 hover:text-brand transition-colors">
+                        <i class="fas fa-bell text-lg"></i>
+                        <span class="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-red-500 ring-2 ring-white"></span>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Page Content -->
+            <main class="flex-1 overflow-y-auto bg-[#f8fafc] p-4 md:p-6 lg:p-8">
+                {% block content %}{% endblock %}
+                
+                <!-- Footer -->
+                <footer class="mt-8 py-4 text-center text-slate-400 text-sm border-t border-slate-200/60">
+                    <p>&copy; 2026 Shree Code Mantra. All rights reserved.</p>
+                </footer>
+            </main>
+        </div>
+    </div>
+
+    <!-- Core Scripts -->
+    <script>
+        // Mobile menu toggle
+        const mobileBtn = document.getElementById('mobile-menu-button');
+        if (mobileBtn) {
+            mobileBtn.addEventListener('click', function () {
+                const sidebar = document.querySelector('aside');
+                sidebar.classList.toggle('hidden');
+                sidebar.classList.toggle('absolute');
+                sidebar.classList.toggle('h-full');
+            });
+        }
+
+        // Logout functionality
+        const logoutBtn = document.getElementById('logoutBtn');
+        if (logoutBtn) {
+            logoutBtn.addEventListener('click', function (e) {
+                e.preventDefault();
+                Swal.fire({
+                    title: 'Logout?',
+                    text: 'Are you sure you want to securely logout?',
+                    icon: 'question',
+                    showCancelButton: true,
+                    confirmButtonColor: '#FF5500',
+                    cancelButtonColor: '#94a3b8',
+                    confirmButtonText: 'Yes, logout',
+                    customClass: {
+                        popup: 'rounded-2xl border border-slate-100 shadow-xl',
+                        confirmButton: 'rounded-xl',
+                        cancelButton: 'rounded-xl'
+                    }
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        fetch("{{ url_for('admin.logout') }}", { method: 'POST' })
+                            .then(response => response.json())
+                            .then(data => {
+                                if (data.status === 'success') {
+                                    window.location.href = "{{ url_for('admin.admin_login') }}";
+                                }
+                            });
+                    }
+                });
+            });
+        }
+    </script>
+    
+    {% block scripts %}{% endblock %}
+</body>
+</html>

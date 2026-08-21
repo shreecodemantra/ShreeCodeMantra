@@ -1,204 +1,405 @@
-{% extends 'auth/header.html'%}
+{% extends 'base.html' %}
+
 {% block content %}
+<!-- HERO -->
+<section class="relative min-h-[90vh] flex items-center justify-center overflow-hidden bg-noise"
+    style="background-image: url('{{ url_for('static', filename='images/space_bg.jpg') }}'); background-size: cover; background-position: center;">
+    <!-- Background Overlay for better text readability -->
+    <div class="absolute inset-0 bg-black/70 z-0"></div>
 
-  <!-- Page Content -->
-  <!-- Banner Starts Here -->
-  <div class="main-banner header-text" id="top">
-    <div class="Modern-Slider">
-      <!-- Item -->
-      <div class="item item-1">
-        <div class="img-fill">
-          <div class="text-content">
-            <h6>Helping Students Build Their Future</h6>
-            <h4>Final Year Academic Projects<br></h4>
-            <p>At <strong>Shree Code Mantra</strong>, we specialize in providing high-quality, industry-level academic
-              projects for CS & IT students. Our projects come with complete guidance, clean code, and easy explanations
-              so you can learn and score confidently.</p>
-            <a href="/users/contact" class="filled-button">contact us</a>
-          </div>
+    <!-- Glow Effect (Replaces Heavy 3D Canvas) -->
+    <div class="absolute inset-0 z-0">
+        <div
+            class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-brand/20 rounded-full blur-[100px] opacity-70">
         </div>
-      </div>
-      <!-- // Item -->
-
-      <!-- Item -->
-      <div class="item item-2">
-        <div class="img-fill">
-          <div class="text-content">
-            <h6>Guidance. Support. Success.</h6>
-            <h4>Project Development<br>&amp; Technical Mentorship</h4>
-            <p>At <strong>Shree Code Mantra</strong>, we provide complete mentorship — from selecting the perfect project
-              topic to final deployment. We deliver ready-made & customized projects using Python, Flask, Django, React,
-              Machine Learning, and more.</p>
-            <a href="/users/services" class="filled-button">our services</a>
-          </div>
-        </div>
-      </div>
-      <!-- // Item -->
-
-      <!-- Item -->
-      <div class="item item-3">
-        <div class="img-fill">
-          <div class="text-content">
-            <h6>Learn. Build. Grow.</h6>
-            <h4>Smart Learning<br>&amp; Better Career Opportunities</h4>
-            <p>With years of experience supporting students, <strong>Shree Code Mantra</strong> helps you convert your
-              academic project into a strong portfolio piece. Our projects are beginner-friendly yet industry-standard,
-              helping you stand out in interviews.</p>
-            <a href="/users/aboutus" class="filled-button">learn more</a>
-          </div>
-        </div>
-      </div>
-      <!-- // Item -->
     </div>
-  </div>
-  <!-- Banner Ends Here -->
 
-  <div class="request-form">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-8">
-          <h4>Need help choosing the right project?</h4>
-          <span>Share your requirements — we suggest topics, technologies, and complete project solutions.</span>
+    <div class="relative z-10 max-w-4xl mx-auto px-4 text-center">
+        <div class="inline-flex items-center space-x-3 mb-8 opacity-0 animate-[fadeInUp_0.8s_ease_0.2s_forwards]">
+            <div class="w-8 h-px bg-brand"></div>
+            <span class="text-xs font-bold tracking-[0.2em] uppercase text-brand">Academic Project & Career
+                Platform</span>
+            <div class="w-8 h-px bg-brand"></div>
         </div>
-        <div class="col-md-4">
-          <a href="/users/contact" class="border-button">Contact Us</a>
+
+        <h1
+            class="font-head text-4xl sm:text-5xl md:text-7xl lg:text-[5.5rem] font-extrabold leading-[1.05] tracking-tight uppercase mb-8">
+            <div class="opacity-0 animate-[fadeInUp_0.8s_ease_0.4s_forwards]">Build Projects.</div>
+            <div class="opacity-0 animate-[fadeInUp_0.8s_ease_0.6s_forwards]"><span class="text-brand">Learn</span>
+                Technology.</div>
+            <div class="opacity-0 animate-[fadeInUp_0.8s_ease_0.8s_forwards]">Become Ready.</div>
+        </h1>
+
+        <p
+            class="text-lg md:text-xl text-white/60 max-w-2xl mx-auto leading-relaxed mb-12 opacity-0 animate-[fadeInUp_0.8s_ease_1s_forwards]">
+            Practical project development, technical training, and industry-focused learning experiences designed to
+            help computer science students become confident developers.
+        </p>
+
+        <div
+            class="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-6 opacity-0 animate-[fadeInUp_0.8s_ease_1.2s_forwards]">
+            <a href="/users/services"
+                class="w-full sm:w-auto bg-transparent border border-black/20 hover:border-brand hover:text-brand text-white px-8 py-4 rounded text-sm font-bold tracking-wide uppercase transition-all transform hover:-translate-y-1">
+                Explore Projects →
+            </a>
+            <a href="/users/topics"
+                class="w-full sm:w-auto bg-transparent border border-black/20 hover:border-brand hover:text-brand text-white px-8 py-4 rounded text-sm font-bold tracking-wide uppercase transition-all transform hover:-translate-y-1">
+                Start Learning
+            </a>
         </div>
-      </div>
     </div>
-  </div>
+</section>
 
-  <div class="fun-facts">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-6">
-          <div class="left-content">
-            <span>Why Students Trust Us</span>
-            <h2>Reliable Solutions for Your <em>Academic Success</em></h2>
-            <p>We provide complete academic project packages including source code, reports, PPT files, diagrams,
-              explanation videos, and VIVA support. Our projects are easy to understand, well-structured, and built with
-              real-world technologies used in today's industry.
-              <br><br>Whether you're a beginner or advanced student, we ensure you get high-quality work and complete
-              confidence before submission.
-            </p>
-            <a href="" class="filled-button">Read More</a>
-          </div>
+<!-- TICKER -->
+<div class="bg-brand py-4 overflow-hidden border-y border-brand-hover">
+    <div class="flex animate-scroll-x whitespace-nowrap">
+        {% for _ in range(3) %}
+        <div class="flex items-center space-x-12 px-6">
+            <span class="font-head text-sm font-bold tracking-[0.15em] uppercase text-white">Python</span>
+            <span class="text-white/50 text-xs">✦</span>
+            <span class="font-head text-sm font-bold tracking-[0.15em] uppercase text-white">Flask</span>
+            <span class="text-white/50 text-xs">✦</span>
+            <span class="font-head text-sm font-bold tracking-[0.15em] uppercase text-white">Django</span>
+            <span class="text-white/50 text-xs">✦</span>
+            <span class="font-head text-sm font-bold tracking-[0.15em] uppercase text-white">Artificial
+                Intelligence</span>
+            <span class="text-white/50 text-xs">✦</span>
+            <span class="font-head text-sm font-bold tracking-[0.15em] uppercase text-white">Machine Learning</span>
+            <span class="text-white/50 text-xs">✦</span>
+            <span class="font-head text-sm font-bold tracking-[0.15em] uppercase text-white">MongoDB</span>
+            <span class="text-white/50 text-xs">✦</span>
+            <span class="font-head text-sm font-bold tracking-[0.15em] uppercase text-white">FastAPI</span>
+            <span class="text-white/50 text-xs">✦</span>
         </div>
-        <div class="col-md-6 align-self-center">
-          <div class="row">
-            <div class="col-md-6">
-              <div class="count-area-content">
-                <div class="count-digit">24</div>
-                <div class="count-title">Support Hours</div>
-              </div>
-            </div>
-            <div class="col-md-6">
-              <div class="count-area-content">
-                <div class="count-digit">650</div>
-                <div class="count-title">Student Reviews</div>
-              </div>
-            </div>
-            <div class="col-md-6">
-              <div class="count-area-content">
-                <div class="count-digit">300</div>
-                <div class="count-title">Projects Delivered</div>
-              </div>
-            </div>
-            <div class="col-md-6">
-              <div class="count-area-content">
-                <div class="count-digit">26</div>
-                <div class="count-title">Achievements</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+        {% endfor %}
     </div>
-  </div>
+</div>
 
-  <div class="more-info">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-12">
-          <div class="more-info-content">
-            <div class="row">
-              <div class="col-md-6">
-                <div class="left-image">
-                  <img src="static/assets/images/more-info.png" alt="">
+<!-- STATS -->
+<section class="bg-gradient-to-br from-[#0f0400] to-dark-bg border-b border-dark-border py-20 px-4">
+    <div class="max-w-7xl mx-auto">
+        <div
+            class="grid grid-cols-2 lg:grid-cols-4 gap-px bg-brand/20 border border-brand/20 rounded-lg overflow-hidden">
+            <div class="bg-dark-bg/80 backdrop-blur-sm p-6 md:p-10 text-center">
+                <div class="font-head text-4xl md:text-5xl font-extrabold text-white mb-2">300<span
+                        class="text-brand">+</span></div>
+                <div class="text-xs font-semibold tracking-widest uppercase text-dark-muted">Projects Completed</div>
+            </div>
+            <div class="bg-dark-bg/80 backdrop-blur-sm p-6 md:p-10 text-center">
+                <div class="font-head text-4xl md:text-5xl font-extrabold text-white mb-2">650<span
+                        class="text-brand">+</span></div>
+                <div class="text-xs font-semibold tracking-widest uppercase text-dark-muted">Students Mentored</div>
+            </div>
+            <div class="bg-dark-bg/80 backdrop-blur-sm p-6 md:p-10 text-center">
+                <div class="font-head text-4xl md:text-5xl font-extrabold text-white mb-2">50<span
+                        class="text-brand">+</span></div>
+                <div class="text-xs font-semibold tracking-widest uppercase text-dark-muted">Technologies</div>
+            </div>
+            <div class="bg-dark-bg/80 backdrop-blur-sm p-10 text-center">
+                <div class="font-head text-4xl md:text-5xl font-extrabold text-white mb-2">24<span
+                        class="text-brand">/7</span></div>
+                <div class="text-xs font-semibold tracking-widest uppercase text-dark-muted">Learning Support</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- TECH SHOWCASE / ENGINE -->
+<section class="py-24 px-4 bg-dark-surface relative overflow-hidden">
+    <div
+        class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-brand/5 rounded-full blur-[80px] pointer-events-none">
+    </div>
+    <div class="max-w-7xl mx-auto relative z-10">
+        <div class="mb-16">
+            <div class="inline-flex items-center space-x-2 mb-4">
+                <div class="w-6 h-px bg-brand"></div>
+                <span class="text-xs font-bold tracking-[0.2em] uppercase text-brand">Stack Overview</span>
+            </div>
+            <h2 class="font-head text-3xl md:text-5xl font-extrabold uppercase leading-tight mb-6">
+                LEARN THE TECHNOLOGIES<br>BEHIND REAL <span class="text-brand">PRODUCTS.</span>
+            </h2>
+            <p class="text-dark-muted text-lg max-w-lg">Explore architectural frameworks utilized in enterprise
+                services.</p>
+        </div>
+
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-px bg-dark-border border border-dark-border">
+            {% set techs = [
+            ('fa-python', 'Python'), ('fa-fire', 'Flask'), ('fa-cube', 'Django'),
+            ('fa-bolt', 'FastAPI'), ('fa-database', 'MongoDB'), ('fa-brain', 'AI'),
+            ('fa-chart-line', 'Machine Learning'), ('fa-docker', 'Docker'),
+            ('fa-git-alt', 'Git & GitHub'), ('fa-cloud', 'Cloud')
+            ] %}
+            {% for icon, name in techs %}
+            <div
+                class="bg-dark-surface hover:bg-[#111111] p-6 md:p-10 text-center transition-colors group relative overflow-hidden">
+                <div
+                    class="absolute top-0 left-0 w-full h-[2px] bg-brand scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-300">
                 </div>
-              </div>
-              <div class="col-md-6 align-self-center">
-                <div class="right-content">
-                  <span>Who We Are</span>
-                  <h2>Your Trusted Academic <em>Project Partner</em></h2>
-                  <p>We provide professional academic projects for CS, IT, Engineering, BCA, MCA, and BSc CS students.
-                    Our work includes fully documented projects, diagrams, code explanations, and step-by-step support.
-                    <br><br>We focus on making each student confident and interview-ready by offering simple explanations,
-                    practical learning, and real-world project structures.</p>
-                  <a href="#" class="filled-button">Read More</a>
+                <i
+                    class="fa-solid {{ icon }} text-3xl text-brand mb-4 transform group-hover:scale-110 transition-transform duration-300"></i>
+                <div class="font-head text-sm font-bold tracking-wider uppercase">{{ name }}</div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- JOURNEY / METHODOLOGY -->
+<section class="py-24 px-4 bg-dark-bg">
+    <div class="max-w-7xl mx-auto text-center mb-16">
+        <div class="inline-flex items-center space-x-2 mb-4 justify-center">
+            <div class="w-6 h-px bg-brand"></div>
+            <span class="text-xs font-bold tracking-[0.2em] uppercase text-brand">Methodology</span>
+            <div class="w-6 h-px bg-brand"></div>
+        </div>
+        <h2 class="font-head text-3xl md:text-5xl font-extrabold uppercase leading-tight mb-6">
+            FROM STUDENT TO<br><span class="text-brand">INDUSTRY-READY</span> DEVELOPER.
+        </h2>
+        <p class="text-dark-muted text-lg max-w-xl mx-auto">We guide you through a step-by-step learning progression,
+            transforming concepts into industry-ready deployment packages.</p>
+    </div>
+
+    <div class="max-w-7xl mx-auto relative px-4">
+        <div
+            class="absolute top-1/2 left-0 w-full h-px bg-gradient-to-r from-transparent via-brand to-transparent -translate-y-1/2 z-0 hidden md:block">
+        </div>
+        <div
+            class="flex flex-col md:flex-row items-center justify-between space-y-10 md:space-y-0 overflow-x-auto pb-8 snap-x relative z-10">
+            {% set steps = [
+            ('Discover', 'Select IEEE synopses'), ('Learn', 'Deep-dive into logic'),
+            ('Build', 'Backend integration'), ('Practice', 'Execute & debug'),
+            ('Showcase', 'Deploy models online'), ('Grow', 'Portfolio value')
+            ] %}
+            {% for title, desc in steps %}
+            <div class="flex flex-col items-center w-full md:w-32 flex-shrink-0 snap-center group">
+                <div
+                    class="w-14 h-14 rounded-full bg-dark-bg border-2 border-dark-border flex items-center justify-center font-bold text-lg mb-4 transition-all duration-300 group-hover:border-brand group-hover:bg-brand/10 group-hover:shadow-[0_0_20px_rgba(255,85,0,0.3)]">
+                    {{ loop.index }}
                 </div>
-              </div>
+                <div
+                    class="text-xs font-bold tracking-widest uppercase text-white/50 group-hover:text-white transition-colors mb-2 text-center">
+                    {{ title }}</div>
+                <div class="text-[0.65rem] text-dark-muted text-center leading-relaxed px-2">{{ desc }}</div>
             </div>
-          </div>
+            {% if not loop.last %}
+            <div class="text-brand/40 text-xl hidden md:block">→</div>
+            {% endif %}
+            {% endfor %}
         </div>
-      </div>
     </div>
-  </div>
+</section>
 
-  <div class="testimonials">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-12">
-          <div class="section-heading">
-            <h2>What Students Say <em>About Us</em></h2>
-            <span>Feedback from students we’ve proudly helped</span>
-          </div>
+<!-- CURRICULUM -->
+<section class="py-24 px-4 bg-dark-surface border-t border-dark-border">
+    <div class="max-w-7xl mx-auto">
+        <div class="flex flex-col lg:flex-row lg:items-end justify-between mb-16 space-y-6 lg:space-y-0">
+            <div>
+                <div class="inline-flex items-center space-x-2 mb-4">
+                    <div class="w-6 h-px bg-brand"></div>
+                    <span class="text-xs font-bold tracking-[0.2em] uppercase text-brand">Training Curriculum</span>
+                </div>
+                <h2 class="font-head text-3xl md:text-5xl font-extrabold uppercase leading-tight">
+                    LEARN BY <span class="text-brand">BUILDING.</span>
+                </h2>
+            </div>
+            <div class="text-dark-muted max-w-sm leading-relaxed">
+                Gain hands-on skills through step-by-step developer modules.
+            </div>
         </div>
-        <div class="col-md-12">
-          <div class="owl-testimonials owl-carousel">
 
-            <div class="testimonial-item">
-              <div class="inner-content">
-                <h4>Rutuja (BSc CS)</h4>
-                <span>Python Final Year Project</span>
-                <p>"Shree Code Mantra helped me complete my Python project with full explanation and proper
-                  documentation. I scored full marks in VIVA!"</p>
-              </div>
-              <img src="http://placehold.it/60x60" alt="">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <!-- Card 1 -->
+            <div
+                class="bg-dark-bg border border-dark-border p-8 rounded-lg flex flex-col hover:border-brand transition-colors duration-300">
+                <span
+                    class="bg-brand/15 text-brand text-[0.65rem] font-bold tracking-widest uppercase px-3 py-1 rounded w-max mb-6">Advanced</span>
+                <h3 class="font-head text-2xl font-bold mb-4">Python Backend Development</h3>
+                <p class="text-dark-muted text-sm leading-relaxed mb-8 flex-grow">Master database mapping, security
+                    tokens, configurations, and core web server environments.</p>
+                <div class="flex justify-between items-center pt-6 border-t border-dark-border mt-auto">
+                    <span class="text-[0.65rem] font-bold tracking-widest uppercase text-dark-muted">Duration: 6
+                        Weeks</span>
+                    <a href="/users/contact"
+                        class="text-[0.7rem] font-bold tracking-widest uppercase text-brand hover:text-white transition-colors">Enquire
+                        →</a>
+                </div>
             </div>
-
-            <div class="testimonial-item">
-              <div class="inner-content">
-                <h4>Kevin (MCA)</h4>
-                <span>Machine Learning Project</span>
-                <p>"Perfect guidance and high-quality code. They explained everything in a very simple and clear way.
-                  Great experience!"</p>
-              </div>
-              <img src="http://placehold.it/60x60" alt="">
+            <!-- Card 2 -->
+            <div
+                class="bg-dark-bg border border-dark-border p-8 rounded-lg flex flex-col hover:border-brand transition-colors duration-300">
+                <span
+                    class="bg-brand/15 text-brand text-[0.65rem] font-bold tracking-widest uppercase px-3 py-1 rounded w-max mb-6">Advanced</span>
+                <h3 class="font-head text-2xl font-bold mb-4">AI & Machine Learning</h3>
+                <p class="text-dark-muted text-sm leading-relaxed mb-8 flex-grow">Understand computer vision, face
+                    tracking matrices, predictive regression, and model exports.</p>
+                <div class="flex justify-between items-center pt-6 border-t border-dark-border mt-auto">
+                    <span class="text-[0.65rem] font-bold tracking-widest uppercase text-dark-muted">Duration: 8
+                        Weeks</span>
+                    <a href="/users/contact"
+                        class="text-[0.7rem] font-bold tracking-widest uppercase text-brand hover:text-white transition-colors">Enquire
+                        →</a>
+                </div>
             </div>
-
-            <div class="testimonial-item">
-              <div class="inner-content">
-                <h4>Sneha (BCA)</h4>
-                <span>Web Development Project</span>
-                <p>"My project was delivered on time and the support was amazing. Their teaching style made everything
-                  easy to understand."</p>
-              </div>
-              <img src="http://placehold.it/60x60" alt="">
+            <!-- Card 3 -->
+            <div
+                class="bg-dark-bg border border-dark-border p-8 rounded-lg flex flex-col hover:border-brand transition-colors duration-300">
+                <span
+                    class="bg-brand/15 text-brand text-[0.65rem] font-bold tracking-widest uppercase px-3 py-1 rounded w-max mb-6">Intermediate</span>
+                <h3 class="font-head text-2xl font-bold mb-4">Flask & Database Systems</h3>
+                <p class="text-dark-muted text-sm leading-relaxed mb-8 flex-grow">Learn server-side rendering, routing
+                    logic, and NoSQL document storage with MongoDB.</p>
+                <div class="flex justify-between items-center pt-6 border-t border-dark-border mt-auto">
+                    <span class="text-[0.65rem] font-bold tracking-widest uppercase text-dark-muted">Duration: 4
+                        Weeks</span>
+                    <a href="/users/contact"
+                        class="text-[0.7rem] font-bold tracking-widest uppercase text-brand hover:text-white transition-colors">Enquire
+                        →</a>
+                </div>
             </div>
-
-            <div class="testimonial-item">
-              <div class="inner-content">
-                <h4>Aditya (BE IT)</h4>
-                <span>Full Stack Project</span>
-                <p>"Very professional and beginner-friendly service. The deployment support was extremely helpful."</p>
-              </div>
-              <img src="http://placehold.it/60x60" alt="">
-            </div>
-
-          </div>
         </div>
-      </div>
     </div>
-  </div>
+</section>
 
+<!-- KNOWLEDGE HUB (ROADMAP & BLOGS) -->
+<section class="py-24 px-4 bg-dark-bg border-t border-dark-border">
+    <div class="max-w-7xl mx-auto">
+        <div class="inline-flex items-center space-x-2 mb-4">
+            <div class="w-6 h-px bg-brand"></div>
+            <span class="text-xs font-bold tracking-[0.2em] uppercase text-brand">Resources</span>
+        </div>
+        <h2 class="font-head text-3xl md:text-5xl font-extrabold uppercase leading-tight mb-16">
+            KNOWLEDGE <span class="text-brand">HUB.</span>
+        </h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Blog Card (Light Theme as requested) -->
+            <a href="/users/blogs#python-guide"
+                class="bg-white rounded-lg p-8 flex flex-col hover:-translate-y-2 transition-transform duration-300 shadow-xl border-t-4 border-brand">
+                <span class="text-brand text-[0.65rem] font-bold tracking-widest uppercase mb-4 block">Guide</span>
+                <h4 class="font-head text-xl font-bold text-black mb-4">How to Choose Best Python, AI & ML Projects</h4>
+                <p class="text-black text-sm leading-relaxed mb-6">Choosing the right python final year project is a
+                    crucial decision for engineering and IT students. Your final year project is not just for marks—it
+                    reflects your technical skills, problem-solving ability, and readiness for real-world challenges.
+                    With the growing demand for Python, Artificial Intelligence (AI), and Machine Learning (ML),
+                    selecting a project in these domains can significantly improve your placement and career.</p>
+                <div class="mt-auto text-[0.7rem] font-bold tracking-widest uppercase text-brand">Read Article →</div>
+            </a>
+
+            <a href="/users/blogs#final-year-projects"
+                class="bg-white rounded-lg p-8 flex flex-col hover:-translate-y-2 transition-transform duration-300 shadow-xl border-t-4 border-brand">
+                <span class="text-brand text-[0.65rem] font-bold tracking-widest uppercase mb-4 block">Source
+                    Code</span>
+                <h4 class="font-head text-xl font-bold text-black mb-4">Final Year Projects with Source Code</h4>
+                <p class="text-black text-sm leading-relaxed mb-6">Finding the right final year projects with source
+                    code is a major challenge for students. Learn how to select open-source projects, understand their
+                    architecture, and customize them for your specific academic requirements.</p>
+                <div class="mt-auto text-[0.7rem] font-bold tracking-widest uppercase text-brand">Read Article →</div>
+            </a>
+
+            <a href="/users/blogs"
+                class="bg-white rounded-lg p-8 flex flex-col hover:-translate-y-2 transition-transform duration-300 shadow-xl border-t-4 border-brand">
+                <span class="text-brand text-[0.65rem] font-bold tracking-widest uppercase mb-4 block">Career</span>
+                <h4 class="font-head text-xl font-bold text-black mb-4">How to Crack Final Year Project Reviews</h4>
+                <p class="text-black text-sm leading-relaxed mb-6">Tips from developers on database design
+                    documentation, live deployment, and viva prep questions. Ensure you are ready to confidently present
+                    and defend your architecture in front of the external examiners.</p>
+                <div class="mt-auto text-[0.7rem] font-bold tracking-widest uppercase text-brand">Read Article →</div>
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="py-24 px-4 bg-dark-bg border-t border-dark-border overflow-hidden">
+    <div class="max-w-7xl mx-auto mb-16">
+        <div class="inline-flex items-center space-x-2 mb-4">
+            <div class="w-6 h-px bg-brand"></div>
+            <span class="text-xs font-bold tracking-[0.2em] uppercase text-brand">Feedback</span>
+        </div>
+        <h2 class="font-head text-3xl md:text-5xl font-extrabold uppercase leading-tight">
+            WHAT OUR STUDENTS<br><span class="text-brand">SAY ABOUT US.</span>
+        </h2>
+    </div>
+
+    <div class="relative max-w-full">
+        <!-- Fade gradients -->
+        <div
+            class="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-dark-bg to-transparent z-10 hidden md:block">
+        </div>
+        <div
+            class="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-dark-bg to-transparent z-10 hidden md:block">
+        </div>
+
+        <div class="flex space-x-6 animate-scroll-x hover:[animation-play-state:paused] w-max">
+            {% set reviews = [
+            ('R', 'Rutuja', 'BSc Computer Science', '"Shree Code Mantra helped me complete my Python project with full
+            explanation and proper documentation. I scored full marks in my VIVA exam!"'),
+            ('K', 'Kevin', 'MCA Student', '"Awesome guidance and high-quality code implementation. They explained every
+            model structure in a very simple and clear way."'),
+            ('S', 'Sneha', 'BCA Student', '"My project was delivered on schedule, and the setup walkthrough made
+            deployment simple. Extremely professional technical support."')
+            ] %}
+
+            {% for _ in range(3) %}
+            {% for initial, name, course, text in reviews %}
+            <div
+                class="w-80 h-64 bg-[#111111] border border-dark-border rounded-lg p-8 flex flex-col justify-between hover:border-brand transition-colors duration-300">
+                <p class="text-white/80 italic text-sm leading-relaxed">{{ text }}</p>
+                <div class="flex items-center space-x-4 border-t border-dark-border pt-4 mt-4">
+                    <div class="w-10 h-10 rounded-full bg-brand text-white flex items-center justify-center font-bold">
+                        {{ initial }}</div>
+                    <div>
+                        <div class="font-bold text-sm">{{ name }}</div>
+                        <div class="text-[0.65rem] text-dark-muted tracking-widest uppercase">{{ course }}</div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="relative py-32 px-4 bg-dark-surface border-t border-dark-border overflow-hidden text-center">
+    <div
+        class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-brand/10 rounded-full blur-[120px] pointer-events-none">
+    </div>
+    <div class="relative z-10 max-w-3xl mx-auto">
+        <div class="inline-flex items-center space-x-2 mb-8 justify-center">
+            <div class="w-6 h-px bg-brand"></div>
+            <span class="text-xs font-bold tracking-[0.2em] uppercase text-brand">Ready to Build?</span>
+            <div class="w-6 h-px bg-brand"></div>
+        </div>
+        <h2 class="font-head text-4xl md:text-6xl font-extrabold uppercase leading-tight mb-8">
+            YOUR NEXT PROJECT<br>COULD BE YOUR <span class="text-brand">CAREER</span><br>STARTING POINT.
+        </h2>
+        <p class="text-white/60 text-lg mb-10">Learn. Build. Practice. Showcase. Grow.</p>
+        <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6">
+            <a href="/users/services"
+                class="bg-brand hover:bg-brand-hover text-black px-10 py-5 rounded text-sm font-bold tracking-wide uppercase transition-all transform hover:-translate-y-1 hover:shadow-[0_10px_30px_rgba(255,85,0,0.3)]">
+                Explore Projects →
+            </a>
+            <a href="/users/topics"
+                class="bg-transparent border border-black/20 hover:border-brand hover:text-brand text-black px-10 py-5 rounded text-sm font-bold tracking-wide uppercase transition-all transform hover:-translate-y-1">
+                Start Learning
+            </a>
+        </div>
+    </div>
+</section>
+
+<style>
+    /* Utility animations for hero entrance */
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+</style>
 {% endblock %}

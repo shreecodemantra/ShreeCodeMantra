@@ -4,8 +4,32 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Login - Shree Code Mantra</title>
+    <!-- Google Fonts - Syne & Space Grotesk -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.tailwindcss.com/3.4.15"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            light: 'rgba(255,85,0,0.15)', 
+                            DEFAULT: '#FF5500',  
+                            hover: '#ff7733',    
+                            dark: '#0a0300',     
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Space Grotesk', 'sans-serif'],
+                        head: ['Syne', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
     <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- jQuery -->
@@ -16,64 +40,68 @@
             font-size: 0.75rem;
             display: block;
             text-align: left;
+            margin-top: 0.25rem;
         }
-        
-        .gradient-bg {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        body {
+            background-image: radial-gradient(circle at 100% 100%, rgba(255, 85, 0, 0.05) 0%, transparent 50%),
+                              radial-gradient(circle at 0% 0%, rgba(255, 85, 0, 0.05) 0%, transparent 50%);
         }
     </style>
 </head>
-<body class="bg-gray-50 min-h-screen flex items-center justify-center p-4">
-    <div class="w-full max-w-md">
+<body class="bg-[#f8fafc] min-h-screen flex items-center justify-center p-4 font-sans antialiased text-[#0e0e0e] selection:bg-brand selection:text-white relative">
+    
+    <div class="w-full max-w-md relative z-10">
+        <!-- Logo Header -->
+        <div class="text-center mb-8">
+            <h1 class="text-3xl font-head font-extrabold tracking-tight text-slate-800">
+                SHREE <span class="text-brand">ADMIN</span>
+            </h1>
+            <p class="text-slate-500 mt-2 text-sm">Secure access to the management dashboard</p>
+        </div>
+
         <!-- Login Card -->
-        <div class="bg-white rounded-xl shadow-lg overflow-hidden">
-            <!-- Header Section -->
-            <div class="gradient-bg text-white p-6 text-center">
-                <h1 class="text-2xl font-bold mb-2">Admin Login</h1>
-                <p class="text-blue-100">Access your admin dashboard securely</p>
-            </div>
-            
+        <div class="bg-white rounded-2xl shadow-xl shadow-brand/5 border border-slate-100 overflow-hidden">
             <!-- Login Form -->
-            <div class="p-6">
+            <div class="p-8">
                 <form id="adminLoginForm" action="" method="get">
                     <!-- Email Field -->
-                    <div class="mb-4">
-                        <label for="adminEmail" class="block text-sm font-medium text-gray-700 mb-1">
+                    <div class="mb-5 relative group">
+                        <label for="adminEmail" class="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">
                             Email Address
                         </label>
                         <div class="relative">
-                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                <i class="fas fa-envelope text-gray-400"></i>
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400 group-focus-within:text-brand transition-colors">
+                                <i class="fas fa-envelope"></i>
                             </div>
                             <input 
                                 name="email" 
                                 type="text" 
-                                class="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition" 
+                                class="w-full pl-10 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand/20 focus:border-brand transition-all text-sm" 
                                 id="adminEmail" 
                                 placeholder="admin@example.com"
                             >
                         </div>
-                        <small id="adminEmailError" class="error-label mt-1"></small>
+                        <small id="adminEmailError" class="error-label"></small>
                     </div>
 
                     <!-- Password Field -->
-                    <div class="mb-6">
-                        <label for="adminPassword" class="block text-sm font-medium text-gray-700 mb-1">
+                    <div class="mb-8 relative group">
+                        <label for="adminPassword" class="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">
                             Password
                         </label>
                         <div class="relative">
-                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                <i class="fas fa-lock text-gray-400"></i>
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400 group-focus-within:text-brand transition-colors">
+                                <i class="fas fa-lock"></i>
                             </div>
                             <input 
                                 name="password" 
                                 type="password" 
-                                class="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition" 
+                                class="w-full pl-10 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand/20 focus:border-brand transition-all text-sm" 
                                 id="adminPassword" 
                                 placeholder="Enter your password"
                             >
                         </div>
-                        <small id="adminPasswordError" class="error-label mt-1"></small>
+                        <small id="adminPasswordError" class="error-label"></small>
                     </div>
 
                     <!-- Submit Button -->
@@ -81,32 +109,29 @@
                         <button 
                             type="submit" 
                             id="adminSubmit" 
-                            class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                            class="w-full bg-brand hover:bg-brand-hover text-white font-semibold py-3 px-4 rounded-xl transition-all duration-300 transform active:scale-[0.98] focus:outline-none focus:ring-4 focus:ring-brand/20 flex justify-center items-center gap-2 shadow-lg shadow-brand/30"
                         >
-                            <i class="fas fa-sign-in-alt mr-2"></i>
-                            Login
+                            <span>Authenticate</span>
+                            <i class="fas fa-arrow-right text-sm"></i>
                         </button>
-                    </div>
-
-                    <!-- Alternative Link -->
-                    <div class="text-center">
-                        <p class="text-sm text-gray-600">
-                            Not an admin? 
-                            <a 
-                                href="{{ url_for('home') }}" 
-                                class="text-blue-600 hover:text-blue-800 font-medium transition duration-200"
-                            >
-                                Go to Home Page
-                            </a>
-                        </p>
                     </div>
                 </form>
             </div>
+            
+            <!-- Alternative Link -->
+            <div class="bg-slate-50 p-4 border-t border-slate-100 text-center">
+                <p class="text-sm text-slate-600">
+                    Not an admin? 
+                    <a href="{{ url_for('home') }}" class="text-brand hover:text-brand-hover font-semibold transition duration-200">
+                        Go to Home Page
+                    </a>
+                </p>
+            </div>
         </div>
 
-        <!-- Additional Info (Optional) -->
-        <div class="mt-6 text-center text-sm text-gray-500">
-            <p>© 2023 Shree Code Mantra. Secure Admin Access</p>
+        <!-- Footer Info -->
+        <div class="mt-8 text-center text-xs text-slate-400">
+            <p>© 2025 Shree Code Mantra. All rights reserved.</p>
         </div>
     </div>
 
