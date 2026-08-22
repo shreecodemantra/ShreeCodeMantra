@@ -792,15 +792,20 @@ def delete_topic(topic_id):
         }), 500
 
 
-@admin_bp.route('/download_report/<filename>')
+@admin_bp.route('/download_report/<path:filename>')
 def download_report(filename):
     try:
+        # filename comes as 'uploads/reports/xxxx_file.pdf' from DB
+        file_path = os.path.join('static', filename)
+        # Extract just the base filename for the download name
+        base_name = os.path.basename(filename)
         return send_file(
-            os.path.join(current_app.config["UPLOAD_FOLDER"], filename),
+            file_path,
             as_attachment=True,
-            download_name=filename
+            download_name=base_name
         )
     except Exception as e:
+        current_app.logger.error(f"Error downloading report: {str(e)}")
         return jsonify({"error": "File not found"}), 404
 
 

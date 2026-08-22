@@ -1,7 +1,8 @@
 {% extends 'base.html' %}
 
 {% block title %}About Us | Shree Code Mantra{% endblock %}
-{% block description %}Discover the story and mission of Shree Code Mantra. We empower CS and IT students with high-quality, industry-ready academic projects.{% endblock %}
+{% block description %}Discover the story and mission of Shree Code Mantra. We empower CS and IT students with
+high-quality, industry-ready academic projects.{% endblock %}
 
 {% block content %}
 <!-- Page Title Heading -->
@@ -26,14 +27,20 @@
                     Transforming Students into Industry-Ready Developers
                 </h2>
                 <p class="text-sm sm:text-base text-slate-500 leading-relaxed">
-                    At <strong>Shree Code Mantra</strong>, we help final-year students and aspiring developers build real-world projects using the latest technologies — <strong>Python, Flask, React.js, AI, ML, Blockchain, and Android</strong>.
+                    At <strong>Shree Code Mantra</strong>, we help final-year students and aspiring developers build
+                    real-world projects using the latest technologies — <strong>Python, Flask, React.js, AI, ML,
+                        Blockchain, and Android</strong>.
                     <br><br>
-                    We bring over <strong>5 years of professional coding experience</strong> and a passion for helping learners turn academic concepts into working applications. Our team guides students step-by-step — from idea to implementation — to make them confident and job-ready.
+                    We bring over <strong>5 years of professional coding experience</strong> and a passion for helping
+                    learners turn academic concepts into working applications. Our team guides students step-by-step —
+                    from idea to implementation — to make them confident and job-ready.
                 </p>
             </div>
             <div>
-                <div class="relative rounded-2xl overflow-hidden shadow-md aspect-video bg-slate-100 border border-slate-100">
-                    <img src="{{ url_for('static', filename='assets/images/about-image.jpg') }}" alt="About Shree Code Mantra" class="w-full h-full object-cover">
+                <div
+                    class="relative rounded-2xl overflow-hidden shadow-md aspect-video bg-slate-100 border border-slate-100">
+                    <img src="{{ url_for('static', filename='assets/images/about-image.jpg') }}"
+                        alt="About Shree Code Mantra" class="w-full h-full object-cover">
                 </div>
             </div>
         </div>
@@ -45,38 +52,45 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-12">
         <div class="space-y-3 max-w-3xl mx-auto">
             <span class="text-xs font-bold text-brand uppercase tracking-widest">Our Team</span>
-            <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">Dedicated Technical Mentors</h2>
+            <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">Dedicated Technical Mentors
+            </h2>
             <p class="text-sm text-slate-500">Meet the professionals guiding your final year academic success.</p>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
             <!-- Member 1 -->
-            <div class="bg-white rounded-2xl border border-slate-100 p-6 shadow-sm flex flex-col justify-between text-left space-y-4">
+            <div
+                class="bg-white rounded-2xl border border-slate-100 p-6 shadow-sm flex flex-col justify-between text-left space-y-4">
                 <div class="space-y-1">
                     <h3 class="font-bold text-slate-900 text-lg">Kishori Salvi</h3>
                     <span class="text-xs font-semibold text-brand">Software Developer</span>
                     <p class="text-xs sm:text-sm text-slate-500 leading-relaxed pt-2">
-                        Expert in modern front-end development and UI/UX design using React.js. Leads the vision of empowering students with practical project experience.
+                        Expert in modern front-end development and UI/UX design using React.js. Leads the vision of
+                        empowering students with practical project experience.
                     </p>
                 </div>
             </div>
             <!-- Member 2 -->
-            <div class="bg-white rounded-2xl border border-slate-100 p-6 shadow-sm flex flex-col justify-between text-left space-y-4">
+            <div
+                class="bg-white rounded-2xl border border-slate-100 p-6 shadow-sm flex flex-col justify-between text-left space-y-4">
                 <div class="space-y-1">
                     <h3 class="font-bold text-slate-900 text-lg">Yash Salvi</h3>
                     <span class="text-xs font-semibold text-brand">Software Developer</span>
                     <p class="text-xs sm:text-sm text-slate-500 leading-relaxed pt-2">
-                        Specializes in Python, Flask, and SQL, ensuring projects are robust, scalable, and efficient from the server side.
+                        Specializes in Python, Flask, and SQL, ensuring projects are robust, scalable, and efficient
+                        from the server side.
                     </p>
                 </div>
             </div>
             <!-- Member 3 -->
-            <div class="bg-white rounded-2xl border border-slate-100 p-6 shadow-sm flex flex-col justify-between text-left space-y-4">
+            <div
+                class="bg-white rounded-2xl border border-slate-100 p-6 shadow-sm flex flex-col justify-between text-left space-y-4">
                 <div class="space-y-1">
                     <h3 class="font-bold text-slate-900 text-lg">Roshan Mundekar</h3>
-                    <span class="text-xs font-semibold text-brand">Software Developer</span>
+                    <span class="text-xs font-semibold text-brand">Data Scientist</span>
                     <p class="text-xs sm:text-sm text-slate-500 leading-relaxed pt-2">
-                        Focused on artificial intelligence and machine learning solutions for next-generation projects and automation systems.
+                        Focused on Data Science & machine learning solutions for next-generation projects and automation
+                        systems.
                     </p>
                 </div>
             </div>
@@ -90,17 +104,22 @@
         <div class="space-y-3 max-w-3xl mx-auto">
             <span class="text-xs font-bold text-brand uppercase tracking-widest">Feedback</span>
             <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">What Our Learners Say</h2>
-            <p class="text-sm text-slate-500">Real feedback from students who transformed academic requirements into live software.</p>
+            <p class="text-sm text-slate-500">Real feedback from students who transformed academic requirements into
+                live software.</p>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             <!-- Review 1 -->
-            <div class="p-5 rounded-2xl border border-slate-100 bg-slate-50/50 hover:bg-white hover:shadow transition duration-150 text-left space-y-4 flex flex-col justify-between">
+            <div
+                class="p-5 rounded-2xl border border-slate-100 bg-slate-50/50 hover:bg-white hover:shadow transition duration-150 text-left space-y-4 flex flex-col justify-between">
                 <p class="text-xs sm:text-sm text-slate-650 italic leading-relaxed">
-                    “Shree Code Mantra helped me complete my final-year project in Flask. The mentors guided me patiently through every step.”
+                    “Shree Code Mantra helped me complete my final-year project in Flask. The mentors guided me
+                    patiently through every step.”
                 </p>
                 <div class="flex items-center space-x-2.5 pt-3 border-t border-slate-100/60">
-                    <div class="w-8 h-8 rounded-full bg-slate-200 text-slate-700 font-bold flex items-center justify-center text-xs">A</div>
+                    <div
+                        class="w-8 h-8 rounded-full bg-slate-200 text-slate-700 font-bold flex items-center justify-center text-xs">
+                        A</div>
                     <div>
                         <h4 class="text-xs font-bold text-slate-900">Amit Pawar</h4>
                         <span class="text-xxs text-slate-550">Python Student</span>
@@ -108,12 +127,16 @@
                 </div>
             </div>
             <!-- Review 2 -->
-            <div class="p-5 rounded-2xl border border-slate-100 bg-slate-50/50 hover:bg-white hover:shadow transition duration-150 text-left space-y-4 flex flex-col justify-between">
+            <div
+                class="p-5 rounded-2xl border border-slate-100 bg-slate-50/50 hover:bg-white hover:shadow transition duration-150 text-left space-y-4 flex flex-col justify-between">
                 <p class="text-xs sm:text-sm text-slate-650 italic leading-relaxed">
-                    “Amazing learning environment! I built my first React project and understood how frontend connects with backend.”
+                    “Amazing learning environment! I built my first React project and understood how frontend connects
+                    with backend.”
                 </p>
                 <div class="flex items-center space-x-2.5 pt-3 border-t border-slate-100/60">
-                    <div class="w-8 h-8 rounded-full bg-slate-200 text-slate-700 font-bold flex items-center justify-center text-xs">S</div>
+                    <div
+                        class="w-8 h-8 rounded-full bg-slate-200 text-slate-700 font-bold flex items-center justify-center text-xs">
+                        S</div>
                     <div>
                         <h4 class="text-xs font-bold text-slate-900">Sneha Patil</h4>
                         <span class="text-xxs text-slate-550">React Intern</span>
@@ -121,12 +144,16 @@
                 </div>
             </div>
             <!-- Review 3 -->
-            <div class="p-5 rounded-2xl border border-slate-100 bg-slate-50/50 hover:bg-white hover:shadow transition duration-150 text-left space-y-4 flex flex-col justify-between">
+            <div
+                class="p-5 rounded-2xl border border-slate-100 bg-slate-50/50 hover:bg-white hover:shadow transition duration-150 text-left space-y-4 flex flex-col justify-between">
                 <p class="text-xs sm:text-sm text-slate-650 italic leading-relaxed">
-                    “The AI and ML sessions were easy to follow and practical. I even deployed my first ML model successfully.”
+                    “The AI and ML sessions were easy to follow and practical. I even deployed my first ML model
+                    successfully.”
                 </p>
                 <div class="flex items-center space-x-2.5 pt-3 border-t border-slate-100/60">
-                    <div class="w-8 h-8 rounded-full bg-slate-200 text-slate-700 font-bold flex items-center justify-center text-xs">R</div>
+                    <div
+                        class="w-8 h-8 rounded-full bg-slate-200 text-slate-700 font-bold flex items-center justify-center text-xs">
+                        R</div>
                     <div>
                         <h4 class="text-xs font-bold text-slate-900">Rohit Sharma</h4>
                         <span class="text-xxs text-slate-550">AI Enthusiast</span>
@@ -134,12 +161,16 @@
                 </div>
             </div>
             <!-- Review 4 -->
-            <div class="p-5 rounded-2xl border border-slate-100 bg-slate-50/50 hover:bg-white hover:shadow transition duration-150 text-left space-y-4 flex flex-col justify-between">
+            <div
+                class="p-5 rounded-2xl border border-slate-100 bg-slate-50/50 hover:bg-white hover:shadow transition duration-150 text-left space-y-4 flex flex-col justify-between">
                 <p class="text-xs sm:text-sm text-slate-650 italic leading-relaxed">
-                    “I got real-time coding experience that helped me land my first internship. Shree Code Mantra truly builds confidence.”
+                    “I got real-time coding experience that helped me land my first internship. Shree Code Mantra truly
+                    builds confidence.”
                 </p>
                 <div class="flex items-center space-x-2.5 pt-3 border-t border-slate-100/60">
-                    <div class="w-8 h-8 rounded-full bg-slate-200 text-slate-700 font-bold flex items-center justify-center text-xs">P</div>
+                    <div
+                        class="w-8 h-8 rounded-full bg-slate-200 text-slate-700 font-bold flex items-center justify-center text-xs">
+                        P</div>
                     <div>
                         <h4 class="text-xs font-bold text-slate-900">Priya Deshmukh</h4>
                         <span class="text-xxs text-slate-550">Final Year Student</span>

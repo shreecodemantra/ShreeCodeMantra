@@ -1,7 +1,8 @@
 {% extends 'base.html' %}
 
 {% block title %}Contact Us | Shree Code Mantra{% endblock %}
-{% block description %}Get in touch with Shree Code Mantra. Request custom projects, seek technical mentorship, or clarify final-year academic queries.{% endblock %}
+{% block description %}Get in touch with Shree Code Mantra. Request custom projects, seek technical mentorship, or
+clarify final-year academic queries.{% endblock %}
 
 {% block content %}
 <style>
@@ -9,6 +10,7 @@
     border-color: #ef4444 !important;
     background-color: #fef2f2 !important;
   }
+
   .is-valid {
     border-color: #10b981 !important;
     background-color: #ecfdf5 !important;
@@ -17,98 +19,112 @@
 
 <!-- Heading -->
 <div class="bg-brand-dark text-white py-16 sm:py-20 relative">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-3">
-        <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight">Contact Our Developers</h1>
-        <p class="text-slate-400 text-sm sm:text-base max-w-2xl mx-auto">
-            Need mentorship support, custom project design, or code explanation? Reach out to us.
-        </p>
-    </div>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-3">
+    <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight">Contact Our Developers</h1>
+    <p class="text-slate-400 text-sm sm:text-base max-w-2xl mx-auto">
+      Need mentorship support, custom project design, or code explanation? Reach out to us.
+    </p>
+  </div>
 </div>
 <!-- Bottom colorful gradient line accent -->
 <div class="h-[2px] w-full bg-gradient-to-r from-brand via-[#6366F1] to-brand-hover"></div>
 
 <!-- Main Section -->
 <div class="py-16 sm:py-20 bg-slate-50">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-            
-            <!-- Left: Contact Form (8/12 cols) -->
-            <div class="lg:col-span-8 bg-white rounded-2xl border border-slate-100 p-6 sm:p-8 shadow-sm">
-                <h2 class="text-lg font-bold text-slate-900 mb-6 flex items-center gap-2">
-                    <i class="fa-regular fa-envelope text-brand"></i> Send Us a Message
-                </h2>
-                
-                <form id="contactForm" method="post" class="space-y-6">
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                        <!-- Name -->
-                        <div class="space-y-1.5">
-                            <label for="fname" class="text-xs font-bold text-slate-700 uppercase tracking-wider">Full Name</label>
-                            <input name="fname" type="text" class="block w-full px-4 py-2.5 border border-slate-200 rounded-xl bg-slate-50/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand/20 focus:border-brand text-sm transition" id="fname" placeholder="John Doe">
-                            <small id="fnameError" class="text-xs text-red-500 font-semibold block"></small>
-                        </div>
-                        
-                        <!-- Email -->
-                        <div class="space-y-1.5">
-                            <label for="emailadd" class="text-xs font-bold text-slate-700 uppercase tracking-wider">Email Address</label>
-                            <input name="email" type="text" class="block w-full px-4 py-2.5 border border-slate-200 rounded-xl bg-slate-50/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand/20 focus:border-brand text-sm transition" id="emailadd" placeholder="john@example.com">
-                            <small id="emailError" class="text-xs text-red-500 font-semibold block"></small>
-                        </div>
-                    </div>
-                    
-                    <!-- Subject -->
-                    <div class="space-y-1.5">
-                        <label for="subject" class="text-xs font-bold text-slate-700 uppercase tracking-wider">Subject</label>
-                        <input name="subject" type="text" class="block w-full px-4 py-2.5 border border-slate-200 rounded-xl bg-slate-50/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand/20 focus:border-brand text-sm transition" id="subject" placeholder="Project customization query..." value="{{ request.args.get('subject', '') }}">
-                        <small id="subjectError" class="text-xs text-red-500 font-semibold block"></small>
-                    </div>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
 
-                    <!-- Message -->
-                    <div class="space-y-1.5">
-                        <label for="message" class="text-xs font-bold text-slate-700 uppercase tracking-wider">Message</label>
-                        <textarea name="message" rows="5" class="block w-full px-4 py-2.5 border border-slate-200 rounded-xl bg-slate-50/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand/20 focus:border-brand text-sm transition" id="message" placeholder="Provide details on the project topic, category, or support you require..."></textarea>
-                        <small id="messageError" class="text-xs text-red-500 font-semibold block"></small>
-                    </div>
+      <!-- Left: Contact Form (8/12 cols) -->
+      <div class="lg:col-span-8 bg-white rounded-2xl border border-slate-100 p-6 sm:p-8 shadow-sm">
+        <h2 class="text-lg font-bold text-slate-900 mb-6 flex items-center gap-2">
+          <i class="fa-regular fa-envelope text-brand"></i> Send Us a Message
+        </h2>
 
-                    <!-- Submit Button -->
-                    <div>
-                        <button type="submit" id="submit" class="inline-flex justify-center items-center px-6 py-3 border border-transparent text-sm font-semibold text-white bg-brand hover:bg-brand-hover rounded-xl shadow-sm transition duration-150">
-                            Send Message
-                        </button>
-                    </div>
-                </form>
+        <form id="contactForm" method="post" class="space-y-6">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <!-- Name -->
+            <div class="space-y-1.5">
+              <label for="fname" class="text-xs font-bold text-slate-700 uppercase tracking-wider">Full Name</label>
+              <input name="fname" type="text"
+                class="block w-full px-4 py-2.5 border border-slate-200 rounded-xl bg-slate-50/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand/20 focus:border-brand text-sm transition"
+                id="fname" placeholder="John Doe">
+              <small id="fnameError" class="text-xs text-red-500 font-semibold block"></small>
             </div>
 
-            <!-- Right: Support Contact Card (4/12 cols) -->
-            <div class="lg:col-span-4 bg-white rounded-2xl border border-slate-100 p-6 shadow-sm space-y-6">
-                <h3 class="text-base font-bold text-slate-900 uppercase tracking-wider">Technical Office</h3>
-                
-                <div class="space-y-4">
-                    <div class="flex items-start space-x-3.5">
-                        <span class="p-2.5 bg-brand/10 text-brand rounded-xl flex-shrink-0">
-                            <i class="fa-regular fa-envelope text-base"></i>
-                        </span>
-                        <div>
-                            <h4 class="font-bold text-slate-900 text-sm">Email Support</h4>
-                            <p class="text-xs text-slate-500 leading-relaxed pt-0.5">We reply to technical mentorship inquiries within 24 hours.</p>
-                            <a href="mailto:shreecodemantra@gmail.com" class="text-sm font-bold text-brand hover:underline pt-1 block">shreecodemantra@gmail.com</a>
-                        </div>
-                    </div>
-
-                    <div class="flex items-start space-x-3.5">
-                        <span class="p-2.5 bg-brand/10 text-brand rounded-xl flex-shrink-0">
-                            <i class="fa-brands fa-github text-base"></i>
-                        </span>
-                        <div>
-                            <h4 class="font-bold text-slate-900 text-sm">GitHub Portfolios</h4>
-                            <p class="text-xs text-slate-500 leading-relaxed pt-0.5">Explore open source synopsis codes and layouts.</p>
-                            <a href="https://github.com" class="text-sm font-bold text-brand hover:underline pt-1 block">github.com/shreecodemantra</a>
-                        </div>
-                    </div>
-                </div>
+            <!-- Email -->
+            <div class="space-y-1.5">
+              <label for="emailadd" class="text-xs font-bold text-slate-700 uppercase tracking-wider">Email
+                Address</label>
+              <input name="email" type="text"
+                class="block w-full px-4 py-2.5 border border-slate-200 rounded-xl bg-slate-50/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand/20 focus:border-brand text-sm transition"
+                id="emailadd" placeholder="john@example.com">
+              <small id="emailError" class="text-xs text-red-500 font-semibold block"></small>
             </div>
+          </div>
 
+          <!-- Subject -->
+          <div class="space-y-1.5">
+            <label for="subject" class="text-xs font-bold text-slate-700 uppercase tracking-wider">Subject</label>
+            <input name="subject" type="text"
+              class="block w-full px-4 py-2.5 border border-slate-200 rounded-xl bg-slate-50/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand/20 focus:border-brand text-sm transition"
+              id="subject" placeholder="Project customization query..." value="{{ request.args.get('subject', '') }}">
+            <small id="subjectError" class="text-xs text-red-500 font-semibold block"></small>
+          </div>
+
+          <!-- Message -->
+          <div class="space-y-1.5">
+            <label for="message" class="text-xs font-bold text-slate-700 uppercase tracking-wider">Message</label>
+            <textarea name="message" rows="5"
+              class="block w-full px-4 py-2.5 border border-slate-200 rounded-xl bg-slate-50/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand/20 focus:border-brand text-sm transition"
+              id="message"
+              placeholder="Provide details on the project topic, category, or support you require..."></textarea>
+            <small id="messageError" class="text-xs text-red-500 font-semibold block"></small>
+          </div>
+
+          <!-- Submit Button -->
+          <div>
+            <button type="submit" id="submit"
+              class="inline-flex justify-center items-center px-6 py-3 border border-transparent text-sm font-semibold text-white bg-brand hover:bg-brand-hover rounded-xl shadow-sm transition duration-150">
+              Send Message
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Right: Support Contact Card (4/12 cols) -->
+      <div class="lg:col-span-4 bg-white rounded-2xl border border-slate-100 p-6 shadow-sm space-y-6">
+        <h3 class="text-base font-bold text-slate-900 uppercase tracking-wider">Technical Office</h3>
+
+        <div class="space-y-4">
+          <div class="flex items-start space-x-3.5">
+            <span class="p-2.5 bg-brand/10 text-brand rounded-xl flex-shrink-0">
+              <i class="fa-regular fa-envelope text-base"></i>
+            </span>
+            <div>
+              <h4 class="font-bold text-slate-900 text-sm">Email Support</h4>
+              <p class="text-xs text-slate-500 leading-relaxed pt-0.5">We reply to technical mentorship inquiries within
+                24 hours.</p>
+              <a href="mailto:shreecodemantra@gmail.com"
+                class="text-sm font-bold text-brand hover:underline pt-1 block">shreecodemantra@gmail.com</a>
+            </div>
+          </div>
+
+          <div class="flex items-start space-x-3.5">
+            <span class="p-2.5 bg-brand/10 text-brand rounded-xl flex-shrink-0">
+              <i class="fa-brands fa-github text-base"></i>
+            </span>
+            <div>
+              <h4 class="font-bold text-slate-900 text-sm">Contact No</h4>
+              <p class="text-xs text-slate-500 leading-relaxed pt-0.5">Call or Whatsapp us for instant support</p>
+              <a href="tel:+919326056474" class="text-sm font-bold text-brand hover:underline pt-1 block">+91
+                9326056474</a>
+            </div>
+          </div>
         </div>
+      </div>
+
     </div>
+  </div>
 </div>
 
 <script>

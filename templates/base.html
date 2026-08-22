@@ -20,10 +20,10 @@
                 extend: {
                     colors: {
                         brand: {
-                            light: 'rgba(255,85,0,0.15)', 
-                            DEFAULT: '#FF5500',  
-                            hover: '#ff7733',    
-                            dark: '#0a0300',     
+                            light: 'rgba(255,85,0,0.15)',
+                            DEFAULT: '#FF5500',
+                            hover: '#ff7733',
+                            dark: '#0a0300',
                         },
                         dark: {
                             bg: '#070707',
@@ -53,7 +53,9 @@
     <!-- Google Fonts - Syne & Space Grotesk -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
 
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
@@ -63,27 +65,53 @@
 
     <style>
         /* Keep custom scrollbar minimal and dark */
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #070707; }
-        ::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: #FF5500; }
-        
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #070707;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #333;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #FF5500;
+        }
+
         /* Subtle noise texture applied via pseudo element so it doesn't break layout */
-        .bg-noise { position: relative; }
+        .bg-noise {
+            position: relative;
+        }
+
         .bg-noise::before {
-            content: ""; position: absolute; inset: 0; z-index: 0; opacity: 0.02; pointer-events: none;
+            content: "";
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+            opacity: 0.02;
+            pointer-events: none;
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
         }
-        .content-layer { position: relative; z-index: 10; }
+
+        .content-layer {
+            position: relative;
+            z-index: 10;
+        }
     </style>
 
     {% block structured_data %}{% endblock %}
 </head>
 
-<body class="flex flex-col min-h-full font-sans antialiased selection:bg-brand selection:text-white {% if request.path == '/' %}bg-dark-bg text-white{% else %}bg-white text-[#0e0e0e]{% endif %}">
+<body
+    class="flex flex-col min-h-full font-sans antialiased selection:bg-brand selection:text-white {% if request.path == '/' %}bg-dark-bg text-white{% else %}bg-white text-[#0e0e0e]{% endif %}">
 
     <!-- Global Header -->
-    <header class="fixed top-0 z-50 w-full backdrop-blur-md transition-all duration-300 {% if request.path == '/' %}bg-dark-bg/90 border-b border-dark-border{% else %}bg-white/95 border-b border-gray-200 shadow-sm{% endif %}">
+    <header
+        class="fixed top-0 z-50 w-full backdrop-blur-md transition-all duration-300 {% if request.path == '/' %}bg-dark-bg/90 border-b border-dark-border{% else %}bg-white/95 border-b border-gray-200 shadow-sm{% endif %}">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-20">
                 <!-- Logo -->
@@ -91,7 +119,8 @@
                     <a href="/" class="flex items-center space-x-3 group">
                         <img src="{{ url_for('static', filename='images/logo_icon.jpg') }}" alt="Shree Code Mantra Logo"
                             class="w-8 h-8 rounded border transition-colors {% if request.path == '/' %}border-dark-border group-hover:border-brand{% else %}border-gray-200 group-hover:border-brand{% endif %}">
-                        <span class="text-xl font-head font-extrabold tracking-tight {% if request.path == '/' %}text-white{% else %}text-[#0e0e0e]{% endif %}">
+                        <span
+                            class="text-xl font-head font-extrabold tracking-tight {% if request.path == '/' %}text-white{% else %}text-[#0e0e0e]{% endif %}">
                             SHREE <span class="text-brand">CODE MANTRA</span>
                         </span>
                     </a>
@@ -99,14 +128,23 @@
 
                 <!-- Desktop Navigation Menu -->
                 <nav class="hidden md:flex items-center space-x-8">
-                    <a href="/" class="text-sm font-medium transition duration-200 {% if request.path == '/' %}text-white/70 hover:text-white{% else %}text-gray-600 hover:text-brand{% endif %}">Home</a>
-                    <a href="/users/services" class="text-sm font-medium transition duration-200 {% if request.path == '/' %}text-white/70 hover:text-white{% else %}text-gray-600 hover:text-brand{% endif %}">Projects</a>
-                    <a href="/users/topics" class="text-sm font-medium transition duration-200 {% if request.path == '/' %}text-white/70 hover:text-white{% else %}text-gray-600 hover:text-brand{% endif %}">IEEE Topics</a>
-                    <a href="/users/blogs" class="text-sm font-medium transition duration-200 {% if request.path == '/' %}text-white/70 hover:text-white{% else %}text-gray-600 hover:text-brand{% endif %}">Blog</a>
-                    <a href="/users/aboutus" class="text-sm font-medium transition duration-200 {% if request.path == '/' %}text-white/70 hover:text-white{% else %}text-gray-600 hover:text-brand{% endif %}">About Us</a>
-                    <a href="/users/contact" class="text-sm font-medium transition duration-200 {% if request.path == '/' %}text-white/70 hover:text-white{% else %}text-gray-600 hover:text-brand{% endif %}">Contact</a>
-                    
-                    <a href="/users/topics" class="bg-brand hover:bg-brand-hover text-white px-5 py-2.5 rounded text-sm font-bold tracking-wide uppercase transition-all transform hover:-translate-y-0.5 hover:shadow-[0_4px_20px_rgba(255,85,0,0.3)]">
+                    <a href="/"
+                        class="text-sm font-medium transition duration-200 {% if request.path == '/' %}text-white/70 hover:text-white{% else %}text-gray-600 hover:text-brand{% endif %}">Home</a>
+                    <a href="/users/services"
+                        class="text-sm font-medium transition duration-200 {% if request.path == '/' %}text-white/70 hover:text-white{% else %}text-gray-600 hover:text-brand{% endif %}">Projects</a>
+                    <a href="/users/topics"
+                        class="text-sm font-medium transition duration-200 {% if request.path == '/' %}text-white/70 hover:text-white{% else %}text-gray-600 hover:text-brand{% endif %}">IEEE
+                        Topics</a>
+                    <a href="/users/blogs"
+                        class="text-sm font-medium transition duration-200 {% if request.path == '/' %}text-white/70 hover:text-white{% else %}text-gray-600 hover:text-brand{% endif %}">Blog</a>
+                    <a href="/users/aboutus"
+                        class="text-sm font-medium transition duration-200 {% if request.path == '/' %}text-white/70 hover:text-white{% else %}text-gray-600 hover:text-brand{% endif %}">About
+                        Us</a>
+                    <a href="/users/contact"
+                        class="text-sm font-medium transition duration-200 {% if request.path == '/' %}text-white/70 hover:text-white{% else %}text-gray-600 hover:text-brand{% endif %}">Contact</a>
+
+                    <a href="/users/topics"
+                        class="bg-brand hover:bg-brand-hover text-white px-5 py-2.5 rounded text-sm font-bold tracking-wide uppercase transition-all transform hover:-translate-y-0.5 hover:shadow-[0_4px_20px_rgba(255,85,0,0.3)]">
                         Start Learning →
                     </a>
                 </nav>
@@ -123,16 +161,26 @@
         </div>
 
         <!-- Mobile Drawer Navigation -->
-        <div class="hidden md:hidden absolute w-full left-0 top-20 shadow-2xl {% if request.path == '/' %}bg-dark-surface border-b border-dark-border{% else %}bg-white border-b border-gray-200{% endif %}" id="mobile-menu">
+        <div class="hidden md:hidden absolute w-full left-0 top-20 shadow-2xl {% if request.path == '/' %}bg-dark-surface border-b border-dark-border{% else %}bg-white border-b border-gray-200{% endif %}"
+            id="mobile-menu">
             <div class="px-4 pt-2 pb-6 space-y-1">
-                <a href="/" class="block px-3 py-3 rounded-md text-base font-medium transition-colors {% if request.path == '/' %}text-white/80 hover:text-white hover:bg-white/5{% else %}text-gray-700 hover:text-brand hover:bg-gray-50{% endif %}">Home</a>
-                <a href="/users/services" class="block px-3 py-3 rounded-md text-base font-medium transition-colors {% if request.path == '/' %}text-white/80 hover:text-white hover:bg-white/5{% else %}text-gray-700 hover:text-brand hover:bg-gray-50{% endif %}">Projects</a>
-                <a href="/users/topics" class="block px-3 py-3 rounded-md text-base font-medium transition-colors {% if request.path == '/' %}text-white/80 hover:text-white hover:bg-white/5{% else %}text-gray-700 hover:text-brand hover:bg-gray-50{% endif %}">IEEE Topics</a>
-                <a href="/users/blogs" class="block px-3 py-3 rounded-md text-base font-medium transition-colors {% if request.path == '/' %}text-white/80 hover:text-white hover:bg-white/5{% else %}text-gray-700 hover:text-brand hover:bg-gray-50{% endif %}">Blog</a>
-                <a href="/users/aboutus" class="block px-3 py-3 rounded-md text-base font-medium transition-colors {% if request.path == '/' %}text-white/80 hover:text-white hover:bg-white/5{% else %}text-gray-700 hover:text-brand hover:bg-gray-50{% endif %}">About Us</a>
-                <a href="/users/contact" class="block px-3 py-3 rounded-md text-base font-medium transition-colors {% if request.path == '/' %}text-white/80 hover:text-white hover:bg-white/5{% else %}text-gray-700 hover:text-brand hover:bg-gray-50{% endif %}">Contact</a>
+                <a href="/"
+                    class="block px-3 py-3 rounded-md text-base font-medium transition-colors {% if request.path == '/' %}text-white/80 hover:text-white hover:bg-white/5{% else %}text-gray-700 hover:text-brand hover:bg-gray-50{% endif %}">Home</a>
+                <a href="/users/services"
+                    class="block px-3 py-3 rounded-md text-base font-medium transition-colors {% if request.path == '/' %}text-white/80 hover:text-white hover:bg-white/5{% else %}text-gray-700 hover:text-brand hover:bg-gray-50{% endif %}">Projects</a>
+                <a href="/users/topics"
+                    class="block px-3 py-3 rounded-md text-base font-medium transition-colors {% if request.path == '/' %}text-white/80 hover:text-white hover:bg-white/5{% else %}text-gray-700 hover:text-brand hover:bg-gray-50{% endif %}">IEEE
+                    Topics</a>
+                <a href="/users/blogs"
+                    class="block px-3 py-3 rounded-md text-base font-medium transition-colors {% if request.path == '/' %}text-white/80 hover:text-white hover:bg-white/5{% else %}text-gray-700 hover:text-brand hover:bg-gray-50{% endif %}">Blog</a>
+                <a href="/users/aboutus"
+                    class="block px-3 py-3 rounded-md text-base font-medium transition-colors {% if request.path == '/' %}text-white/80 hover:text-white hover:bg-white/5{% else %}text-gray-700 hover:text-brand hover:bg-gray-50{% endif %}">About
+                    Us</a>
+                <a href="/users/contact"
+                    class="block px-3 py-3 rounded-md text-base font-medium transition-colors {% if request.path == '/' %}text-white/80 hover:text-white hover:bg-white/5{% else %}text-gray-700 hover:text-brand hover:bg-gray-50{% endif %}">Contact</a>
                 <div class="px-3 pt-4">
-                    <a href="/users/topics" class="block w-full text-center bg-brand text-white px-5 py-3 rounded text-sm font-bold uppercase">
+                    <a href="/users/topics"
+                        class="block w-full text-center bg-brand text-white px-5 py-3 rounded text-sm font-bold uppercase">
                         Start Learning
                     </a>
                 </div>
@@ -145,7 +193,8 @@
     {% if messages %}
     <div class="fixed top-24 right-4 z-50 w-full max-w-sm space-y-3 pointer-events-none">
         {% for category, message in messages %}
-        <div class="flex items-center p-4 rounded-lg border shadow-2xl bg-dark-surface border-dark-border pointer-events-auto">
+        <div
+            class="flex items-center p-4 rounded-lg border shadow-2xl bg-dark-surface border-dark-border pointer-events-auto">
             <div class="flex-shrink-0">
                 {% if category == 'error' %}
                 <i class="fa-solid fa-circle-exclamation text-red-500 text-lg"></i>
@@ -158,7 +207,8 @@
             <div class="ml-3 text-sm font-medium text-white/90 flex-grow">
                 {{ message }}
             </div>
-            <button type="button" class="ml-auto text-white/50 hover:text-white transition" onclick="this.parentElement.remove()">
+            <button type="button" class="ml-auto text-white/50 hover:text-white transition"
+                onclick="this.parentElement.remove()">
                 <i class="fa-solid fa-xmark text-sm"></i>
             </button>
         </div>
@@ -173,18 +223,22 @@
     </main>
 
     <!-- Global Footer -->
-    <footer class="pt-20 pb-10 border-t {% if request.path == '/' %}bg-[#050505] border-dark-border{% else %}bg-slate-50 border-gray-200{% endif %}">
+    <footer
+        class="pt-20 pb-10 border-t {% if request.path == '/' %}bg-[#050505] border-dark-border{% else %}bg-slate-50 border-gray-200{% endif %}">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8 mb-16">
                 <!-- Branding -->
                 <div class="space-y-6">
                     <a href="/" class="flex items-center space-x-3 group">
-                        <img src="{{ url_for('static', filename='images/logo_icon.jpg') }}" alt="Logo" class="w-8 h-8 rounded border transition-colors {% if request.path == '/' %}border-dark-border{% else %}border-gray-200{% endif %}">
-                        <span class="text-xl font-head font-extrabold tracking-tight {% if request.path == '/' %}text-white{% else %}text-[#0e0e0e]{% endif %}">
+                        <img src="{{ url_for('static', filename='images/logo_icon.jpg') }}" alt="Logo"
+                            class="w-8 h-8 rounded border transition-colors {% if request.path == '/' %}border-dark-border{% else %}border-gray-200{% endif %}">
+                        <span
+                            class="text-xl font-head font-extrabold tracking-tight {% if request.path == '/' %}text-white{% else %}text-[#0e0e0e]{% endif %}">
                             SHREE <span class="text-brand">CODE MANTRA</span>
                         </span>
                     </a>
-                    <p class="text-sm leading-relaxed max-w-xs {% if request.path == '/' %}text-dark-muted{% else %}text-gray-500{% endif %}">
+                    <p
+                        class="text-sm leading-relaxed max-w-xs {% if request.path == '/' %}text-dark-muted{% else %}text-gray-500{% endif %}">
                         Build Projects. Learn Technology. Become Industry Ready.
                     </p>
                     <p class="text-xs font-bold tracking-widest uppercase text-brand">
@@ -194,45 +248,78 @@
 
                 <!-- Platform Columns -->
                 <div>
-                    <h3 class="text-xs font-bold tracking-widest uppercase mb-6 {% if request.path == '/' %}text-white/40{% else %}text-gray-400{% endif %}">Platform</h3>
+                    <h3
+                        class="text-xs font-bold tracking-widest uppercase mb-6 {% if request.path == '/' %}text-white/40{% else %}text-gray-400{% endif %}">
+                        Platform</h3>
                     <ul class="space-y-4">
-                        <li><a href="/users/services" class="text-sm transition duration-200 {% if request.path == '/' %}text-white/60 hover:text-brand{% else %}text-gray-600 hover:text-brand{% endif %}">Browse Projects</a></li>
-                        <li><a href="/users/topics" class="text-sm transition duration-200 {% if request.path == '/' %}text-white/60 hover:text-brand{% else %}text-gray-600 hover:text-brand{% endif %}">IEEE Topics</a></li>
-                        <li><a href="/users/blogs" class="text-sm transition duration-200 {% if request.path == '/' %}text-white/60 hover:text-brand{% else %}text-gray-600 hover:text-brand{% endif %}">Articles & Blog</a></li>
+                        <li><a href="/users/services"
+                                class="text-sm transition duration-200 {% if request.path == '/' %}text-white/60 hover:text-brand{% else %}text-gray-600 hover:text-brand{% endif %}">Browse
+                                Projects</a></li>
+                        <li><a href="/users/topics"
+                                class="text-sm transition duration-200 {% if request.path == '/' %}text-white/60 hover:text-brand{% else %}text-gray-600 hover:text-brand{% endif %}">IEEE
+                                Topics</a></li>
+                        <li><a href="/users/blogs"
+                                class="text-sm transition duration-200 {% if request.path == '/' %}text-white/60 hover:text-brand{% else %}text-gray-600 hover:text-brand{% endif %}">Articles
+                                & Blog</a></li>
                     </ul>
                 </div>
 
                 <!-- Technologies -->
                 <div>
-                    <h3 class="text-xs font-bold tracking-widest uppercase mb-6 {% if request.path == '/' %}text-white/40{% else %}text-gray-400{% endif %}">Technologies</h3>
+                    <h3
+                        class="text-xs font-bold tracking-widest uppercase mb-6 {% if request.path == '/' %}text-white/40{% else %}text-gray-400{% endif %}">
+                        Technologies</h3>
                     <ul class="space-y-4">
-                        <li><span class="text-sm cursor-default {% if request.path == '/' %}text-white/60{% else %}text-gray-600{% endif %}">Python & Django / Flask</span></li>
-                        <li><span class="text-sm cursor-default {% if request.path == '/' %}text-white/60{% else %}text-gray-600{% endif %}">AI & Machine Learning</span></li>
-                        <li><span class="text-sm cursor-default {% if request.path == '/' %}text-white/60{% else %}text-gray-600{% endif %}">Web Development</span></li>
-                        <li><span class="text-sm cursor-default {% if request.path == '/' %}text-white/60{% else %}text-gray-600{% endif %}">MongoDB & Databases</span></li>
+                        <li><span
+                                class="text-sm cursor-default {% if request.path == '/' %}text-white/60{% else %}text-gray-600{% endif %}">Python
+                                & Django / Flask</span></li>
+                        <li><span
+                                class="text-sm cursor-default {% if request.path == '/' %}text-white/60{% else %}text-gray-600{% endif %}">AI
+                                & Machine Learning</span></li>
+                        <li><span
+                                class="text-sm cursor-default {% if request.path == '/' %}text-white/60{% else %}text-gray-600{% endif %}">Web
+                                Development</span></li>
+                        <li><span
+                                class="text-sm cursor-default {% if request.path == '/' %}text-white/60{% else %}text-gray-600{% endif %}">MongoDB
+                                & Databases</span></li>
                     </ul>
                 </div>
 
                 <!-- Company info -->
                 <div>
-                    <h3 class="text-xs font-bold tracking-widest uppercase mb-6 {% if request.path == '/' %}text-white/40{% else %}text-gray-400{% endif %}">Company</h3>
+                    <h3
+                        class="text-xs font-bold tracking-widest uppercase mb-6 {% if request.path == '/' %}text-white/40{% else %}text-gray-400{% endif %}">
+                        Company</h3>
                     <ul class="space-y-4">
-                        <li><a href="/users/aboutus" class="text-sm transition duration-200 {% if request.path == '/' %}text-white/60 hover:text-brand{% else %}text-gray-600 hover:text-brand{% endif %}">About Us</a></li>
-                        <li><a href="/users/contact" class="text-sm transition duration-200 {% if request.path == '/' %}text-white/60 hover:text-brand{% else %}text-gray-600 hover:text-brand{% endif %}">Contact Us</a></li>
-                        <li><span class="text-sm cursor-not-allowed {% if request.path == '/' %}text-white/30{% else %}text-gray-400{% endif %}">Careers</span></li>
+                        <li><a href="/users/aboutus"
+                                class="text-sm transition duration-200 {% if request.path == '/' %}text-white/60 hover:text-brand{% else %}text-gray-600 hover:text-brand{% endif %}">About
+                                Us</a></li>
+                        <li><a href="/users/contact"
+                                class="text-sm transition duration-200 {% if request.path == '/' %}text-white/60 hover:text-brand{% else %}text-gray-600 hover:text-brand{% endif %}">Contact
+                                Us</a></li>
+                        <li><span
+                                class="text-sm cursor-not-allowed {% if request.path == '/' %}text-white/30{% else %}text-gray-400{% endif %}">Careers</span>
+                        </li>
                     </ul>
                 </div>
             </div>
 
             <!-- Footer Bottom -->
-            <div class="border-t pt-8 flex flex-col md:flex-row justify-between items-center gap-6 {% if request.path == '/' %}border-dark-border{% else %}border-gray-200{% endif %}">
+            <div
+                class="border-t pt-8 flex flex-col md:flex-row justify-between items-center gap-6 {% if request.path == '/' %}border-dark-border{% else %}border-gray-200{% endif %}">
                 <p class="text-xs {% if request.path == '/' %}text-white/30{% else %}text-gray-400{% endif %}">
                     &copy; 2026 Shree Code Mantra. All rights reserved.
                 </p>
                 <div class="flex space-x-4">
-                    <a href="#" class="w-10 h-10 rounded-full border flex items-center justify-center transition duration-300 {% if request.path == '/' %}border-dark-border text-white/40 hover:text-brand hover:border-brand{% else %}border-gray-300 text-gray-400 hover:text-brand hover:border-brand{% endif %}"><i class="fa-brands fa-github text-sm"></i></a>
-                    <a href="#" class="w-10 h-10 rounded-full border flex items-center justify-center transition duration-300 {% if request.path == '/' %}border-dark-border text-white/40 hover:text-brand hover:border-brand{% else %}border-gray-300 text-gray-400 hover:text-brand hover:border-brand{% endif %}"><i class="fa-brands fa-linkedin text-sm"></i></a>
-                    <a href="#" class="w-10 h-10 rounded-full border flex items-center justify-center transition duration-300 {% if request.path == '/' %}border-dark-border text-white/40 hover:text-brand hover:border-brand{% else %}border-gray-300 text-gray-400 hover:text-brand hover:border-brand{% endif %}"><i class="fa-brands fa-youtube text-sm"></i></a>
+                    <a href="#"
+                        class="w-10 h-10 rounded-full border flex items-center justify-center transition duration-300 {% if request.path == '/' %}border-dark-border text-white/40 hover:text-brand hover:border-brand{% else %}border-gray-300 text-gray-400 hover:text-brand hover:border-brand{% endif %}"><i
+                            class="fa-brands fa-github text-sm"></i></a>
+                    <a href="#"
+                        class="w-10 h-10 rounded-full border flex items-center justify-center transition duration-300 {% if request.path == '/' %}border-dark-border text-white/40 hover:text-brand hover:border-brand{% else %}border-gray-300 text-gray-400 hover:text-brand hover:border-brand{% endif %}"><i
+                            class="fa-brands fa-linkedin text-sm"></i></a>
+                    <a href="#"
+                        class="w-10 h-10 rounded-full border flex items-center justify-center transition duration-300 {% if request.path == '/' %}border-dark-border text-white/40 hover:text-brand hover:border-brand{% else %}border-gray-300 text-gray-400 hover:text-brand hover:border-brand{% endif %}"><i
+                            class="fa-brands fa-youtube text-sm"></i></a>
                 </div>
             </div>
         </div>
@@ -262,7 +349,8 @@
             }
         });
     </script>
-    
+
     {% block extra_scripts %}{% endblock %}
 </body>
+
 </html>
