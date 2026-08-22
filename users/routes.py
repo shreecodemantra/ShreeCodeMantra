@@ -43,47 +43,127 @@ def blogs():
 @user_bp.route('/services', methods=['GET'])
 def services():
     try:
-        search_query = request.args.get('search', '')
-        category_filter = request.args.get('category', '')
+        # -----------------------------------------
+        # GET FILTER VALUES
+        # -----------------------------------------
+        search_query = request.args.get('search', '').strip()
+        category_filter = request.args.get('category', '').strip()
+
         page = request.args.get('page', 1, type=int)
         per_page = 3
-        
-        query = {}
-        
-        if search_query:
-            query['$or'] = [
-                {'title': {'$regex': search_query, '$options': 'i'}},
-                {'description': {'$regex': search_query, '$options': 'i'}},
-                {'tech_stack': {'$regex': search_query, '$options': 'i'}}
-            ]
-        
-        if category_filter:
-            query['category'] = category_filter
-            
-        total_projects = mongo.db.projects.count_documents(query)
-        total_pages = math.ceil(total_projects / per_page)
-        
+
+        # Prevent invalid page number
         if page < 1:
             page = 1
-        elif page > total_pages and total_pages > 0:
-            page = total_pages
-            
-        skip = (page - 1) * per_page
-        
-        projects = list(mongo.db.projects.find(query).sort('upload_date', -1).skip(skip).limit(per_page))
-        categories = list(mongo.db.categories.find())
-        
-        return render_template('users/services.html', 
-                             projects=projects, 
-                             categories=categories,
-                             search_query=search_query,
-                             category_filter=category_filter,
-                             page=page,
-                             total_pages=total_pages)
-    except Exception as e:
-        flash('Error retrieving projects', 'error')
-        return render_template('users/services.html', projects=[], page=1, total_pages=1)
 
+        # -----------------------------------------
+        # BUILD MONGODB QUERY
+        # -----------------------------------------
+        query = {}
+
+        # Search
+        if search_query:
+            query['$or'] = [
+                {
+                    'title': {
+                        '$regex': search_query,
+                        '$options': 'i'
+                    }
+                },
+                {
+                    'description': {
+                        '$regex': search_query,
+                        '$options': 'i'
+                    }
+                },
+                {
+                    'tech_stack': {
+                        '$regex': search_query,
+                        '$options': 'i'
+                    }
+                }
+            ]
+
+        # Category
+        if category_filter:
+            query['category'] = category_filter
+
+        # -----------------------------------------
+        # TOTAL PROJECTS
+        # -----------------------------------------
+        total_projects = mongo.db.projects.count_documents(query)
+
+        # -----------------------------------------
+        # TOTAL PAGES
+        # -----------------------------------------
+        if total_projects > 0:
+            total_pages = math.ceil(total_projects / per_page)
+        else:
+            total_pages = 1
+
+        # -----------------------------------------
+        # FIX PAGE IF OUT OF RANGE
+        # -----------------------------------------
+        if page > total_pages:
+            page = total_pages
+
+        # -----------------------------------------
+        # MONGODB PAGINATION
+        # -----------------------------------------
+        skip = (page - 1) * per_page
+
+        # -----------------------------------------
+        # FETCH PROJECTS
+        # -----------------------------------------
+        projects = list(
+            mongo.db.projects
+            .find(query)
+            .sort('upload_date', -1)
+            .skip(skip)
+            .limit(per_page)
+        )
+
+        # -----------------------------------------
+        # GET CATEGORIES
+        # -----------------------------------------
+        categories = list(
+            mongo.db.categories
+            .find()
+            .sort('name', 1)
+        )
+
+        # -----------------------------------------
+        # RENDER PAGE
+        # -----------------------------------------
+        return render_template(
+            'users/services.html',
+            projects=projects,
+            categories=categories,
+            search_query=search_query,
+            category_filter=category_filter,
+            page=page,
+            total_pages=total_pages,
+            total_projects=total_projects
+        )
+
+    except Exception as e:
+
+        print("SERVICES ERROR:", str(e))
+
+        flash('Error retrieving projects', 'error')
+
+        return render_template(
+            'users/services.html',
+            projects=[],
+            categories=[],
+            search_query='',
+            category_filter='',
+            page=1,
+            total_pages=1,
+            total_projects=0
+        )
+
+        
 @user_bp.route('/topics')
 def view_topics():
     topics = list(mongo.db.topics.find().sort('created_at', -1))
