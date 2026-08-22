@@ -1,684 +1,209 @@
 {% extends 'base.html' %}
 
-{% block title %}
-Explore Real-World Projects | Shree Code Mantra
-{% endblock %}
-
-{% block description %}
-Browse through our catalog of final-year academic projects. Filter by category,
-search by keywords, and find clean code packages.
-{% endblock %}
-
+{% block title %}Explore Real-World Projects | Shree Code Mantra{% endblock %}
+{% block description %}Browse through our catalog of final-year academic projects. Filter by category, search by
+keywords, and find clean code packages.{% endblock %}
 
 {% block content %}
-
 <div class="py-12 bg-slate-50 min-h-screen">
-
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
-
-        <!-- ========================================= -->
-        <!-- PAGE HEADER -->
-        <!-- ========================================= -->
-
+        <!-- Page Title & Header -->
         <div class="text-left space-y-3 mb-10">
-
-            <h1 class="text-3xl font-extrabold text-slate-900 tracking-tight sm:text-4xl">
-                Explore Real-World Projects
+            <h1 class="text-3xl font-extrabold text-slate-900 tracking-tight sm:text-4xl">Explore Real-World Projects
             </h1>
-
             <p class="text-sm sm:text-base text-slate-500 max-w-3xl">
-                Discover verified academic projects across multiple technology
-                domains. Each project comes with clean code, reports, setup
-                guides, and mentorship.
+                Discover verified academic projects across multiple technology domains. Each project comes with clean
+                code, reports, setup guides, and mentorship.
             </p>
-
         </div>
 
-
-
-        <!-- ========================================= -->
-        <!-- FILTER BAR -->
-        <!-- ========================================= -->
-
+        <!-- Filter Bar -->
         <div class="bg-white rounded-2xl border border-slate-100 p-5 shadow-sm mb-8">
-
-            <form id="filter-form" method="GET" action="{{ url_for('users.services') }}"
-                class="grid grid-cols-1 sm:grid-cols-12 gap-4">
-
-                <!-- Search -->
+            <form id="filter-form" method="GET" action="/users/services" class="grid grid-cols-1 sm:grid-cols-12 gap-4">
+                <!-- Search Input (7/12 column) -->
                 <div class="sm:col-span-6 relative">
-
                     <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-slate-400">
                         <i class="fa-solid fa-magnifying-glass"></i>
                     </span>
-
-                    <input name="search" type="text" id="globalSearch"
-                        placeholder="Search projects by keyword, tech, title..." value="{{ search_query or '' }}" class="block w-full pl-10 pr-4 py-2.5
-                        border border-slate-200 rounded-xl
-                        bg-slate-50/50
-                        focus:bg-white
-                        focus:outline-none
-                        focus:ring-2
-                        focus:ring-brand/20
-                        focus:border-brand
-                        text-sm transition">
-
+                    <input name="search" type="text"
+                        class="block w-full pl-10 pr-4 py-2.5 border border-slate-200 rounded-xl bg-slate-50/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand/20 focus:border-brand text-sm transition"
+                        id="globalSearch" placeholder="Search projects by keyword, tech, title..."
+                        value="{{ search_query or '' }}">
                 </div>
 
-
-                <!-- Category -->
+                <!-- Category Selector (3/12 column) -->
                 <div class="sm:col-span-4">
-
-                    <select name="category" id="categoryFilter" class="block w-full px-3 py-2.5
-                        border border-slate-200 rounded-xl
-                        bg-slate-50/50
-                        focus:bg-white
-                        focus:outline-none
-                        focus:ring-2
-                        focus:ring-brand/20
-                        focus:border-brand
-                        text-sm transition">
-
-                        <option value="" {% if not category_filter %} selected {% endif %}>
-                            All Categories
-                        </option>
-
+                    <select name="category"
+                        class="block w-full px-3 py-2.5 border border-slate-200 rounded-xl bg-slate-50/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand/20 focus:border-brand text-sm transition"
+                        id="categoryFilter">
+                        <option value="" {% if not category_filter %}selected{% endif %}>All Categories</option>
                         {% for category in categories %}
-
-                        <option value="{{ category.name }}" {% if category_filter==category.name %} selected {% endif
-                            %}>
+                        <option value="{{ category.name }}" {% if category_filter==category.name %}selected{% endif %}>
                             {{ category.name }}
                         </option>
-
                         {% endfor %}
-
                     </select>
-
                 </div>
 
-
-                <!-- Filter Button -->
+                <!-- Apply Filters Button (2/12 column) -->
                 <div class="sm:col-span-2">
-
-                    <button type="submit" class="w-full inline-flex justify-center
-                        items-center px-4 py-2.5
-                        text-sm font-semibold
-                        text-white bg-brand
-                        hover:bg-brand-hover
-                        rounded-xl shadow-sm
-                        transition duration-150">
-                        <i class="fa-solid fa-filter mr-2"></i>
+                    <button type="submit"
+                        class="w-full inline-flex justify-center items-center px-4 py-2.5 text-sm font-semibold text-white bg-brand hover:bg-brand-hover rounded-xl shadow-sm transition duration-150">
                         Filter
                     </button>
-
                 </div>
-
             </form>
-
         </div>
 
-
-
-        <!-- ========================================= -->
-        <!-- RESULT INFORMATION -->
-        <!-- ========================================= -->
-
-        {% if total_projects > 0 %}
-
-        <div class="flex items-center justify-between mb-5">
-
-            <p class="text-sm text-slate-500">
-
-                Showing
-
-                <span class="font-semibold text-slate-700">
-                    {{ ((page - 1) * 3) + 1 }}
-                </span>
-
-                -
-
-                <span class="font-semibold text-slate-700">
-                    {{ [page * 3, total_projects]|min }}
-                </span>
-
-                of
-
-                <span class="font-semibold text-slate-700">
-                    {{ total_projects }}
-                </span>
-
-                projects
-
-            </p>
-
-
-            {% if search_query or category_filter %}
-
-            <a href="{{ url_for('users.services') }}" class="text-sm text-brand hover:text-brand-hover font-semibold">
-                Clear Filters
-            </a>
-
-            {% endif %}
-
-        </div>
-
-        {% endif %}
-
-
-
-        <!-- ========================================= -->
-        <!-- PROJECT GRID -->
-        <!-- ========================================= -->
-
+        <!-- Project Cards Grid -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-
-
             {% if projects and projects|length > 0 %}
-
-
             {% for project in projects %}
+            <div
+                class="group bg-white rounded-2xl border border-slate-100 shadow-sm hover:shadow-md overflow-hidden flex flex-col justify-between transition duration-200">
 
-            <div class="group bg-white rounded-2xl
-                border border-slate-100
-                shadow-sm hover:shadow-md
-                overflow-hidden
-                flex flex-col
-                transition duration-200">
-
-
-                <!-- ================================= -->
-                <!-- PROJECT IMAGE -->
-                <!-- ================================= -->
-
-                <div class="relative overflow-hidden
-                    aspect-video
-                    bg-slate-100
-                    flex-shrink-0">
-
+                <!-- Card Media -->
+                <div class="relative overflow-hidden aspect-video bg-slate-100 flex-shrink-0">
                     {% if project.files and project.files.main_image %}
-
-                    <img src="{{ url_for(
-                            'static',
-                            filename=project.files.main_image.replace('\\', '/')
-                        ) }}" alt="{{ project.title }}" class="w-full h-full object-cover
-                        group-hover:scale-105
-                        transition duration-300" loading="lazy" onerror="this.onerror=null;
-                        this.src='{{ url_for(
-                            'static',
-                            filename='assets/images/browse.jpg'
-                        ) }}';">
-
+                    <img src="{{ url_for('static', filename=project.files.main_image.replace('\\', '/')) }}"
+                        alt="{{ project.title }}"
+                        class="w-full h-full object-cover group-hover:scale-102 transition duration-300"
+                        onerror="this.onerror=null;this.src='{{ url_for('static', filename='assets/images/browse.jpg') }}';">
                     {% else %}
-
-                    <img src="{{ url_for(
-                            'static',
-                            filename='assets/images/browse.jpg'
-                        ) }}" alt="{{ project.title }}" class="w-full h-full object-cover
-                        group-hover:scale-105
-                        transition duration-300" loading="lazy">
-
+                    <img src="{{ url_for('static', filename='assets/images/browse.jpg') }}" alt="Placeholder"
+                        class="w-full h-full object-cover group-hover:scale-102 transition duration-300">
                     {% endif %}
-
-
-                    <!-- Category Badge -->
 
                     {% if project.category %}
-
-                    <span class="absolute top-3 right-3
-                        inline-flex items-center
-                        px-2.5 py-1
-                        rounded-full
-                        text-xs font-semibold
-                        bg-white text-slate-800
-                        shadow">
+                    <span
+                        class="absolute top-3 right-3 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-white text-slate-800 shadow">
                         {{ project.category }}
                     </span>
-
                     {% endif %}
-
                 </div>
 
-
-
-                <!-- ================================= -->
-                <!-- PROJECT CONTENT -->
-                <!-- ================================= -->
-
-                <div class="p-6 flex-grow
-                    flex flex-col
-                    justify-between
-                    space-y-4">
-
+                <!-- Card Body -->
+                <div class="p-6 flex-grow flex flex-col justify-between space-y-4">
                     <div class="space-y-2">
-
-                        <!-- Title -->
-
-                        <h3 class="text-lg font-bold
-                            text-slate-900
-                            leading-snug
-                            group-hover:text-brand
-                            transition duration-150">
+                        <h3
+                            class="text-lg font-bold text-slate-900 leading-snug group-hover:text-brand transition duration-150">
                             {{ project.title }}
                         </h3>
-
-
-                        <!-- Description -->
-
-                        <p class="text-xs text-slate-500
-                            leading-relaxed">
-
-                            {% if project.description %}
-
-                            {{ project.description[:110] }}
-
-                            {% if project.description|length > 110 %}
-                            ...
-                            {% endif %}
-
-                            {% else %}
-
-                            No description available.
-
-                            {% endif %}
-
+                        <p class="text-xs text-slate-500 leading-relaxed">
+                            {{ project.description[:110] }}{% if project.description|length > 110 %}...{% endif %}
                         </p>
-
                     </div>
-
-
-
-                    <!-- ================================= -->
-                    <!-- TECH + FOOTER -->
-                    <!-- ================================= -->
 
                     <div class="space-y-4 pt-2">
-
-
-                        <!-- Tech Stack -->
-
+                        <!-- Tech Badges -->
                         {% if project.tech_stack %}
-
                         <div class="flex flex-wrap gap-1.5">
-
-                            {% if project.tech_stack is iterable
-                            and project.tech_stack is not string %}
-
+                            {% if project.tech_stack is iterable and project.tech_stack is not string %}
                             {% for tech in project.tech_stack[:4] %}
-
-                            <span class="inline-flex items-center
-                                    px-2 py-1
-                                    rounded
-                                    text-xs font-semibold
-                                    bg-slate-100
-                                    text-slate-600">
+                            <span
+                                class="inline-flex items-center px-2 py-0.5 rounded text-xxs font-semibold bg-slate-100 text-slate-650">
                                 {{ tech }}
                             </span>
-
                             {% endfor %}
-
                             {% else %}
-
-                            <span class="inline-flex items-center
-                                    px-2 py-1
-                                    rounded
-                                    text-xs font-semibold
-                                    bg-slate-100
-                                    text-slate-600">
+                            <span
+                                class="inline-flex items-center px-2 py-0.5 rounded text-xxs font-semibold bg-slate-100 text-slate-650">
                                 {{ project.tech_stack }}
                             </span>
-
                             {% endif %}
-
                         </div>
-
                         {% endif %}
 
-
-
-                        <!-- Footer -->
-
-                        <div class="flex items-center
-                            justify-between
-                            pt-4
-                            border-t border-slate-50
-                            text-xs font-semibold
-                            text-slate-500">
-
-                            <!-- Price -->
-
-                            <div>
-
+                        <!-- Card Footer Details -->
+                        <div
+                            class="flex items-center justify-between pt-4 border-t border-slate-50 text-xs font-semibold text-slate-500">
+                            <span>
                                 {% if project.price %}
-
-                                <span class="text-slate-900
-                                    font-bold text-sm">
-                                    ₹{{ project.price }}
-                                </span>
-
+                                <span class="text-slate-900 font-bold text-sm">₹{{ project.price }}</span>
                                 {% else %}
-
-                                <span class="text-emerald-600
-                                    uppercase">
-                                    Free
-                                </span>
-
+                                <span class="text-emerald-600 uppercase">Free</span>
                                 {% endif %}
-
-                            </div>
-
-
-
-                            <!-- View Project -->
-
-                            <a href="{{ url_for(
-                                    'users.project_details',
-                                    slug=project.slug
-                                ) if project.slug
-                                else url_for(
-                                    'users.project_details',
-                                    slug=project._id
-                                ) }}" class="inline-flex
-                                items-center
-                                text-brand
-                                hover:text-brand-hover
-                                transition">
-
-                                View Project
-
-                                <i class="fa-solid
-                                    fa-arrow-right-long
-                                    ml-1 text-xs"></i>
-
-                            </a>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-            {% endfor %}
-
-
-            <!-- ================================= -->
-            <!-- EMPTY STATE -->
-            <!-- ================================= -->
-
-            {% else %}
-
-            <div class="col-span-1 md:col-span-3
-                text-center py-16
-                bg-white rounded-2xl
-                border border-slate-100
-                p-8 shadow-sm">
-
-                <div class="w-16 h-16
-                    rounded-full
-                    bg-slate-100
-                    text-slate-400
-                    flex items-center
-                    justify-center
-                    mx-auto mb-4">
-
-                    <i class="fa-solid fa-folder-open text-2xl"></i>
-
-                </div>
-
-
-                <h3 class="font-bold
-                    text-slate-900
-                    text-lg">
-                    No Projects Found
-                </h3>
-
-
-                <p class="text-sm
-                    text-slate-500
-                    max-w-sm
-                    mx-auto
-                    mt-1 mb-6">
-                    We couldn't find any projects matching your
-                    search criteria. Try modifying your filters
-                    or search terms.
-                </p>
-
-
-                <a href="{{ url_for('users.services') }}" class="inline-flex
-                    justify-center
-                    items-center
-                    px-4 py-2.5
-                    text-sm font-semibold
-                    text-white bg-brand
-                    hover:bg-brand-hover
-                    rounded-xl shadow-sm
-                    transition">
-                    Clear Search & Filters
-                </a>
-
-            </div>
-
-            {% endif %}
-
-        </div>
-
-
-
-        <!-- ========================================= -->
-        <!-- PAGINATION -->
-        <!-- ========================================= -->
-
-        {% if total_pages > 1 %}
-
-        <div class="mt-12">
-
-            <div class="flex flex-col
-                sm:flex-row
-                items-center
-                justify-center
-                gap-4">
-
-
-                <!-- Previous -->
-
-                {% if page > 1 %}
-
-                <a href="{{ url_for(
-                        'users.services',
-                        page=page-1,
-                        search=search_query,
-                        category=category_filter
-                    ) }}" rel="prev" aria-label="Previous page" class="w-10 h-10
-                    flex items-center
-                    justify-center
-                    rounded-xl
-                    bg-white
-                    border border-slate-200
-                    text-slate-500
-                    hover:text-brand
-                    hover:border-brand
-                    hover:shadow-sm
-                    transition">
-                    <i class="fa-solid fa-chevron-left text-xs"></i>
-                </a>
-
-                {% endif %}
-
-
-
-                <!-- Page Numbers -->
-
-                <div class="flex items-center gap-2">
-
-
-                    {% set start_page = page - 2 %}
-
-                    {% if start_page < 1 %} {% set start_page=1 %} {% endif %} {% set end_page=page + 2 %} {% if
-                        end_page> total_pages %}
-                        {% set end_page = total_pages %}
-                        {% endif %}
-
-
-
-                        <!-- First Page -->
-
-                        {% if start_page > 1 %}
-
-                        <a href="{{ url_for(
-                            'users.services',
-                            page=1,
-                            search=search_query,
-                            category=category_filter
-                        ) }}" class="w-10 h-10
-                        flex items-center
-                        justify-center
-                        rounded-xl
-                        bg-white
-                        border border-slate-200
-                        text-slate-600
-                        font-medium
-                        hover:text-brand
-                        hover:border-brand
-                        transition">
-                            1
-                        </a>
-
-
-                        {% if start_page > 2 %}
-
-                        <span class="px-1 text-slate-400">
-                            ...
-                        </span>
-
-                        {% endif %}
-
-                        {% endif %}
-
-
-
-                        <!-- Current Page Range -->
-
-                        {% for p in range(start_page, end_page + 1) %}
-
-                        {% if p == page %}
-
-                        <span aria-current="page" class="w-10 h-10
-                            flex items-center
-                            justify-center
-                            rounded-xl
-                            bg-brand
-                            text-white
-                            font-bold
-                            shadow-sm">
-                            {{ p }}
-                        </span>
-
-                        {% else %}
-
-                        <a href="{{ url_for(
-                                'users.services',
-                                page=p,
-                                search=search_query,
-                                category=category_filter
-                            ) }}" class="w-10 h-10
-                            flex items-center
-                            justify-center
-                            rounded-xl
-                            bg-white
-                            border border-slate-200
-                            text-slate-600
-                            font-medium
-                            hover:text-brand
-                            hover:border-brand
-                            hover:shadow-sm
-                            transition">
-                            {{ p }}
-                        </a>
-
-                        {% endif %}
-
-                        {% endfor %}
-
-
-
-                        <!-- Last Page -->
-
-                        {% if end_page < total_pages %} {% if end_page < total_pages - 1 %} <span
-                            class="px-1 text-slate-400">
-                            ...
                             </span>
 
-                            {% endif %}
-
-
-                            <a href="{{ url_for(
-                            'users.services',
-                            page=total_pages,
-                            search=search_query,
-                            category=category_filter
-                        ) }}" class="w-10 h-10
-                        flex items-center
-                        justify-center
-                        rounded-xl
-                        bg-white
-                        border border-slate-200
-                        text-slate-600
-                        font-medium
-                        hover:text-brand
-                        hover:border-brand
-                        transition">
-                                {{ total_pages }}
+                            <a href="/users/project/{{ project.slug if project.slug else project._id }}"
+                                class="inline-flex items-center text-brand hover:text-brand-hover transition duration-150">
+                                View Project <i class="fa-solid fa-arrow-right-long ml-1 text-xxs"></i>
                             </a>
-
-                            {% endif %}
-
+                        </div>
+                    </div>
                 </div>
 
-
-
-                <!-- Next -->
-
-                {% if page < total_pages %} <a href="{{ url_for(
-                        'users.services',
-                        page=page+1,
-                        search=search_query,
-                        category=category_filter
-                    ) }}" rel="next" aria-label="Next page" class="w-10 h-10
-                    flex items-center
-                    justify-center
-                    rounded-xl
-                    bg-white
-                    border border-slate-200
-                    text-slate-500
-                    hover:text-brand
-                    hover:border-brand
-                    hover:shadow-sm
-                    transition">
-                    <i class="fa-solid fa-chevron-right text-xs"></i>
-                    </a>
-
-                    {% endif %}
-
             </div>
-
-
-
-            <!-- Page Information -->
-
-            <p class="text-center text-xs text-slate-400 mt-4">
-
-                Page {{ page }} of {{ total_pages }}
-
-            </p>
-
+            {% endfor %}
+            {% else %}
+            <!-- Empty State -->
+            <div
+                class="col-span-1 md:col-span-3 text-center py-16 bg-white rounded-2xl border border-slate-100 p-8 shadow-sm">
+                <div
+                    class="w-16 h-16 rounded-full bg-slate-100 text-slate-400 flex items-center justify-center mx-auto mb-4">
+                    <i class="fa-solid fa-folder-open text-2xl"></i>
+                </div>
+                <h3 class="font-bold text-slate-900 text-lg">No Projects Found</h3>
+                <p class="text-sm text-slate-550 max-w-sm mx-auto mt-1 mb-6">
+                    We couldn't find any projects matching your search criteria. Try modifying your filters or terms.
+                </p>
+                <a href="/users/services"
+                    class="inline-flex justify-center items-center px-4 py-2.5 text-sm font-semibold text-white bg-brand hover:bg-brand-hover rounded-xl shadow-sm transition">
+                    Clear Search & Filters
+                </a>
+            </div>
+            {% endif %}
         </div>
 
+        <!-- Pagination -->
+        {% if total_pages and total_pages > 1 %}
+        <div class="mt-12 flex items-center justify-center space-x-2">
+            <!-- Prev Button -->
+            {% if page > 1 %}
+            <a href="{{ url_for('users.services', page=page-1, search=search_query, category=category_filter) }}"
+                rel="prev"
+                class="w-10 h-10 flex items-center justify-center rounded-xl bg-white border border-slate-200 text-slate-500 hover:text-brand hover:border-brand hover:shadow-sm transition-all">
+                <i class="fa-solid fa-chevron-left text-xs"></i>
+            </a>
+            {% else %}
+            <div
+                class="w-10 h-10 flex items-center justify-center rounded-xl bg-slate-50 border border-slate-100 text-slate-300 cursor-not-allowed">
+                <i class="fa-solid fa-chevron-left text-xs"></i>
+            </div>
+            {% endif %}
+
+            <!-- Page Numbers -->
+            {% for p in range(1, total_pages + 1) %}
+            {% if p == page %}
+            <div
+                class="w-10 h-10 flex items-center justify-center rounded-xl bg-brand text-white font-bold shadow-[0_4px_12px_rgba(255,85,0,0.3)]">
+                {{ p }}
+            </div>
+            {% else %}
+            <a href="{{ url_for('users.services', page=p, search=search_query, category=category_filter) }}"
+                class="w-10 h-10 flex items-center justify-center rounded-xl bg-white border border-slate-200 text-slate-600 font-medium hover:text-brand hover:border-brand hover:shadow-sm transition-all">
+                {{ p }}
+            </a>
+            {% endif %}
+            {% endfor %}
+
+            <!-- Next Button -->
+            {% if page < total_pages %} <a
+                href="{{ url_for('users.services', page=page+1, search=search_query, category=category_filter) }}"
+                rel="next"
+                class="w-10 h-10 flex items-center justify-center rounded-xl bg-white border border-slate-200 text-slate-500 hover:text-brand hover:border-brand hover:shadow-sm transition-all">
+                <i class="fa-solid fa-chevron-right text-xs"></i>
+                </a>
+                {% else %}
+                <div
+                    class="w-10 h-10 flex items-center justify-center rounded-xl bg-slate-50 border border-slate-100 text-slate-300 cursor-not-allowed">
+                    <i class="fa-solid fa-chevron-right text-xs"></i>
+                </div>
+                {% endif %}
+        </div>
         {% endif %}
 
     </div>
-
 </div>
-
 {% endblock %}
