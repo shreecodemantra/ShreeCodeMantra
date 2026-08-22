@@ -372,11 +372,11 @@ search by keywords, and find clean code packages.
                             <!-- View Project -->
 
                             <a href="{{ url_for(
-                                    'users.project_detail',
+                                    'users.project_details',
                                     slug=project.slug
                                 ) if project.slug
                                 else url_for(
-                                    'users.project_detail',
+                                    'users.project_details',
                                     slug=project._id
                                 ) }}" class="inline-flex
                                 items-center
