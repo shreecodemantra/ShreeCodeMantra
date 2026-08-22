@@ -43,76 +43,33 @@ def blogs():
 @user_bp.route('/services', methods=['GET'])
 def services():
     try:
-        # -----------------------------------------
-        # FILTERS
-        # -----------------------------------------
-        search_query = request.args.get('search', '').strip()
-        category_filter = request.args.get('category', '').strip()
-
+        search_query = request.args.get('search', '')
+        category_filter = request.args.get('category', '')
         page = request.args.get('page', 1, type=int)
         per_page = 3
 
-        # Prevent invalid page
-        if page < 1:
-            page = 1
-
-        # -----------------------------------------
-        # MONGODB QUERY
-        # -----------------------------------------
         query = {}
 
         if search_query:
             query['$or'] = [
-                {
-                    'title': {
-                        '$regex': search_query,
-                        '$options': 'i'
-                    }
-                },
-                {
-                    'description': {
-                        '$regex': search_query,
-                        '$options': 'i'
-                    }
-                },
-                {
-                    'tech_stack': {
-                        '$regex': search_query,
-                        '$options': 'i'
-                    }
-                }
+                {'title': {'$regex': search_query, '$options': 'i'}},
+                {'description': {'$regex': search_query, '$options': 'i'}},
+                {'tech_stack': {'$regex': search_query, '$options': 'i'}}
             ]
 
         if category_filter:
             query['category'] = category_filter
 
-        # -----------------------------------------
-        # TOTAL PROJECTS
-        # -----------------------------------------
         total_projects = mongo.db.projects.count_documents(query)
+        total_pages = math.ceil(total_projects / per_page)
 
-        # -----------------------------------------
-        # TOTAL PAGES
-        # -----------------------------------------
-        total_pages = max(
-            1,
-            math.ceil(total_projects / per_page)
-        )
-
-        # -----------------------------------------
-        # FIX INVALID PAGE
-        # -----------------------------------------
-        if page > total_pages:
+        if page < 1:
+            page = 1
+        elif page > total_pages and total_pages > 0:
             page = total_pages
 
-        # -----------------------------------------
-        # PAGINATION
-        # -----------------------------------------
         skip = (page - 1) * per_page
 
-        # -----------------------------------------
-        # GET PROJECTS
-        # -----------------------------------------
         projects = list(
             mongo.db.projects
             .find(query)
@@ -121,18 +78,8 @@ def services():
             .limit(per_page)
         )
 
-        # -----------------------------------------
-        # GET CATEGORIES
-        # -----------------------------------------
-        categories = list(
-            mongo.db.categories
-            .find()
-            .sort('name', 1)
-        )
+        categories = list(mongo.db.categories.find())
 
-        # -----------------------------------------
-        # RENDER
-        # -----------------------------------------
         return render_template(
             'users/services.html',
             projects=projects,
@@ -140,14 +87,11 @@ def services():
             search_query=search_query,
             category_filter=category_filter,
             page=page,
-            total_pages=total_pages,
-            total_projects=total_projects
+            total_pages=total_pages
         )
 
     except Exception as e:
-
-        print("SERVICES ERROR:", str(e))
-
+        print(f"SERVICES ERROR: {e}")
         flash('Error retrieving projects', 'error')
 
         return render_template(
@@ -157,8 +101,7 @@ def services():
             search_query='',
             category_filter='',
             page=1,
-            total_pages=1,
-            total_projects=0
+            total_pages=1
         )
 
 
