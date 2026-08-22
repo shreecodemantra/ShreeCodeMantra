@@ -73,7 +73,7 @@ packages.
                 </div>
 
 
-                <!-- Apply Filters Button -->
+                <!-- Filter Button -->
                 <div class="sm:col-span-2">
 
                     <button type="submit"
@@ -188,7 +188,7 @@ packages.
                         {% endif %}
 
 
-                        <!-- Card Footer Details -->
+                        <!-- Card Footer -->
                         <div
                             class="flex items-center justify-between pt-4 border-t border-slate-50 text-xs font-semibold text-slate-500">
 
@@ -213,7 +213,7 @@ packages.
 
                             <!-- VIEW PROJECT -->
                             <a href="{{ url_for(
-                                        'users.project',
+                                        'users.project_details',
                                         slug=project.slug if project.slug else project._id
                                     ) }}"
                                 class="inline-flex items-center text-brand hover:text-brand-hover transition duration-150">
@@ -267,16 +267,16 @@ packages.
         </div>
 
 
-        <!-- ===================================================== -->
+        <!-- ================================================ -->
         <!-- PAGINATION -->
-        <!-- ===================================================== -->
+        <!-- ================================================ -->
 
         {% if total_pages and total_pages > 1 %}
 
         <div class="mt-12 flex items-center justify-center space-x-2">
 
 
-            <!-- PREVIOUS -->
+            <!-- PREVIOUS BUTTON -->
             {% if page > 1 %}
 
             <a href="{{ url_for(
@@ -379,33 +379,29 @@ packages.
 
 
     <!-- LAST PAGE -->
-    {% if total_pages > 1 %}
+    {% if page != total_pages %}
 
-    {% if page == total_pages %}
+    <a href="{{ url_for(
+                    'users.services',
+                    page=total_pages,
+                    search=search_query,
+                    category=category_filter
+                ) }}"
+        class="w-10 h-10 flex items-center justify-center rounded-xl bg-white border border-slate-200 text-slate-600 font-medium hover:text-brand hover:border-brand hover:shadow-sm transition-all">
+        {{ total_pages }}
+    </a>
+
+    {% elif total_pages > 1 %}
 
     <div
         class="w-10 h-10 flex items-center justify-center rounded-xl bg-brand text-white font-bold shadow-[0_4px_12px_rgba(255,85,0,0.3)]">
         {{ total_pages }}
     </div>
 
-    {% else %}
-
-    <a href="{{ url_for(
-                        'users.services',
-                        page=total_pages,
-                        search=search_query,
-                        category=category_filter
-                    ) }}"
-        class="w-10 h-10 flex items-center justify-center rounded-xl bg-white border border-slate-200 text-slate-600 font-medium hover:text-brand hover:border-brand hover:shadow-sm transition-all">
-        {{ total_pages }}
-    </a>
-
-    {% endif %}
-
     {% endif %}
 
 
-    <!-- NEXT -->
+    <!-- NEXT BUTTON -->
     {% if page < total_pages %} <a href="{{ url_for(
                     'users.services',
                     page=page + 1,

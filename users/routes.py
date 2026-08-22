@@ -44,7 +44,7 @@ def blogs():
 def services():
     try:
         # -----------------------------------------
-        # GET FILTER VALUES
+        # FILTERS
         # -----------------------------------------
         search_query = request.args.get('search', '').strip()
         category_filter = request.args.get('category', '').strip()
@@ -52,16 +52,15 @@ def services():
         page = request.args.get('page', 1, type=int)
         per_page = 3
 
-        # Prevent invalid page number
+        # Prevent invalid page
         if page < 1:
             page = 1
 
         # -----------------------------------------
-        # BUILD MONGODB QUERY
+        # MONGODB QUERY
         # -----------------------------------------
         query = {}
 
-        # Search
         if search_query:
             query['$or'] = [
                 {
@@ -84,7 +83,6 @@ def services():
                 }
             ]
 
-        # Category
         if category_filter:
             query['category'] = category_filter
 
@@ -96,24 +94,24 @@ def services():
         # -----------------------------------------
         # TOTAL PAGES
         # -----------------------------------------
-        if total_projects > 0:
-            total_pages = math.ceil(total_projects / per_page)
-        else:
-            total_pages = 1
+        total_pages = max(
+            1,
+            math.ceil(total_projects / per_page)
+        )
 
         # -----------------------------------------
-        # FIX PAGE IF OUT OF RANGE
+        # FIX INVALID PAGE
         # -----------------------------------------
         if page > total_pages:
             page = total_pages
 
         # -----------------------------------------
-        # MONGODB PAGINATION
+        # PAGINATION
         # -----------------------------------------
         skip = (page - 1) * per_page
 
         # -----------------------------------------
-        # FETCH PROJECTS
+        # GET PROJECTS
         # -----------------------------------------
         projects = list(
             mongo.db.projects
@@ -133,7 +131,7 @@ def services():
         )
 
         # -----------------------------------------
-        # RENDER PAGE
+        # RENDER
         # -----------------------------------------
         return render_template(
             'users/services.html',
@@ -163,7 +161,7 @@ def services():
             total_projects=0
         )
 
-        
+
 @user_bp.route('/topics')
 def view_topics():
     topics = list(mongo.db.topics.find().sort('created_at', -1))
