@@ -43,11 +43,17 @@ def blogs():
 @user_bp.route('/services', methods=['GET'])
 def services():
     try:
-        search_query = request.args.get('search', '')
-        category_filter = request.args.get('category', '')
-        page = request.args.get('page', 1, type=int)
+        search_query = request.args.get('search', '').strip()
+        category_filter = request.args.get('category', '').strip()
+
+        try:
+            page = int(request.args.get('page', 1))
+        except (ValueError, TypeError):
+            page = 1
+
         per_page = 3
 
+        # Build query
         query = {}
 
         if search_query:
@@ -60,14 +66,16 @@ def services():
         if category_filter:
             query['category'] = category_filter
 
+        # Total records
         total_projects = mongo.db.projects.count_documents(query)
-        total_pages = math.ceil(total_projects / per_page)
 
-        if page < 1:
-            page = 1
-        elif page > total_pages and total_pages > 0:
-            page = total_pages
+        # Calculate total pages
+        total_pages = max(1, math.ceil(total_projects / per_page))
 
+        # Keep page within valid range
+        page = max(1, min(page, total_pages))
+
+        # Pagination
         skip = (page - 1) * per_page
 
         projects = list(
@@ -78,7 +86,9 @@ def services():
             .limit(per_page)
         )
 
-        categories = list(mongo.db.categories.find())
+        categories = list(
+            mongo.db.categories.find().sort('name', 1)
+        )
 
         return render_template(
             'users/services.html',
@@ -87,11 +97,13 @@ def services():
             search_query=search_query,
             category_filter=category_filter,
             page=page,
-            total_pages=total_pages
+            total_pages=total_pages,
+            total_projects=total_projects
         )
 
     except Exception as e:
         print(f"SERVICES ERROR: {e}")
+
         flash('Error retrieving projects', 'error')
 
         return render_template(
@@ -101,9 +113,9 @@ def services():
             search_query='',
             category_filter='',
             page=1,
-            total_pages=1
+            total_pages=1,
+            total_projects=0
         )
-
 
 @user_bp.route('/topics')
 def view_topics():
