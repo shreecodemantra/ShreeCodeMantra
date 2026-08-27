@@ -136,19 +136,21 @@
 
         <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-px bg-dark-border border border-dark-border">
             {% set techs = [
-            ('fa-python', 'Python'), ('fa-fire', 'Flask'), ('fa-cube', 'Django'),
-            ('fa-bolt', 'FastAPI'), ('fa-database', 'MongoDB'), ('fa-brain', 'AI'),
-            ('fa-chart-line', 'Machine Learning'), ('fa-docker', 'Docker'),
-            ('fa-git-alt', 'Git & GitHub'), ('fa-cloud', 'Cloud')
+            ('fa-brands', 'fa-python', 'Python'), ('fa-solid', 'fa-fire', 'Flask'), ('fa-solid', 'fa-cube', 'Django'),
+            ('fa-solid', 'fa-bolt', 'FastAPI'), ('fa-solid', 'fa-database', 'MongoDB'), ('fa-solid', 'fa-brain', 'AI'),
+            ('fa-solid', 'fa-chart-line', 'Machine Learning'), ('fa-brands', 'fa-docker', 'Docker'),
+            ('fa-brands', 'fa-git-alt', 'Git & GitHub'), ('fa-solid', 'fa-cloud', 'Cloud'), ('fa-brands', 'fa-react', 'React'),
+            ('fa-solid', 'fa-mobile-screen', 'Flutter'), ('fa-brands', 'fa-android', 'Android'), ('fa-brands', 'fa-java', 'Java'),
+            ('fa-solid', 'fa-leaf', 'Spring Boot')
             ] %}
-            {% for icon, name in techs %}
+            {% for prefix, icon, name in techs %}
             <div
                 class="bg-dark-surface hover:bg-[#111111] p-6 md:p-10 text-center transition-colors group relative overflow-hidden">
                 <div
                     class="absolute top-0 left-0 w-full h-[2px] bg-brand scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-300">
                 </div>
                 <i
-                    class="fa-solid {{ icon }} text-3xl text-brand mb-4 transform group-hover:scale-110 transition-transform duration-300"></i>
+                    class="{{ prefix }} {{ icon }} text-3xl text-brand mb-4 transform group-hover:scale-110 transition-transform duration-300"></i>
                 <div class="font-head text-sm font-bold tracking-wider uppercase">{{ name }}</div>
             </div>
             {% endfor %}
