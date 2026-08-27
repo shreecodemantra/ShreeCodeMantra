@@ -46,7 +46,7 @@ def services():
         search_query = request.args.get('search', '')
         category_filter = request.args.get('category', '')
         page = request.args.get('page', 1, type=int)
-        per_page = 3
+        per_page = 6
 
         query = {}
 
@@ -61,11 +61,11 @@ def services():
             query['category'] = category_filter
 
         total_projects = mongo.db.projects.count_documents(query)
-        total_pages = math.ceil(total_projects / per_page)
+        total_pages = max(1, math.ceil(total_projects / per_page))
 
         if page < 1:
             page = 1
-        elif page > total_pages and total_pages > 0:
+        elif page > total_pages:
             page = total_pages
 
         skip = (page - 1) * per_page
