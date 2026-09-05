@@ -1,5 +1,6 @@
 import os
 from flask import Flask, render_template, send_from_directory, request, Response, make_response
+from werkzeug.middleware.proxy_fix import ProxyFix
 from config import Config
 from extensions import mongo, mail
 from auth.routes import auth_bp
@@ -7,6 +8,7 @@ from admin.routes import admin_bp
 from users.routes import user_bp
 
 app = Flask(__name__)
+app.wsgi_app = ProxyFix(app.wsgi_app, x_proto=1, x_host=1)
 
 app.config.from_object(Config)
 app.config.update(
